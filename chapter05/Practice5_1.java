@@ -1,3 +1,10 @@
+/**
+ * @title javaPractice / chapter05 / Practice5-1
+ * @content
+ * @author shika
+ * @date 2020-10-07
+ */
+
 package javaPractice.chapter05;
 
 import java.util.InputMismatchException;
