@@ -1,4 +1,13 @@
+/**
+ * @title javaPractice / chapter04 / ChangeSeat
+ * @title ～席替えプログラム～
+ * @content 配列, List
+ * @author shika
+ * @date 2020-10-08
+ */
+
 package javaPractice.chapter04;
+
 import java.util.ArrayList;
 import java.util.List;
 /*
