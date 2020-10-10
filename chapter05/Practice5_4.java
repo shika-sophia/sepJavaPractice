@@ -1,7 +1,7 @@
 /**
  * @title javaPractice / chapter05 / Practice5-4
  * @content Scanner, BigDecimal
- *     doubleの計算は誤差の出る可能性があるので、BidDecimalクラスを使う
+ *     doubleの計算は誤差の出る可能性があるので、BigDecimalクラスを使う
  * @author shika
  * @date 2020-10-09
  */
@@ -53,7 +53,7 @@ public class Practice5_4 {
 	private static BigDecimal height;
 	private static BigDecimal upper;
 	private static BigDecimal value;
-	//doubleの計算は誤差の出る可能性があるので、BidDecimalクラスを使う
+	//doubleの計算は誤差の出る可能性があるので、BigDecimalクラスを使う
 
 	public static void main(String[] args) {
 		//メニュー表示
