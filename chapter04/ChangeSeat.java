@@ -108,12 +108,12 @@ public class ChangeSeat {
 
         length = nameArray.length;
 
-        //座席の配列と初期化
-        int[] seatArray = new int[length];
-
-        for (int i = 0; i < length; i++) {
-            seatArray[i] = -1;
-        }
+        //座席の配列と初期化(現在の席と被らないようにするための初期値)
+        int[] seatArray = new int[] {
+            1, 2, 3, 5, 6, 7, 8,
+            9, 10, 12, 13, 14, 16,
+            17, 18, 19, 21, 22, 20
+        };
 
         //---- 座席のランダムくじ ----
         //平均ループ
@@ -152,7 +152,7 @@ public class ChangeSeat {
             //かぶっている座席がなくなるまでループ
             loop:
             while (true) {
-                dice = rdm.nextInt(24);
+                dice = rdm.nextInt(23);
 
                 for(int j = 0; j < length; j++) {
                     //diceが他の座席と かぶったら、ランダムやり直し
@@ -199,9 +199,10 @@ public class ChangeSeat {
         int tableAverage = length / 3;
 
         //テーブル平均より２より離れていたら false
-        if ((tableA.size() - tableAverage) > 2
-            || (tableB.size() - tableAverage) > 2
-            || (tableC.size() - tableAverage) > 2
+        //Math.abs():絶対値を取るメソッド
+        if (Math.abs(tableA.size() - tableAverage) > 1
+            || Math.abs(tableB.size() - tableAverage) > 1
+            || Math.abs(tableC.size() - tableAverage) > 1
         ) {
             isAverage = false;
 
@@ -252,6 +253,11 @@ tableC.size(): 7
 tableA.size(): 7
 tableB.size(): 7
 tableC.size(): 5
+
+こりゃあかん→絶対値を取らな
+tableA.size(): 8
+tableB.size(): 8
+tableC.size(): 3
 
 あと追加するなら、
 ・元テーブルの人と かぶらないようにする。
