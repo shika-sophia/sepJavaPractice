@@ -138,6 +138,7 @@ public class SeatingPlanRV {
 
 		for(int i = 0; i < name.size(); i++) {
 			bld.append("|").append(name.get(i)).append("|");
+
 			if((i + 1) % 6 == 0) {
 				bld.append("\n");
 			}
@@ -157,7 +158,7 @@ public class SeatingPlanRV {
 		name.set(target, targetName);
 		name.set(14, "大鹿");
 		return name;
-	}//
+	}//exchange()
 
 }//class
 /*
@@ -166,5 +167,12 @@ public class SeatingPlanRV {
 |臨泉||山本||川島||東出||澤井||岡本|
 |中山||畑中||大鹿||住田||松本||上野|
 
+【考察】
+たまにループにハマって返って来ないときあり。
+原因究明すべし。
+旧座席と同じだとシャッフルし直す。
+大鹿のいた位置と座席番号14の位置を入れ替えるので
+大鹿が座席番号14のひとの旧座席にシャッフル配置されると再シャッフル。
 
+ループにハマりそうなとこがないんだが・・
 */
