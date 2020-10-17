@@ -1,7 +1,6 @@
-
 /**
  * @title javaPractice / chapter04 / SeatingPlanRV
- * @author 上野
+ * @author 上野さん
  * @author forked from Ueno-san at 2020-10-16 / Revision wrote by shika
  * @date 2020-10-16
  *
@@ -30,60 +29,60 @@ import java.util.List;
 //旧座席との被らないようチェックした 全シャッフルVersion
 public class SeatingPlanRV {
 
-	public static void main(String[] args) {
-		List<String> name = new ArrayList<String>();
+    public static void main(String[] args) {
+        List<String> name = new ArrayList<String>();
 
-		//初期値が出席番号順？になっているので現在の座席に改変
-		//name = Arrays.asList("|岩田|", "|植田|", "|上野|", "|岡本|", "|川島|", "|澤井|", "|住田|", "|辻谷|", "|道満|",
-		//		"|中山|", "|西尾|", "|畑中|", "|東出|", "|松本|", "|山本|", "|米田|", "|臨泉|");
-		//System.out.println(name);
+        //初期値が出席番号順？になっているので現在の座席に改変
+        //name = Arrays.asList("|岩田|", "|植田|", "|上野|", "|岡本|", "|川島|", "|澤井|", "|住田|", "|辻谷|", "|道満|",
+        //		"|中山|", "|西尾|", "|畑中|", "|東出|", "|松本|", "|山本|", "|米田|", "|臨泉|");
+        //System.out.println(name);
 
-		name = Arrays.asList("大鹿","岡本","米田","臨泉","川島","岩田",
-				             "東出","辻谷","西尾","松本","澤井","植田",
-				             "中山","上野","山本","道満","住田","畑中");
+        name = Arrays.asList("大鹿","岡本","米田","臨泉","川島","岩田",
+                             "東出","辻谷","西尾","松本","澤井","植田",
+                             "中山","上野","山本","道満","住田","畑中");
 
-		//旧座席のコピー
-		List<String> nameCopy = new ArrayList<>();
-		for (String namebit : name) {
-			nameCopy.add(namebit);
-		}
+        //旧座席のコピー
+        List<String> nameCopy = new ArrayList<>();
+        for (String namebit : name) {
+            nameCopy.add(namebit);
+        }
 
-		//シャッフルのループ
-		boolean checked = false;
-		loop:
-		do {
-			Collections.shuffle(name);
+        //シャッフルのループ
+        boolean checked = false;
+        loop:
+        do {
+            Collections.shuffle(name);
 
-			//旧座席と被っていないかチェック
-			for (int i = 0; i < name.size(); i++) {
-				//旧座席と同じ位置に、同じ名前があったらShuffle()やり直し
-				if (name.get(i).equals(nameCopy.get(i))) {
-					continue loop;
-				}
-			}//for i
-			checked = true;
+            //旧座席と被っていないかチェック
+            for (int i = 0; i < name.size(); i++) {
+                //旧座席と同じ位置に、同じ名前があったらShuffle()やり直し
+                if (name.get(i).equals(nameCopy.get(i))) {
+                    continue loop;
+                }
+            }//for i
+            checked = true;
 
-		} while (checked);
+        } while (checked);
 
-		//for文で座席表を自動生成
-		//今回は18人なので 3人×6列
+        //for文で座席表を自動生成
+        //今回は18人なので 3人×6列
 
-		//◆StringBuilder
-		//「+」演算子は「"あ"+"い" -> "あい"」なら３つのStringオブジェクトを生成する。
-		//次々と「+」演算子で繋げると、その度にStringオブジェクトを生成していく。
-		//なのでたくさん繋げるときは StringBuilder()を使うとメモリへの負担がわずかながら改善する。
-		StringBuilder bld = new StringBuilder();
-		bld.append("　　　　　　先生□\n");
+        //◆StringBuilder
+        //「+」演算子は「"あ"+"い" -> "あい"」なら３つのStringオブジェクトを生成する。
+        //次々と「+」演算子で繋げると、その度にStringオブジェクトを生成していく。
+        //なのでたくさん繋げるときは StringBuilder()を使うとメモリへの負担がわずかながら改善する。
+        StringBuilder bld = new StringBuilder();
+        bld.append("　　　　　　先生□\n");
 
-		for(int i = 0; i < name.size(); i++) {
-			bld.append("|").append(name.get(i)).append("|");
-			if((i + 1) % 6 == 0) {
-				bld.append("\n");
-			}
-		}//for
+        for(int i = 0; i < name.size(); i++) {
+            bld.append("|").append(name.get(i)).append("|");
+            if((i + 1) % 6 == 0) {
+                bld.append("\n");
+            }
+        }//for
 
-		System.out.println(bld.toString());
-	}//main()
+        System.out.println(bld.toString());
+    }//main()
 
 }//class
 */
@@ -94,71 +93,72 @@ public class SeatingPlanRV {
 |米田||中山||畑中||植田||岩田||辻谷|
 |東出||西尾||道満||岡本||住田||大鹿|
  */
+
 //###### fix '大鹿' Version ######
 public class SeatingPlanRV {
 
-	public static void main(String[] args) {
-		List<String> name = new ArrayList<String>();
+    public static void main(String[] args) {
+        List<String> name = new ArrayList<String>();
 
-		name = Arrays.asList("大鹿","岡本","米田","臨泉","川島","岩田",
-				             "東出","辻谷","西尾","松本","澤井","植田",
-				             "中山","上野","山本","道満","住田","畑中");
+        name = Arrays.asList("大鹿","岡本","米田","臨泉","川島","岩田",
+                             "東出","辻谷","西尾","松本","澤井","植田",
+                             "中山","上野","山本","道満","住田","畑中");
 
-		//旧座席のコピー
-		List<String> nameCopy = new ArrayList<>();
-		for (String namebit : name) {
-			nameCopy.add(namebit);
-		}
+        //旧座席のコピー
+        List<String> nameCopy = new ArrayList<>();
+        for (String namebit : name) {
+            nameCopy.add(namebit);
+        }
 
-		//シャッフルのループ
-		boolean checked = false;
-		loop:
-		do {
-			Collections.shuffle(name);
+        //シャッフルのループ
+        boolean checked = false;
+        loop:
+        do {
+            Collections.shuffle(name);
 
-			//'大鹿'の位置を探して、'大鹿'固定位置と入れ替え
-			name = exchange(name);
+            //'大鹿'の位置を探して、'大鹿'固定位置と入れ替え
+            name = exchange(name);
 
-			//旧座席と被っていないかチェック
-			for (int i = 0; i < name.size(); i++) {
-				//旧座席と同じ位置に、同じ名前があったらShuffle()やり直し
-				if (name.get(i).equals(nameCopy.get(i))) {
-					continue loop;
-				}
-			}//for i
+            //旧座席と被っていないかチェック
+            for (int i = 0; i < name.size(); i++) {
+                //旧座席と同じ位置に、同じ名前があったらShuffle()やり直し
+                if (name.get(i).equals(nameCopy.get(i))) {
+                    continue loop;
+                }
+            }//for i
 
-			checked = true;
+            checked = true;
 
-		} while (checked);
+        } while (!checked);
 
-		//for文で座席表を自動生成
-		//今回は18人なので 3人×6列
-		StringBuilder bld = new StringBuilder();
-		bld.append("　　　　　　先生□\n");
+        //for文で座席表を自動生成
+        //今回は18人なので 3人×6列
+        StringBuilder bld = new StringBuilder();
+        bld.append("　　　　　　先生□\n");
 
-		for(int i = 0; i < name.size(); i++) {
-			bld.append("|").append(name.get(i)).append("|");
+        for(int i = 0; i < name.size(); i++) {
+            bld.append("|").append(name.get(i)).append("|");
 
-			if((i + 1) % 6 == 0) {
-				bld.append("\n");
-			}
-		}//for
+            if((i + 1) % 6 == 0) {
+                bld.append("\n");
+            }
+        }//for
 
-		System.out.println(bld.toString());
-	}//main()
+        System.out.println(bld.toString());
+    }//main()
 
-	private static List<String> exchange(List<String> name) {
-		//大鹿のいる席番を取得
-		int target = name.indexOf("大鹿");
+    private static List<String> exchange(List<String> name) {
+        //大鹿のいる席番を取得
+        int target = name.indexOf("大鹿");
 
-		//固定席14の名前を取得
-		String targetName = name.get(14);
+        //固定席14の名前を取得
+        String targetName = name.get(14);
 
-		//大鹿と入れ替え
-		name.set(target, targetName);
-		name.set(14, "大鹿");
-		return name;
-	}//exchange()
+        //大鹿と入れ替え
+        name.set(target, targetName);
+        name.set(14, "大鹿");
+        return name;
+    }//exchange()
 
 }//class
 /*
@@ -175,4 +175,13 @@ public class SeatingPlanRV {
 大鹿が座席番号14のひとの旧座席にシャッフル配置されると再シャッフル。
 
 ループにハマりそうなとこがないんだが・・
+
+あっ do{} while (!checked);のところ while (checked)になってたわ
+そりゃループするわ。(修正済 2020-10-17)
+
+　　　　　　先生□
+|岩田||住田||畑中||中山||東出||岡本|
+|松本||川島||道満||臨泉||上野||山本|
+|澤井||西尾||大鹿||植田||辻谷||米田|
+
 */
