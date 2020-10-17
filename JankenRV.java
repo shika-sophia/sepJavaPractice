@@ -1,7 +1,7 @@
 /**
  * @title javaPractice / JankenRV
  * @content じゃんけん勝敗決定式 switch ((com - user + 3) % 3 )
- * @author Shouji,Recurrent Teacher
+ * @author Shouji-san, Recurrent Teacher
  * @author forked from Shouji-san, Revision wrote by shika
  * @date 2020-10-17
  */
