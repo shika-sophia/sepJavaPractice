@@ -17,15 +17,15 @@ package javaPractice.exercise;
 
 public class Exercise01Ans {
 
-	public static void main(String[] args) {
-		int x = 2;
-		int y = 3;
+    public static void main(String[] args) {
+        int x = 2;
+        int y = 3;
 
-		System.out.println("x: " + x);
-		System.out.println("y: " + y);
-		System.out.println("x + y = " + (x + y));//← x+yの()を忘れずに
+        System.out.println("x: " + x);
+        System.out.println("y: " + y);
+        System.out.println("x + y = " + (x + y));//← x+yの変数に()を忘れずに
 
-	}//main()
+    }//main()
 
 }//class
 

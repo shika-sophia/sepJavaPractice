@@ -18,66 +18,68 @@ import java.util.Scanner;
 
 public class Exercise03Ans {
 
-	public static void main(String[] args) {
-		Scanner scn = new Scanner(System.in);
-		System.out.print("xの値を入力してください。");
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        System.out.print("xの値を入力してください。");
         int x = scn.nextInt();
 
         System.out.print("yの値を入力してください。");
         int y = scn.nextInt();
 
         System.out.print("計算方法を数字で選択してください。\n"
-        	+ "[1]足し算, [2]引き算, [3]掛け算, [4]割り算");
+            + "[1]足し算, [2]引き算, [3]掛け算, [4]割り算");
         int calc = scn.nextInt();
 
         //---- switch分岐、計算メソッドの呼び出し ----
         int result = 0;
         switch(calc) {
         case 1:
-        	result = calcAdd(x, y);
-        	break;
+            result = calcAdd(x, y);
+            break;
         case 2:
 
-        	result = calcSubstract(x, y);
-        	break;
+            result = calcSubstract(x, y);
+            break;
 
         case 3:
 
-        	result = calcMultiply(x, y);
-        	break;
+            result = calcMultiply(x, y);
+            break;
         case 4:
 
-        	result = calcDevide(x, y);
-        	break;
+            result = calcDevide(x, y);
+            break;
 
-    	default:
-    		System.out.println("1～4の数字で入力してください。");
-    		System.exit(0);
+        default:
+            System.out.println("1～4の数字で入力してください。");
+            System.exit(0);
         }//switch
 
         System.out.println("計算結果は " + result);
-	}//main()
+        scn.close();
+    }//main()
 
-	private static int calcAdd(int x, int y) {
-		return x + y;
-	}//calcAdd()
 
-	private static int calcSubstract(int x, int y) {
-		return x - y;
-	}//calcSubstract()
+    private static int calcAdd(int x, int y) {
+        return x + y;
+    }//calcAdd()
 
-	private static int calcMultiply(int x, int y) {
-		return x * y;
-	}//calcMultiply()
+    private static int calcSubstract(int x, int y) {
+        return x - y;
+    }//calcSubstract()
 
-	private static int calcDevide(int x, int y) {
-		if (y == 0) {
-			System.out.println("0で割ることはできません。");
-			System.exit(0);
-		}//if
+    private static int calcMultiply(int x, int y) {
+        return x * y;
+    }//calcMultiply()
 
-		return x / y;
-	}//calcDevide()
+    private static int calcDevide(int x, int y) {
+        if (y == 0) {
+            System.out.println("0で割ることはできません。");
+            System.exit(0);
+        }//if
+
+        return x / y;
+    }//calcDevide()
 
 }//class
 /*

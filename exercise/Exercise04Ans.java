@@ -16,13 +16,21 @@
   「[1]足し算, [2]引き算, [3]掛け算, [4]割り算」も配列とfor文を用いて自動生成せよ。
 
 〔ヒント〕
-◆printf():
+◆printf(): 「f」は String.format()の「f」
+  ＊例文
   System.out.printf("[%d] %s \n", i, str);
-  printf()というメソッドは"～"に書式を指示し、「,」以下に変数をおくと
+
+  printf()というメソッドは"～"に書式を指定し、「,」以下に変数をおくと
   表示するときに変数の値を代入して表示してくれる。
+
+  暗号みたいで最初は敬遠しがちだけど、自分の書きたいフォーマットに整形する際に便利。
+  同じことを「+」演算子だけでやると、とても長くなり、時に if文まで必要になる。
+
+  ＊記号説明
   「%d」: int型を代入できる。
   「%s」: String型を代入できる。
   「\n」: 改行
+
 
 ◇実行結果
 xの値を入力してください。4
@@ -37,11 +45,11 @@ import java.util.Scanner;
 
 public class Exercise04Ans {
 
-	public static void main(String[] args) {
-		String[] calcStr = {"足し算","引き算","掛け算","割り算"};
+    public static void main(String[] args) {
+        String[] calcStr = {"足し算","引き算","掛け算","割り算"};
 
-		Scanner scn = new Scanner(System.in);
-		System.out.print("xの値を入力してください。");
+        Scanner scn = new Scanner(System.in);
+        System.out.print("xの値を入力してください。");
         int x = scn.nextInt();
 
         System.out.print("yの値を入力してください。");
@@ -49,9 +57,16 @@ public class Exercise04Ans {
 
         System.out.println("計算方法を数字で選択してください。");
 
+        //◆printf()
         for (int i = 0; i < calcStr.length; i++) {
-        	System.out.printf("[%d] %s, ", (i+1), calcStr[i]);
+            System.out.printf("[%d] %s, ", (i+1), calcStr[i]);
         }//for
+
+        //◇printf()を使わない場合の別解
+        //for (int i = 0; i < calcStr.length; i++) {
+        //    System.out.print("[" + (i+1) + "]" + calcStr[i] + ", "); //←println()にしないように
+        //}//for
+
 
         int calc = scn.nextInt();
 
@@ -59,51 +74,60 @@ public class Exercise04Ans {
         int result = 0;
         switch(calc) {
         case 1:
-        	result = calcAdd(x, y);
-        	break;
+            result = calcAdd(x, y);
+            break;
         case 2:
 
-        	result = calcSubstract(x, y);
-        	break;
+            result = calcSubstract(x, y);
+            break;
 
         case 3:
 
-        	result = calcMultiply(x, y);
-        	break;
+            result = calcMultiply(x, y);
+            break;
         case 4:
 
-        	result = calcDevide(x, y);
-        	break;
+            result = calcDevide(x, y);
+            break;
 
-    	default:
-    		System.out.println("1～4の数字で入力してください。");
-    		System.exit(0);
+        default:
+            System.out.println("1～4の数字で入力してください。");
+            System.exit(0);
         }//switch
 
-        System.out.printf("x = %d, y = %d: %sの計算結果は %d ",
-        	x, y, calcStr[calc-1], result);
-	}//main()
+        //◆printf()
+        System.out.printf("x = %d, y = %d: %sの計算結果は %d \n",
+            x, y, calcStr[calc-1], result);
+        //calcは1～4しか、ここに来ないので calcStr[calc-1]で ArraysIndexOutOfBoundsException(例外)は起こらない。
 
-	private static int calcAdd(int x, int y) {
-		return x + y;
-	}//calcAdd()
+        //◇printf()を使わない場合の別解
+        //System.out.println("x = " + x + ", y = " + y + ": "
+        //  + calcStr[calc-1] + "の計算結果は " + result);
 
-	private static int calcSubstract(int x, int y) {
-		return x - y;
-	}//calcSubstract()
+        scn.close();
+    }//main()
 
-	private static int calcMultiply(int x, int y) {
-		return x * y;
-	}//calcMultiply()
 
-	private static int calcDevide(int x, int y) {
-		if (y == 0) {
-			System.out.println("0で割ることはできません。");
-			System.exit(0);
-		}//if
+    private static int calcAdd(int x, int y) {
+        return x + y;
+    }//calcAdd()
 
-		return x / y;
-	}//calcDevide()
+    private static int calcSubstract(int x, int y) {
+        return x - y;
+    }//calcSubstract()
+
+    private static int calcMultiply(int x, int y) {
+        return x * y;
+    }//calcMultiply()
+
+    private static int calcDevide(int x, int y) {
+        if (y == 0) {
+            System.out.println("0で割ることはできません。");
+            System.exit(0);
+        }//if
+
+        return x / y;
+    }//calcDevide()
 
 }//class
 /*
