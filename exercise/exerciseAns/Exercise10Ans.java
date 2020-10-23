@@ -11,22 +11,30 @@ package javaPractice.exercise;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+//###### variable WIDTH & HEIGHT version ######
+//マス目の横×縦を変数にしたversion
 public class Exercise10Ans {
     private static int point; //駒の現在位置
-    private static String[] square; //横４×縦３のマス目
+    private static int prePoint;//駒の前位置をコピー
+    private static int move;
+    private static final int WIDTH = 4; //マス目の横幅
+    private static final int HEIGHT = 3;//マス目の縦高
+    private static String[] square; //横WIDTH×縦HEIGHTのマス目
 
     public static void main(String[] args) {
         //==== 初期設定 ====
-        square = new String[12];
+        square = new String[WIDTH * HEIGHT];
 
         //squareに全て「□」を入れて初期化
         for(int i = 0; i < square.length; i++) {
             square[i] = "□";
         }//for i
 
-        //6番に◆を入れて駒とする
+        //初期値 6番に◆を入れて駒とする
         point = 6;
-        square[point] = "◆";
+        prePoint = point;
+        move = 0;
+        movePoint();
 
         //マス目の表示
         printSquare();
@@ -48,7 +56,6 @@ public class Exercise10Ans {
 
             //---- switch 入力分岐 ----
             //break loop, continue loopをするため、ここのメソッド分け不可
-            int move = 0;
 
             switch (input) {
             case 0: //[0] 終了
@@ -56,16 +63,16 @@ public class Exercise10Ans {
                 break loop; //while loopを break
 
             case 2: //[2] ↓下へ移動
-                move = +4;
+                checkDownable();
                 break;
             case 4: //[4] ←左へ移動
-                move = -1;
+                checkLeftable();
                 break;
             case 6: //[6] →右へ移動
-                move = +1;
+                checkRightable();
                 break;
             case 8: //[8] ↑上へ移動
-                move = -4;
+                checkUpable();
                 break;
 
             default: //上記以外の不正入力
@@ -74,10 +81,7 @@ public class Exercise10Ans {
             }//switch
 
             //移動処理メソッド
-            movePoint(move);
-
-            //squareをセット
-            //putPoint();
+            movePoint();
 
             //マス目を表示
             printSquare();
@@ -87,25 +91,65 @@ public class Exercise10Ans {
     }//main()
 
 
-    //移動処理メソッド
-    private static void movePoint(int move) {
-        boolean movable = checkMove();
+    private static void checkDownable() {
+        for (int i = 0; i < WIDTH; i++) {
+            //point が最下段にあるとき
+            if (point == (WIDTH * (HEIGHT - 1) + i)){
+                move = -(WIDTH * (HEIGHT - 1));
+                break;
+            } else {
+                move = WIDTH;
+            }
+        }//for
 
-        if (movable) {
-            point += move;
-        } else {
+    }//checkDownable()
 
-        }
-    }// movePoint()
+    private static void checkLeftable() {
+        for (int i = 0; i < HEIGHT; i++) {
+            //pointが最左列にいる場合
+            if(point == WIDTH * i) {
+                move = (WIDTH - 1);
+                break;
+            } else {
+                move = -1;
+            }
+        }//for
 
-    //移動チェックのメソッド
-    //point 現在位置によって移動処理が変わるのでそれを判定
-    private static boolean checkMove() {
+    }//checkLeftable()
+
+    private static void checkRightable() {
+        for (int i = 0; i < HEIGHT; i++) {
+            //pointが最右列にいる場合
+            if(point == (WIDTH - 1) + WIDTH * i) {
+                move =  -(WIDTH - 1);
+                break;
+            } else {
+                move = +1;
+            }
+        }//for
+
+    }//checkeRightable()
+
+    private static void checkUpable() {
+        for (int i = 0; i < WIDTH; i++) {
+            //point が最上段にあるとき
+            if (point == i ){
+                move = WIDTH * (HEIGHT - 1);
+                break;
+            } else {
+                move = -(WIDTH);
+            }
+        }//for
+
+    }//checkUpable()
 
 
-        return false;
-    }//checkMove()
-
+    private static void movePoint() {
+        prePoint = point;
+        point += move;
+        square[prePoint] = "□";
+        square[point] = "◆";
+    }//movePoint()
 
     //マス目の表示
     private static void printSquare() {
@@ -119,7 +163,7 @@ public class Exercise10Ans {
 
             bld.append(square[i]);
 
-            if((i + 1) % 4 == 0) {
+            if((i + 1) % WIDTH == 0) {
                 bld.append("\n");
                 bld.append("　　");
             }
