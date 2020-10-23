@@ -11,6 +11,7 @@
  * 同じフォルダ内にある [Exercise10.class]を
  * コマンドプロンプトのワークフォルダ(自分のjavaファイルを置いてるところ)にコピーし
  *
+ * コマンドプロンプトを開いて
  * >java Exercise10 で実行する。
  * (classファイルはコンパイルした結果できたファイルなので、すでにコンパイル済)
  *
@@ -356,6 +357,7 @@ public class Exercise10Ans {
 }//class
 
 /*
+//###### variable WIDTH & HEIGHT Reault ######
 C:\Users\6A16\Desktop>javac Exercise10.java -encoding UTF-8
 
 C:\Users\6A16\Desktop>java Exercise10
