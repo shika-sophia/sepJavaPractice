@@ -4,7 +4,7 @@
  *           while(true), ラベル, break, continue, クラスファイルの実行,
  *           《解説》フィールド,《解説》StringBuilder
  * @author shika
- * @date 2020-10-22 ～ 10-25
+ * @date 2020-10-22 ～ 10-24
  */
 /*
  * ◆Exercise10 [応用]
@@ -438,8 +438,8 @@ public class Exercise10Ans {
         square = new String[HEIGHT][WIDTH];//二次元配列は[行][列]の順
 
         //squareに全て「□」を入れて初期化
-        for(int i = 0; i < square.length; i++) { // (WIDTH - 1)まで
-            for (int j = 0; j < square[i].length; j++) { //(HEIGHT - 1)まで
+        for(int i = 0; i < square.length; i++) { //(HEIGHT - 1)まで
+            for (int j = 0; j < square[i].length; j++) { // (WIDTH - 1)まで
                 square[i][j] = "□";
             }//for j
         }//for i
