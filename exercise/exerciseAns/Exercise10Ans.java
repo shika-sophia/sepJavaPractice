@@ -86,7 +86,7 @@
 package javaPractice.exercise;
 /*
 //###### 問１解答 / fix 4×3 version ######
-//マス目の横×縦を変数にしたversion
+//マス目の横４×縦３に固定したversion
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
