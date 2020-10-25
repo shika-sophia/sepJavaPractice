@@ -1,0 +1,2623 @@
+■座標指定 (java.awt.Pointクラス)
+＊ネット検索 [Java 座標指定表示]
+
+◇Oracle API reference
+＊java.awt.Pointクラス (java.desktopモジュール)
+https://docs.oracle.com/javase/jp/11/docs/api/java.desktop/java/awt/Point.html
+
+    ・Point​(int x, int y)
+    座標空間内の指定された(x,y)の位置に点を構築して初期化します。
+
+    ・void move​(int x, int y)
+    この点を(x,y)座標平面内の指定された位置に移動します。
+
+    ・void setLocation​(int x, int y)
+    この点を指定された位置に変更します。
+
+
+
+■Let's プログラミング
+◆INDEX Swingを使ってみよう
+https://www.javadrive.jp/tutorial/
+
+◆Swingを使ったアプリケーションとは
+https://www.javadrive.jp/tutorial/ini/index1.html
+
+Swing を使用することで GUI を使ったアプリケーションを作成することができます。
+ここでは簡単に Swing を使ったアプリケーションの特徴について解説します。
+
+目次
+＊コマンドラインプログラムとの違い
+＊コンテナとコンポーネント
+＊レイアウトマネージャーによるコンポーネントの配置
+＊イベントを使った処理の実行
+
+
+＊コマンドラインプログラムとの違い
+コマンドラインで動作するプログラムとは、例えば次のようなプログラムです。
+
+class JSample1_1{
+  public static void main(String args[]){
+    int sum = 0;
+
+    for (int i = 1; i <= 1000; i++){
+      sum += i;
+    }
+
+    System.out.println("合計は" + sum + "です");
+  }
+}
+このプログラムでは1から1000までを順に加算した結果を出力します。
+実際に実行した結果は次のようになります。
+
+
+・(画像)コマンドラインプログラムとの違い(1)
+このようにプログラムを実行すると、定められた手順を順に実行し場合によっては
+結果を出力した後でプログラムが終了します。
+つまり実行＞結果出力＞終了までが一連の流れとして行われます。
+もちろんこのような単純なものばかりではなく、
+ユーザーからの入力を待って処理を実行するものもありますし、
+終了の指示を出すまで繰り返しプログラムを実行するものもありますが、
+基本的にコマンドラインでのプログラムは先ほどのサンプルのような動作をします。
+
+-- --
+
+Swing は GUI のアプリケーションを作成するために使用されるものです。
+GUI とは Graphical User Interface のことで
+フレームを持ったアプリケーションでボタンやテキストボックスなど
+グラフィカルな部品を使って操作を行うものです。
+
+Swing を使ったプログラムとは、例えば次のようなプログラムです。
+
+import javax.swing.JFrame;
+
+class JSample1_2{
+  public static void main(String args[]){
+    JFrame frame = new JFrame("MyTitle");
+    frame.setBounds(100, 100, 600, 400);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setVisible(true);
+  }
+}
+このプログラムではフレームを1つ作成して表示するだけのプログラムです。実際に実行した結果は次のようになります。
+・(画像)コマンドラインプログラムとの違い(2)
+
+
+このプログラムはフレームを画面上に表示させて終了したわけではありません。
+現時点でもプログラムは実行されたままです。
+実際プログラムを実行したコマンドプロンプトでは、まだコマンドプロンプトに制御は戻ってきていません。
+
+利用者は Windows 画面に現れたフレームに対して様々な動作を行います。
+例えばテキストボックスに文字を入力したり、リストから項目を選択したり、ボタンを押したりします。
+どんな部品をフレームに表示するのか、そして利用者が行った操作に応じて何を行うのかを
+Swing を使ったプログラムでは記述していくことになります。
+
+
+＊コンテナとコンポーネント
+Swing を使ったプログラムではベースとなるウィンドウを作成します。
+そしてウィンドウの中に様々な部品を追加していくことになります。
+そこでまずはベースとなるウィンドウを作成しなければいけませんが、
+Swing ではフレーム、ダイアログ、アプレットの3種類を大元のウィンドウとして利用することができます。
+
+フレームは JFrame クラス、ダイアログは JDialog クラス、アプレットは JApplet クラスで定義されており、
+こららのクラスからオブジェクトを作成することで土台が作成されます。
+これらは Container クラスのサブクラスとして定義されています。
+Swing では他のコンポーネントを追加することできるオブジェクトをコンテナと呼んでおり、
+特にこの3つのクラスのオブジェクトはトップレベルコンテナと呼ばれます。
+
+
+先ほど「Swing を使ったプログラムとは」で作成したサンプルは
+トップレベルコンテナの一つである JFrame クラスのオブジェクトを作成しています。
+トップレベルコンテナを作成したら、次にコンポーネントを作成してトップレベルコンテナに追加していきます。
+コンポーネントは JComponent クラスのサブクラスとして定義されており、ボタンやラベルなど用途に応じて数多くのクラスが定義されています。
+
+例えばコンポーネントの一つでありボタンを作成するためのクラスである JButton クラスのオブジェクトを作成して
+フレームに追加するには次のように記述します。
+
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import java.awt.Container;
+import java.awt.BorderLayout;
+
+class JSample1_3{
+  public static void main(String args[]){
+    JFrame frame = new JFrame("MyTitle");
+    frame.setBounds(100, 100, 600, 400);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JButton button = new JButton("Push");
+
+    frame.getContentPane().add(button, BorderLayout.NORTH);
+    frame.setVisible(true);
+  }
+}
+実行してみるとボタンがウィンドウの上部に表示されていることが分かります。
+Swing のアプリケーションではこのようにコンテナを作成し、部品となるコンポーネントを追加していくことになります。
+
+・(画像)コンテナとコンポーネント
+
+
+＊レイアウトマネージャーによるコンポーネントの配置
+ボタンやラベルなどのコンポーネントをフレームなどの追加していく場合、
+Swing ではレイアウトマネージャーと呼ばれるものを使います。
+細かいサイズや位置を指定するのではなく、複数用意されたレイアウトマネージャーの中から希望する画面構成にあったものを選び、
+実際の配置はレイアウトマネージャーに任せます。
+
+例えばフレームの下部にボタンを横一列に並べたい場合には
+FlowLayout と呼ばれるレイアウトマネージャーが適しています。
+FlowLayout はコンポーネントを追加した順に右へ右へと追加していくレイアウトマネージャーです。
+またこのレイアウトマネージャーは追加されるコンポーネントのサイズを自動調整しません。
+
+
+import javax.swing.*;
+import java.awt.*;
+
+class JSample1_4{
+  public static void main(String args[]){
+    JFrame frame = new JFrame("MyTitle");
+    frame.setBounds(100, 100, 600, 400);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JPanel p = new JPanel();
+    JButton btn1 = new JButton("Save");
+    JButton btn2 = new JButton("Cancel");
+    JButton btn3 = new JButton("Help");
+
+    p.add(btn1);
+    p.add(btn2);
+    p.add(btn3);
+
+    frame.getContentPane().add(p, BorderLayout.SOUTH);
+    frame.setVisible(true);
+  }
+}
+実行してみると3つのボタンが横に並んで表示されています。
+
+(画像)レイアウトマネージャーによるコンポーネントの配置(1)
+
+
+また画面全体の大まかなレイアウトを行いたい場合には BorderLayout と呼ばれるレイアウトマネージャーが適しています。
+BorderLayout は画面全体を 5 つの領域に分けます。そして各領域にコンポーネントを配置していきます。
+コンポーネントを追加する時はどの位置に配置したいのかを合わせて指定しなければなりません。
+このレイアウトマネージャーの場合には追加されるコンポーネントのサイズを自動的に調整します。
+
+import javax.swing.*;
+import java.awt.*;
+
+class JSample1_5{
+  public static void main(String args[]){
+    JFrame frame = new JFrame("MyTitle");
+    frame.setBounds(100, 100, 600, 400);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JButton btn1 = new JButton("North");
+    JButton btn2 = new JButton("South");
+    JButton btn3 = new JButton("West");
+    JButton btn4 = new JButton("East");
+    JButton btn5 = new JButton("Center");
+
+    frame.getContentPane().add(btn1, BorderLayout.NORTH);
+    frame.getContentPane().add(btn2, BorderLayout.SOUTH);
+    frame.getContentPane().add(btn3, BorderLayout.WEST);
+    frame.getContentPane().add(btn4, BorderLayout.EAST);
+    frame.getContentPane().add(btn5, BorderLayout.CENTER);
+
+    frame.setVisible(true);
+  }
+}
+実行してみると5つのボタンが上下左右中央に配置されて表示されています。
+
+(画像)レイアウトマネージャーによるコンポーネントの配置(2)
+
+このようにレイアウトマネージャーをコンテナに設定すると、追加されたコンポーネントがどのように配置されるのか、
+そして配置されるコンポーネントのサイズをどうするのかが自動的に決まります。
+
+
+＊イベントを使った処理の実行
+Swing ではフレーム上に配置されたボタンが押された時に何らかの処理を実行したい場合、イベントと呼ばれる機能を使います。
+
+アプリケーションは様々なコンポーネントから構成されていますが、
+コンポーネントの上をマウスが動いたりキーボードから文字が入力されたりと利用者が何らかの操作を行った時に、
+その操作に応じてイベントと呼ばれるものを発行します。イベントはコンポーネント毎に発行されますし、
+利用者の様々な操作に応じて別々のイベントが発行されるため数多くのイベントが常に発行されています。
+
+イベントの中で必要なものだけを受け取るようにすることができます。
+例えばボタンをクリックされたイベントは欲しいけれど、ボタンの上をマウスが移動したイベントは必要ないのであれば、
+ボタンのクリックのイベントだけを受け取りように設定しておきます。
+そしてクリックされたイベントを受け取った時に処理を記述しておきます。
+
+
+次の例ではボタンがクリックされた時のイベントを受け取るように設定し、クリックされたらダイアログを表示しています。
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class JSample1_6 extends JFrame implements ActionListener{
+  public static void main(String args[]){
+    JSample1_6 frame = new JSample1_6("MyTitle");
+    frame.setVisible(true);
+  }
+
+  JSample1_6(String title){
+    setTitle(title);
+    setBounds(100, 100, 600, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JPanel p = new JPanel();
+    JButton btn = new JButton("Push");
+    btn.addActionListener(this);
+
+    p.add(btn);
+    getContentPane().add(p, BorderLayout.CENTER);
+  }
+
+  public void actionPerformed(ActionEvent e){
+    JLabel label = new JLabel("Push A Button");
+    JOptionPane.showMessageDialog(this, label);
+  }
+}
+実行してみるとボタンが1つ表示されています。
+
+(画像)イベントを使った処理の実行(1)
+
+ボタンをクリックすると、クリックされたというイベントをプログラムは受け取り、
+ダイアログを表示させてメッセージを表示します。
+
+(画像)イベントを使った処理の実行(2)
+
+-- --
+
+Swing を使って作成するアプリケーションとはどのようなものなのかについて簡単に解説しました。
+
+( Written by Tatsuo Ikura )
+
+
+◆SpringLayoutクラス
+＊制約を使って位置を設定する
+https://www.javadrive.jp/tutorial/springlayout/index3.html
+
+追加されるコンポーネントに対して制約を設定するにはSpringLayoutクラスで用意されている
+「putConstraint」メソッドを使います。
+
+putConstraint
+public void putConstraint(String e1,
+                          Component c1,
+                          int pad,
+                          String e2,
+                          Component c2)
+
+コンポーネント c1 のエッジ e1 をコンポーネント c2 のエッジ e2 にリンクし
+ます。エッジ間の距離は固定です。この制約により、後続のすべてのレイアウト
+オペレーションで、次の代入が発生します。
+
+  value(e1, c1) = value(e2, c2) + pad
+
+パラメータ:
+  e1 - 依存するエッジ
+  c1 - 依存するコンポーネント
+  pad - 依存する側とされる側の間の固定距離
+  e2 - 依存されるエッジ
+  c2 - 依存されるコンポーネント
+使い方としては次のようになります。
+
+まず制約を設定したいコンポーネントが「c1」です。
+このコンポーネントのどの部分に対して設定をするのかが「e1」となります。
+どの部分というのはコンポーネントの上辺/下辺/左辺/右辺のいずれかです。
+
+次に基準となるコンポーネントが「c2」です。
+このコンポーネントのどの部分を基準とするのかが「e2」となります。
+どの部分というのはコンポーネントの上辺/下辺/左辺/右辺のいずれかです。
+
+そして基準となるコンポーネントの部分から設定したいコンポーネントの部分までの距離を設定するのが「pad」です。
+右又は下方向への距離の場合はプラスの値、左又は上方向への距離の場合はマイナスの値となります。
+
+例えば「コンポーネントの上辺を、基準となるパネルの上辺から10ピクセルの位置に設定する」と言ったように制約を設定します。
+
+制約を設定したいコンポーネントの位置を設定する場合にコンテナを基準コンポーネントとするならば、
+コンポーネントの上辺がコンテナの上辺からどれくらい離れているかと、
+コンポーネントの左辺がコンテナの左辺からどれくらい離れているのかを設定すれば位置を決定することが出来ます。
+
+部分を指定するために次の値が用意されています。
+
+値                  部分
+SpringLayout.NORTH  上端
+SpringLayout.SOUTH  下端
+SpringLayout.WEST   左端
+SpringLayout.EAST   右端
+基準となるコンポーネントはコンテナだけではなく他のコンポーネントを基準にしても構いません。
+例えばコンポーネント1の右端から10ピクセル離れた位置にコンポーネント2の左端を設定するという制約を設定することも出来ます。
+
+実際の使い方は次のようになります。
+
+SpringLayout layout = new SpringLayout();
+JPanel p = new JPanel();
+p.setLayout(layout);
+
+JButton button1 = new JButton("button1");
+JButton button2 = new JButton("button2");
+
+layout.putConstraint(SpringLayout.NORTH, button1, 10, SpringLayout.NORTH, p);
+layout.putConstraint(SpringLayout.WEST, button1, 10, SpringLayout.WEST, p);
+
+layout.putConstraint(SpringLayout.NORTH, button2, 10, SpringLayout.NORTH, p);
+layout.putConstraint(SpringLayout.WEST, button2, 5, SpringLayout.EAST, button1);
+
+p.add(button1);
+サンプルプログラム
+では簡単なサンプルを作成して試してみます。
+
+SpringLayoutTest2.java
+
+import javax.swing.*;
+import java.awt.Font;
+import java.awt.BorderLayout;
+
+public class SpringLayoutTest2 extends JFrame{
+
+  public static void main(String[] args){
+    SpringLayoutTest2 frame = new SpringLayoutTest2();
+
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setBounds(10, 10, 300, 200);
+    frame.setTitle("タイトル");
+    frame.setVisible(true);
+  }
+
+  SpringLayoutTest2(){
+    SpringLayout layout = new SpringLayout();
+    JPanel p = new JPanel();
+    p.setLayout(layout);
+
+    JButton button1 = new JButton("Google");
+    JButton button2 = new JButton("Yahoo!");
+    button2.setFont(new Font("Arial", Font.PLAIN, 30));
+    JButton button3 = new JButton("MSN");
+
+    layout.putConstraint(SpringLayout.NORTH, button1, 50, SpringLayout.NORTH, p);
+    layout.putConstraint(SpringLayout.WEST, button1, 10, SpringLayout.WEST, p);
+
+    layout.putConstraint(SpringLayout.NORTH, button2, 50, SpringLayout.NORTH, p);
+    layout.putConstraint(SpringLayout.WEST, button2, 10, SpringLayout.EAST, button1);
+
+    layout.putConstraint(SpringLayout.NORTH, button3, 10, SpringLayout.SOUTH, button2);
+    layout.putConstraint(SpringLayout.WEST, button3, 0, SpringLayout.WEST, button2);
+
+    p.add(button1);
+    p.add(button2);
+    p.add(button3);
+
+    getContentPane().add(p, BorderLayout.CENTER);
+  }
+}
+
+上記をコンパイルした後で実行すると次のように表示されます。
+
+(画像)SpringLayoutで制約を使って位置を設定する
+
+今回はまず「Google」ボタンをコンテナをベースに位置を設定します。
+次に「Yahoo!」ボタンの垂直方向の位置は「Google」ボタンと同じくコンテナからの距離で指定し
+水平方向の位置は「Google」ボタンの右端からの距離で設定しています。
+最後に「MSN」ボタンの水平位置は「Yahoo!」ボタンからの距離を「0」で設定し、
+垂直方向の位置は「Yahoo!」ボタンの下端からの距離で設定しています。
+
+( Written by Tatsuo Ikura )
+
+
+◆パネルのサイズの設定と枠線の表示
+https://www.javadrive.jp/tutorial/jpanel/index5.html
+パネルのサイズは任意のサイズに設定することができます。
+またパネルには枠線を設定することもできます。
+ここではパネルのサイズを設定する方法、およびパネルに枠線を表示する方法について解説します。
+
+目次
+＊パネルのサイズを設定する
+＊パネルに枠線を表示する
+
+
+＊パネルのサイズを設定する
+ラベルのサイズを設定するには
+JPanel クラスの親クラスである JComponent クラスで用意されている setPreferredSize メソッドを使います。
+
+public void setPreferredSize?(Dimension preferredSize)
+
+
+
+このコンポーネントの適切なサイズを設定します。 preferredSizeがnullの場合、UIで適切なサイズを要求します。
+
+オーバーライド:
+setPreferredSize 、クラス: Component
+
+パラメータ:
+preferredSize - 新しい推奨サイズ、またはnull
+
+
+
+引数にはサイズを表す Dimension クラスのオブジェクトを指定します。
+( Dimension クラスの詳細は「Dimensionクラス」を参照して下さい)。
+
+実際の使い方は次のようになります。
+
+JPanel panel = new JPanel();
+panel.setPreferredSize(new Dimension(200, 100));
+コンポーネントでサイズを設定する場合、
+使用しているレイアウトマネージャーによってはコンポーネントに設定したサイズは無視される場合がありますのでご注意ください。
+例えばレイアウトマネージャーとして BorderLayout を使用している場合はコンポーネントに設定されたサイズは無視されます。
+
+＊サンプルプログラム
+それでは簡単なサンプルプログラムを作って試してみます。
+テキストエディタで次のように記述したあと、 JSample5_1.java という名前で保存します。
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.Container;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Dimension;
+
+class JSample5_1 extends JFrame{
+  public static void main(String args[]){
+    JSample5_1 frame = new JSample5_1("MyTitle");
+    frame.setVisible(true);
+  }
+
+  JSample5_1(String title){
+    setTitle(title);
+    setBounds(100, 100, 600, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    setLayout(new FlowLayout());
+
+    JPanel panel1 = new JPanel();
+    panel1.setBackground(Color.BLUE);
+
+    JButton button1 = new JButton("Open");
+    panel1.add(button1);
+
+    JPanel panel2 = new JPanel();
+    panel2.setBackground(Color.RED);
+    panel2.setPreferredSize(new Dimension(200, 200));
+
+    JButton button2 = new JButton("Close");
+    panel2.add(button2);
+
+    Container contentPane = getContentPane();
+    contentPane.add(panel1);
+    contentPane.add(panel2);
+  }
+}
+次のようにコンパイルを行います。
+
+javac JSample5_1.java
+(画像)パネルのサイズを設定する(1)
+
+コンパイルが終わりましたら実行します。
+
+java JSample5_1
+2 つのパネルを作成しそれぞれに背景色を設定したあとでフレームに追加しています。
+1 つ目のパネルはサイズを設定を行わず、 2 つ目のパネルにはサイズを設定してあります。
+
+(画像)パネルのサイズを設定する(2)
+
+
+＊パネルに枠線を表示する
+パネルに枠線を設定するには
+JPanel クラスの親クラスである JComponent クラスで用意されている setBorder メソッドを使います。
+
+public void setBorder?(Border border)
+
+このコンポーネントのボーダーを設定します。
+Borderオブジェクトは、コンポーネントのイン・セットを定義し
+(コンポーネントで直接設定されているイン・セットをオーバーライドする)、
+任意でそれらのイン・セットの境界内のボーダー装飾をレンダリングします。
+Swingコンポーネントで装飾領域および非装飾領域(マージンおよびパディングなど)の両方を生成するには、
+イン・セットではなくボーダーを使用する必要があります。
+単一のコンポーネント内で複数のボーダーを入れ子にするには、複合ボーダーを使用できます。
+技術的にはJComponentを継承するどのオブジェクトにもボーダーを設定できますが、
+標準のSwingコンポーネントのルック・アンド・フィールの実装の多くは、ユーザー設定のボーダーでは正しく動作しません。
+通常、JPanelまたはJLabel以外の標準のSwingコンポーネントでボーダーを設定するときは、
+コンポーネントをJPanelに入れて、JPanelでボーダーを設定することをお勧めします。
+
+これはバウンド・プロパティです。
+
+パラメータ:
+border - このコンポーネントでレンダリングされるボーダー
+
+引数には枠線を表す Border インターフェースを実装したクラスのオブジェクトを指定します。
+( Border インターフェースの詳細は「Border」を参照して下さい)。
+
+実際の使い方は次のようになります。
+
+JPanel panel = new JPanel();
+LineBorder border = new LineBorder(Color.RED, 2, true);
+panel.setBorder(border);
+
+＊サンプルプログラム
+それでは簡単なサンプルプログラムを作って試してみます。
+テキストエディタで次のように記述したあと、 JSample5_2.java という名前で保存します。
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.border.LineBorder;
+import java.awt.Container;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Dimension;
+
+class JSample5_2 extends JFrame{
+  public static void main(String args[]){
+    JSample5_2 frame = new JSample5_2("MyTitle");
+    frame.setVisible(true);
+  }
+
+  JSample5_2(String title){
+    setTitle(title);
+    setBounds(100, 100, 600, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    setLayout(new FlowLayout());
+
+    JPanel panel1 = new JPanel();
+    panel1.setBackground(Color.ORANGE);
+    panel1.setPreferredSize(new Dimension(200, 200));
+
+    JButton button1 = new JButton("Open");
+    panel1.add(button1);
+
+    JPanel panel2 = new JPanel();
+    panel2.setBackground(Color.ORANGE);
+    panel2.setPreferredSize(new Dimension(200, 200));
+
+    LineBorder border = new LineBorder(Color.RED, 2, true);
+    panel2.setBorder(border);
+
+    JButton button2 = new JButton("Close");
+    panel2.add(button2);
+
+    Container contentPane = getContentPane();
+    contentPane.add(panel1);
+    contentPane.add(panel2);
+  }
+}
+次のようにコンパイルを行います。
+
+javac JSample5_2.java
+(画像)パネルに枠線を表示する(1)
+
+コンパイルが終わりましたら実行します。
+
+java JSample5_2
+2 つのパネルをフレームに追加していますが、 2 つ目のパネルには枠線を設定しています。
+
+(画像)パネルに枠線を表示する(2)
+
+-- --
+
+パネルのサイズを設定する方法、およびパネルに枠線を表示する方法について解説しました。
+
+( Written by Tatsuo Ikura )
+
+
+◆ラベルのサイズの設定と枠線の表示
+https://www.javadrive.jp/tutorial/jlabel/index4.html
+ラベルのサイズは通常表示される文字列の大きさに調整されますが、任意のサイズに設定することができます。
+またラベルには枠線を設定することもできます。
+ここではラベルのサイズを設定する方法、およびラベルに枠線を表示する方法について解説します。
+
+目次
+＊ラベルのサイズを設定する
+＊ラベルに枠線を表示する
+
+
+＊ラベルのサイズを設定する
+ラベルのサイズを設定するには
+ JLabel クラスの親クラスである JComponent クラスで用意されている setPreferredSize メソッドを使います。
+
+public void setPreferredSize?(Dimension preferredSize)
+
+
+このコンポーネントの適切なサイズを設定します。 preferredSizeがnullの場合、UIで適切なサイズを要求します。
+
+オーバーライド:
+setPreferredSize 、クラス: Component
+
+パラメータ:
+preferredSize - 新しい推奨サイズ、またはnull
+
+
+引数にはサイズを表す Dimension クラスのオブジェクトを指定します。
+( Dimension クラスの詳細は「Dimensionクラス」を参照して下さい)。
+
+実際の使い方は次のようになります。
+
+JLabel label = new JLabel("MyLabel");
+label.setPreferredSize(new Dimension(200, 100));
+コンポーネントでサイズを設定する場合、
+使用しているレイアウトマネージャーによってはコンポーネントに設定したサイズは無視される場合がありますのでご注意ください。
+例えばレイアウトマネージャーとして BorderLayout を使用している場合はコンポーネントに設定されたサイズは無視されます。
+
+＊サンプルプログラム
+それでは簡単なサンプルプログラムを作って試してみます。
+テキストエディタで次のように記述したあと、 JSample4_1.java という名前で保存します。
+
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
+class JSample4_1 extends JFrame{
+  public static void main(String args[]){
+    JSample4_1 frame = new JSample4_1("MyTitle");
+    frame.setVisible(true);
+  }
+
+  JSample4_1(String title){
+    setTitle(title);
+    setBounds(100, 100, 600, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JLabel label1 = new JLabel("Hello!");
+    label1.setOpaque(true);
+    label1.setBackground(Color.YELLOW);
+
+    JLabel label2 = new JLabel("Good!");
+    label2.setOpaque(true);
+    label2.setBackground(Color.GREEN);
+    label2.setPreferredSize(new Dimension(100, 100));
+
+    JLabel label3 = new JLabel("Bye!");
+    label3.setOpaque(true);
+    label3.setBackground(Color.RED);
+    label3.setPreferredSize(new Dimension(200, 200));
+
+    JPanel p = new JPanel();
+    p.add(label1);
+    p.add(label2);
+    p.add(label3);
+
+    Container contentPane = getContentPane();
+    contentPane.add(p, BorderLayout.CENTER);
+  }
+}
+次のようにコンパイルを行います。
+
+javac JSample4_1.java
+(画像)ラベルのサイズを設定する(1)
+
+コンパイルが終わりましたら実行します。
+
+java JSample4_1
+ラベルを 3 つ作成し、最初のラベルはサイズを設定せず、 2 番目と 3 番目のラベルにはサイズを設定しています。
+サイズが設定されたことが分かりやすいようにラベルには背景色を設定しています。
+またレイアウトマネージャーによってサイズが変更されないように、
+サイズに影響を与えない FlowLayout がデフォルトで設定されている JPanel にラベルを追加しています。
+
+(画像)ラベルのサイズを設定する(2)
+
+1 番目のラベルのようにサイズを設定していないラベルのサイズは表示している文字列のサイズに自動的に設定されています。
+ 2 番目と 3 番目のラベルは設定したサイズに設定されています。
+
+
+＊ラベルに枠線を表示する
+ラベルに枠線を設定するには
+JLabel クラスの親クラスである JComponent クラスで用意されている setBorder メソッドを使います。
+
+public void setBorder?(Border border)
+
+このコンポーネントのボーダーを設定します。 Borderオブジェクトは、コンポーネントのイン・セットを定義し(コンポーネントで直接設定されているイン・セットをオーバーライドする)、任意でそれらのイン・セットの境界内のボーダー装飾をレンダリングします。 Swingコンポーネントで装飾領域および非装飾領域(マージンおよびパディングなど)の両方を生成するには、イン・セットではなくボーダーを使用する必要があります。 単一のコンポーネント内で複数のボーダーを入れ子にするには、複合ボーダーを使用できます。
+技術的にはJComponentを継承するどのオブジェクトにもボーダーを設定できますが、標準のSwingコンポーネントのルック・アンド・フィールの実装の多くは、ユーザー設定のボーダーでは正しく動作しません。 通常、JPanelまたはJLabel以外の標準のSwingコンポーネントでボーダーを設定するときは、コンポーネントをJPanelに入れて、JPanelでボーダーを設定することをお勧めします。
+
+これはバウンド・プロパティです。
+
+パラメータ:
+border - このコンポーネントでレンダリングされるボーダー
+
+引数には枠線を表す Border インターフェースを実装したクラスのオブジェクトを指定します。( Border インターフェースの詳細は「Border」を参照して下さい)。
+
+実際の使い方は次のようになります。
+
+JLabel label = new JLabel("MyLabel");
+LineBorder border = new LineBorder(Color.RED, 2, true);
+label.setBorder(border);
+
+＊サンプルプログラム
+それでは簡単なサンプルプログラムを作って試してみます。テキストエディタで次のように記述したあと、 JSample4_2.java という名前で保存します。
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
+class JSample4_2 extends JFrame{
+  public static void main(String args[]){
+    JSample4_2 frame = new JSample4_2("MyTitle");
+    frame.setVisible(true);
+  }
+
+  JSample4_2(String title){
+    setTitle(title);
+    setBounds(100, 100, 600, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JLabel label1 = new JLabel("Hello!");
+    label1.setBorder(new LineBorder(Color.BLUE, 2, false));
+
+    JLabel label2 = new JLabel("Bye!");
+    label2.setPreferredSize(new Dimension(200, 200));
+    label2.setBorder(new LineBorder(Color.RED, 8, true));
+
+    JPanel p = new JPanel();
+    p.add(label1);
+    p.add(label2);
+
+    Container contentPane = getContentPane();
+    contentPane.add(p, BorderLayout.CENTER);
+  }
+}
+次のようにコンパイルを行います。
+
+javac JSample4_2.java
+(画像)ラベルに枠線を表示する(1)
+
+コンパイルが終わりましたら実行します。
+
+java JSample4_2
+2 つラベルを作成しそれぞれ枠線を表示しています。
+
+(画像)ラベルに枠線を表示する(2)
+
+-- --
+
+ラベルのサイズを設定する方法、およびラベルに枠線を表示する方法について解説しました。
+
+( Written by Tatsuo Ikura )
+
+
+■Let's プログラミング
+◆座標の値を取得する, 実行Windowのフレームを作成
+https://www.javadrive.jp/tutorial/point/index3.html
+
+Pointクラスのオブジェクトに保持されているx座標及びy座標をそれぞれ取得する方法を確認します。
+
+Pointクラスには2つのフィールドが用意されており、
+Pointクラスのオブジェクトが保持しているx座標及びy座標はこのフィールドを参照することで取得する事が可能です。
+
+フィールド   説明
+Point.x x座標
+Point.y y座標
+フィールドはそれぞれ次のように定義されています。
+
+x
+public int x
+この Point の X 座標です。X 座標が設定されていない場合はデフォルトで 0 になります。
+y
+public int y
+この Point の Y 座標です。Y 座標が設定されていない場合はデフォルトで 0になります。
+このフィールドの値を参照することで
+Pointクラスのオブジェクトが持っている2つの値をそれぞれint型の値として取得することが可能となります。
+
+実際には次のように使用します。
+
+Point point = new Point(10, 20);
+
+int x = point.x;
+int y = point.y;
+
+＊サンプルプログラム
+では簡単なサンプルを作成して試してみます。
+
+JPointTest3.java
+
+import javax.swing.*;
+import java.awt.Point;
+import java.awt.Color;
+import java.awt.BorderLayout;
+import java.awt.event.*;
+
+public class JPointTest3 extends JFrame implements MouseListener{
+
+  JLabel label;
+
+  public static void main(String[] args){
+    JPointTest3 frame = new JPointTest3();
+
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setBounds(10, 10, 300, 200);
+    frame.setTitle("タイトル");
+    frame.setVisible(true);
+  }
+
+  JPointTest3(){
+    JPanel panel = new JPanel();
+    panel.addMouseListener(this);
+    panel.setBackground(Color.BLUE);
+
+    label = new JLabel("座標を表示");
+
+    getContentPane().add(panel, BorderLayout.CENTER);
+    getContentPane().add(label, BorderLayout.PAGE_END);
+  }
+
+  public void mouseClicked(MouseEvent e){
+    Point point = e.getPoint();
+    label.setText("x:" + point.x + ",y:" + point.y);
+  }
+
+  public void mouseEntered(MouseEvent e){}
+  public void mouseExited(MouseEvent e){}
+  public void mousePressed(MouseEvent e){}
+  public void mouseReleased(MouseEvent e){}
+
+}
+上記をコンパイルした後で実行すると次のように表示されます。
+
+(画像)JPointクラスのオブジェクトから座標を取得する
+
+今回はパネルの上をマウスでクリックすると、クリックされた位置の座標を取得して画面下部のラベルに表示するようにしています。青い部分をクリックして下さい。
+
+(画像)JPointクラスのオブジェクトから座標を取得する
+
+(画像)JPointクラスのオブジェクトから座標を取得する
+
+＊メソッドを使って取得する
+フィールドを参照する以外にPointクラスで用意されている
+「getX」メソッドと「getY」メソッドで取得することが可能です。
+
+getXメソッド：
+
+getX
+public double getX()
+この Point2D の X 座標を double 精度で返します。
+
+戻り値:
+  この Point2D の X 座標
+getYメソッド：
+
+getY
+public double getY()
+この Point2D の Y 座標を double 精度で返します。
+
+戻り値:
+  この Point2D の Y 座標
+それぞれのメソッドの戻り値としてPointクラスのオブジェクトが保持しているx座標及びy座標を取得することが出来ますが、
+取得できる値はint型ではなくdouble型の値として取得される点に注意して下さい。
+
+実際には次のように使用します。
+
+Point point = new Point(10, 20);
+
+double x = point.getX();
+double y = point.getY();
+
+( Written by Tatsuo Ikura )
+
+■Let's プログラミング
+◆座標指定で配置する
+https://www.javadrive.jp/tutorial/nulllayout/index1.html
+
+まずレイアウトマネージャーを無効にする方法を確認します。
+無効にするにはコンテナに対し、JPanelクラスやJFrameクラスの親クラスであるContainerクラスで用意されている
+「setLayout」メソッドを実行する時に引数に「null」を設定します。
+
+JPanel p = new JPanel();
+p.setLayout(null);
+これでコンテナにデフォルトで設定されているレイアウトマネージャーが無効となりました。
+
+レイアウトマネージャーが無効となると、
+コンポーネントを配置しても位置やサイズに関する調整をまったく行わなくなりますので
+コンテナの中のどの位置に配置するのかやサイズをどうするのかを別途メソッドを使って指定します。
+
+例えばほとんどのコンポーネントの親クラスであるComponentクラスで用意されている「setBounds」メソッドを使って
+位置及びサイズを指定してみます。
+
+setBounds
+public void setBounds(int x,
+                      int y,
+                      int width,
+                      int height)
+このコンポーネントを移動し、サイズ変更します。左上隅の新しい位置は x お
+よび y によって指定され、新しいサイズは width および height によって指
+定されます。
+
+パラメータ:
+  x - このコンポーネントの新しい x 座標
+  y - このコンポーネントの新しい y 座標
+  width - このコンポーネントの新しい width
+  height - このコンポーネントの新しい height
+1番目と2番目の引数で座標を指定し、3番目と4番目の引数でサイズを指定します。
+
+実際の使い方は次のようになります。
+
+JPanel p = new JPanel();
+p.setLayout(null);
+
+JButton button = new JButton("button");
+button.setBounds(10, 10, 100, 50);
+
+p.add(button);
+
+＊サンプルプログラム
+では簡単なサンプルを作成して試してみます。
+
+NullLayoutTest1.java
+
+import javax.swing.*;
+import java.awt.BorderLayout;
+
+public class NullLayoutTest1 extends JFrame{
+
+  public static void main(String[] args){
+    NullLayoutTest1 frame = new NullLayoutTest1();
+
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setBounds(10, 10, 300, 200);
+    frame.setTitle("タイトル");
+    frame.setVisible(true);
+  }
+
+  NullLayoutTest1(){
+    JPanel p = new JPanel();
+    p.setLayout(null);
+
+    JButton button1 = new JButton("Google");
+    button1.setBounds(10, 10, 80, 30);
+
+    JButton button2 = new JButton("Yahoo!");
+    button2.setBounds(30, 30, 80, 30);
+
+    JButton button3 = new JButton("MSN");
+    button3.setBounds(50, 50, 80, 30);
+
+    p.add(button1);
+    p.add(button2);
+    p.add(button3);
+
+    getContentPane().add(p, BorderLayout.CENTER);
+  }
+}
+上記をコンパイルした後で実行すると次のように表示されます。
+
+(画像)レイアウトマネージャーを無効にする
+
+( Written by Tatsuo Ikura )
+
+
+
+◆BorderLayoutクラスの定義とコンストラクタ
+https://www.javadrive.jp/tutorial/borderlayout/index1.html
+
+BorderLayoutクラスの定義を確認します。クラス図は次のようになっています。
+
+java.lang.Object
+    java.awt.BorderLayout
+
+public class BorderLayout extends Object
+    implements LayoutManager2, Serializable
+
+BorderLayoutクラスのコンストラクタ
+BorderLayoutクラスをを利用するにはコンストラクタを使って
+BorderLayoutクラスのオブジェクトを作成します。
+どのようなコンストラクタが用意されているか確認してみます。
+
+コンストラクタ
+BorderLayout()
+
+コンポーネント間に間隔を設けずに、新しいボーダレイアウトを構築します。
+BorderLayout(int hgap, int vgap)
+
+コンポーネント間に間隔を指定して、新しいボーダレイアウトを構築します。
+コンストラクタは2つ用意されています。
+BorderLayoutクラスでは配置するコンポーネントの間に間隔を空けるのかどうかでコンストラクタを使い分けます。
+
+では1番目のコンストラクタを確認してみます。
+
+BorderLayout
+public BorderLayout()
+コンポーネント間に間隔を設けずに、新しいボーダレイアウトを構築します。
+実際の使い方は次のようになります。
+
+JPanel panel = new JPanel();
+panel.setLayout(new BorderLayout());
+
+＊サンプルプログラム
+では簡単なサンプルを作成して試してみます。
+
+BorderLayoutTest1.java
+
+import javax.swing.*;
+import java.awt.BorderLayout;
+
+public class BorderLayoutTest1 extends JFrame{
+
+  public static void main(String[] args){
+    BorderLayoutTest1 frame = new BorderLayoutTest1();
+
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setBounds(10, 10, 300, 200);
+    frame.setTitle("タイトル");
+    frame.setVisible(true);
+  }
+
+  BorderLayoutTest1(){
+    JButton button1 = new JButton("PAGE_START");
+    JButton button2 = new JButton("CENTER");
+    JButton button3 = new JButton("PAGE_END");
+    JButton button4 = new JButton("LINE_START");
+    JButton button5 = new JButton("LINE_END");
+
+    JPanel p = new JPanel();
+    p.setLayout(new BorderLayout());
+
+    p.add(button1, BorderLayout.PAGE_START);
+    p.add(button2, BorderLayout.CENTER);
+    p.add(button3, BorderLayout.PAGE_END);
+    p.add(button4, BorderLayout.LINE_START);
+    p.add(button5, BorderLayout.LINE_END);
+
+    getContentPane().add(p, BorderLayout.CENTER);
+  }
+}
+上記をコンパイルした後で実行すると次のように表示されます。
+
+BorderLayoutのサンプル
+
+コンポーネントの配置方法については次のページを見てください。
+
+( Written by Tatsuo Ikura )
+
+
+◆テキストフィールドの作成と初期値や列数(幅)の設定
+https://www.javadrive.jp/tutorial/jtextfield/index1.html
+
+テキストフィールドを作成するには JTextField クラスを使用します。ここでは JTextField クラスの定義やコンストラクトについて確認します。またテキストフィールドに初期値として値を設定する方法やテキストフィールドの列数(幅)を設定する方法も解説します。
+
+目次
+＊JTextFieldクラスの定義
+＊JTextFieldクラスのコンストラクタ
+＊テキストフィールドの列数を設定する
+＊テキストフィールドに初期値を設定する
+
+
+＊JTextFieldクラスの定義
+JTextField クラスは次のように定義されています。
+
+java.lang.Object
+  java.awt.Component
+    java.awt.Container
+      javax.swing.JComponent
+        javax.swing.text.JTextComponent
+          javax.swing.JTextField
+
+public class JLabel
+    extends JComponent
+    implements SwingConstants, Accessible
+
+
+
+テキストフィールドはコンポーネントの親クラスである JComponent クラスのサブクラスとなっています。
+またテキストを扱うクラス全般の親クラスである JTextComponent クラスのサブクラスでもあります。
+
+
+＊JTextFieldクラスのコンストラクタ
+JTextField クラスをを利用するにはコンストラクタを使って JTextField クラスのオブジェクトを作成します。
+次のようなコンストラクタが用意されています。
+
+・JTextField()
+新しいTextFieldを構築します。
+
+・JTextField(int columns)
+指定された列数で新規の空のTextFieldを構築します。
+
+・JTextField(String text)
+指定されたテキストで初期化された新しいTextFieldを構築します。
+
+・JTextField(String text, int columns)
+指定されたテキストおよび列で初期化される新規TextFieldを構築します。
+
+・JTextField(Document doc, String text, int columns)
+指定されたテキスト・ストレージ・モデルと列数を使用する新規のJTextFieldを構築します。
+
+
+テキストフィールドに初期値を設定するかどうか、
+またテキストフィールドの列数を設定するかどうかでコンストラクタを選択してください。
+
+次のコンストラクタでは初期値が null で列数が 0 のテキストフィールドを作成します。
+
+public JTextField()
+
+新しいTextFieldを構築します。
+デフォルト・モデルが作成され、初期文字列はnullで、列数が0に設定されます。
+
+実際の使い方は次のようになります。
+
+JTextField text = new JTextField();
+列が 0 では利用者がテキストを入力できないのでメソッドを使って列数を設定してから使用します。
+
+＊テキストフィールドの列数を設定する
+テキストフィールドを列数を指定して作成するには次のコンストラクタを使用します。
+
+public JTextField(int columns)
+
+指定された列数で新規の空のTextFieldを構築します。
+デフォルト・モデルが作成され、初期文字列はnullに設定されます。
+
+パラメータ:
+columns - 適切な幅の計算に使用する列数。
+列数を0に設定すると、適切な幅はコンポーネントの実装から自然に得られる値になる
+
+引数にはテキストフィールドの見た目のサイズを決定するための列数を指定します。
+
+テキストフィールドの列数とは文字数と考えてください。
+例えば 10 と指定すれば 10文字分の文字が表示できるだけの幅となります。
+ただし 文字はそれぞれ幅が違うので、どんな文字でも 10 文字ぴったりとなるわけではありません。
+またあくまで見た目のサイズなので入力できる文字数とは関係がありません。
+フォントの設定によっても実際のサイズは変わってくるので、
+厳密にピクセル単位でサイズを指定するには別のページで解説する setPreferredSize メソッドを使います。
+
+実際の使い方は次のようになります。
+
+JTextField text = new JTextField(10);
+またテキストフィールドを作成したあとで、列数を設定したり再設定したりすることができます。
+テキストフィールドの列数を設定するには JTextField クラスで用意されている setColumns メソッドを使います。
+
+public void setColumns(int columns)
+
+このTextFieldの列数を設定し、配置を無効にします。
+
+パラメータ:
+columns:  列数 >= 0
+
+例外:
+IllegalArgumentException - columnsが0より小さい場合
+
+引数にはテキストフィールドの見た目のサイズを決定するための列数を指定します。
+
+実際の使い方は次のようになります。
+
+JTextField text = new JTextField();
+text.setColumns(10);
+
+＊サンプルプログラム
+それでは簡単なサンプルプログラムを作って試してみます。
+テキストエディタで次のように記述したあと、 JSample1_1.java という名前で保存します。
+
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JPanel;
+import java.awt.Container;
+import java.awt.BorderLayout;
+
+class JSample1_1 extends JFrame{
+  public static void main(String args[]){
+    JSample1_1 frame = new JSample1_1("MyTitle");
+    frame.setVisible(true);
+  }
+
+  JSample1_1(String title){
+    setTitle(title);
+    setBounds(100, 100, 600, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JTextField text1 = new JTextField();
+    JTextField text2 = new JTextField(10);
+    JTextField text3 = new JTextField();
+    text3.setColumns(20);
+
+    JPanel p = new JPanel();
+    p.add(text1);
+    p.add(text2);
+    p.add(text3);
+
+    Container contentPane = getContentPane();
+    contentPane.add(p, BorderLayout.CENTER);
+  }
+}
+
+次のようにコンパイルを行います。
+
+javac JSample1_1.java
+(画像)テキストフィールドの列数を設定する(1)
+
+コンパイルが終わりましたら実行します。
+
+java JSample1_1
+テキストフィールドを 3 つ追加しました。
+1 つ目は引数なしのコンストラクタで作成したテキストフィールド、
+2 つ目は列数を指定して作成したテキストフィールド、
+3 つ目は引数なしのコンストラクタで作成したあとで列数を設定したテキストフィールドです。
+
+(画像)テキストフィールドの列数を設定する(2)
+
+テキストフィールドには利用者がテキストを入力することができます。
+
+(画像)テキストフィールドの列数を設定する(3)
+
+
+＊テキストフィールドに初期値を設定する
+テキストフィールドは利用者にテキストを入力してもらうためのコンポーネントですが、
+初期値として指定した文字列を設定しておくことができます。
+テキストフィールドを初期値を指定して作成するには次のコンストラクタを使用します。
+
+public JTextField(String text)
+
+指定されたテキストで初期化された新しいTextFieldを構築します。
+デフォルト・モデルが作成され、列数は0です。
+
+パラメータ:
+text - 表示されるテキストまたはnull
+
+引数には初期値として入力される文字列を String クラスのオブジェクトを使って指定します。
+このコンストラクタを使用した場合、テキストフィールドのサイズは引数に指定した文字列が
+ちょうど表示されるだけのサイズに設定されます。
+
+また初期値に加えて列数を合わせて指定することもできます。次のコンストラクタを使用します。
+
+public JTextField(String text, int columns)
+
+指定されたテキストおよび列で初期化される新規TextFieldを構築します。
+デフォルト・モデルが作成されます。
+
+パラメータ:
+text - 表示されるテキストまたはnull
+
+columns - 適切な幅の計算に使用する列数。
+列数を0に設定すると、適切な幅はコンポーネントの実装から自然に得られる値になる
+
+1 番目の引数には初期値として入力される文字列を String クラスのオブジェクトを使って指定します。
+2 番目の引数にはテキストフィールドの見た目のサイズを決定するための列数を指定します。
+
+実際の使い方は次のようになります。
+
+JTextField text1 = new JTextField("Tokyo");
+JTextField text2 = new JTextField("Tokyo", 10);
+-- --
+
+テキストフィールドのオブジェクトを作成したあとで、テキストフィールドに初期値を設定することもできます。
+JTextField クラスの親クラスである JTextComponent クラスで用意されている setText メソッドを使います。
+
+public void setText(String t)
+
+このTextComponentのテキストに、指定されたテキストを設定します。
+テキストがnullまたは空の場合は、古いテキストを単に削除する効果があります。
+テキストが挿入されたときに結果として得られるキャレット位置は、キャレット・クラスの実装によって決定されます。
+テキストはバウンド・プロパティではないため、それが変更されてもPropertyChangeEvent はトリガーされません。
+テキストの変更を待機するには、DocumentListenerを使用してください。
+
+パラメータ:
+t - 設定する新しいテキスト
+
+引数には初期値として入力される文字列を String クラスのオブジェクトを使って指定します。
+このメソッドを実行した場合、対象のテキストフィールドに列数が明示的に設定されていた場合にはサイズの変更はありませんが、
+列数が設定されていなかった場合には
+テキストフィールドのサイズは引数に指定した文字列がちょうど表示されるだけのサイズに設定されます。
+
+実際の使い方は次のようになります。
+
+JTextField text = new JTextField("Tokyo");
+text.setText?("Osaka");
+
+＊サンプルプログラム
+それでは簡単なサンプルプログラムを作って試してみます。
+テキストエディタで次のように記述したあと、 JSample1_2.java という名前で保存します。
+
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JPanel;
+import java.awt.Container;
+import java.awt.BorderLayout;
+
+class JSample1_2 extends JFrame{
+  public static void main(String args[]){
+    JSample1_2 frame = new JSample1_2("MyTitle");
+    frame.setVisible(true);
+  }
+
+  JSample1_2(String title){
+    setTitle(title);
+    setBounds(100, 100, 600, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JTextField text1 = new JTextField("Tokyo");
+    JTextField text2 = new JTextField("Tokyo", 15);
+    JTextField text3 = new JTextField("Tokyo", 15);
+    text3.setText("Yamanashi");
+
+    JPanel p = new JPanel();
+    p.add(text1);
+    p.add(text2);
+    p.add(text3);
+
+    Container contentPane = getContentPane();
+    contentPane.add(p, BorderLayout.CENTER);
+  }
+}
+次のようにコンパイルを行います。
+
+javac JSample1_2.java
+(画像)テキストフィールドに初期値を設定する(1)
+
+コンパイルが終わりましたら実行します。
+
+java JSample1_2
+テキストフィールドを 3 つ追加しました。
+1 つ目は初期値を指定したコンストラクタで作成したテキストフィールド、
+2 つ目は初期値と列数を指定して作成したテキストフィールド、
+3 つ目は初期値と引数を指定して作成したあとで初期値を別の文字列で設定しなおしたテキストフィールドです。
+
+(画像)テキストフィールドに初期値を設定する(2)
+
+テキストフィールドの初期値は利用者が自由に修正したり削除して新しい値を入力することができます。
+
+(画像)テキストフィールドに初期値を設定する(3)
+
+-- --
+
+JTextField クラスの定義やコンストラクトについて確認し、
+またテキストフィールドに初期値として値を設定する方法やテキストフィールドの列数(幅)を設定する方法も解説しました。
+
+( Written by Tatsuo Ikura )
+
+
+◆テキストエリアの作成と初期値や列数(幅)/行数の設定
+https://www.javadrive.jp/tutorial/jtextarea/index1.html
+
+テキストエリアを作成するには JTextArea クラスを使用します。
+ここでは JTextArea クラスの定義やコンストラクトについて確認します。
+またテキストエリアに初期値として値を設定する方法やテキストエリアの列数(幅)を設定する方法も解説します。
+
+目次
+＊JTextAreaクラスの定義
+＊JTextAreaクラスのコンストラクタ
+＊テキストエリアの列数と行数を設定する
+＊テキストエリアに初期値を設定する
+
+
+＊JTextAreaクラスの定義
+JTextArea クラスは次のように定義されています。
+
+java.lang.Object
+  java.awt.Component
+    java.awt.Container
+      javax.swing.JComponent
+        javax.swing.text.JTextComponent
+          javax.swing.JTextArea
+
+public class JTextArea
+    extends JTextComponent
+
+テキストエリアはコンポーネントの親クラスである JComponent クラスのサブクラスとなっています。またテキストを扱うクラス全般の親クラスである JTextComponent クラスのサブクラスでもあります。
+
+
+＊JTextAreaクラスのコンストラクタ
+JTextArea クラスをを利用するにはコンストラクタを使って JTextArea クラスのオブジェクトを作成します。
+次のようなコンストラクタが用意されています。
+
+・JTextArea()
+新しいTextAreaを構築します。
+
+・JTextArea(int rows, int columns)
+指定された行数と列数で新しい空のTextAreaを構築します。
+
+・JTextArea(String text)
+
+指定された表示テキストで新しいTextAreaを構築します。
+
+・JTextArea(String text, int rows, int columns)
+指定されたテキストと行数と列数で新しいTextAreaを構築します。
+
+・JTextArea(Document doc)
+指定されたドキュメント・モデルと、ほかの引数はすべてデフォルト(null, 0, 0)で、
+新しいJTextAreaを構築します。
+
+・JTextArea(Document doc, String text, int rows, int columns)
+指定された行数と列数、および指定されたモデルで新しいJTextAreaを構築します。
+
+テキストエリアに初期値を設定するかどうか、
+またテキストエリアの列数および行数を設定するかどうかでコンストラクタを選択してください。
+
+次のコンストラクタでは初期値が null で列数が 0 のテキストフィールドを作成します。
+
+
+・public JTextArea()
+新しいTextAreaを構築します。
+デフォルト・モデルが設定され、初期文字列はnull、行/列数は0に設定されます。
+
+実際の使い方は次のようになります。
+
+JTextArea area = new JTextArea();
+
+テキストフィールドと異なり
+テキストエリアでは入力されたテキストの量に応じて自動的に縦方向にも横方向にも拡張されるように
+デフォルトでは設定されています。
+その為、列数や行数が 0 でも入力は行えますが、
+どこにテキストエリアがあるのか分かりにくいので実際にはメソッドを使って列数や行数を設定してから使用します。
+
+テキストエリアの列数と行数を設定する
+テキストエリアを列数と行数を指定して作成するには次のコンストラクタを使用します。
+
+
+・public JTextArea(int rows, int columns)
+指定された行数と列数で新しい空のTextAreaを構築します。 デフォルト・モデルが作成され、初期文字列はnullに設定されます。
+
+パラメータ:
+rows - 行数>= 0
+columns - 列数>= 0
+
+例外:
+IllegalArgumentException - 行または列の引数が負の数の場合。
+
+1 番目の引数にはテキストエリアの高さに相当する行数を指定し、 2 番目の引数には幅に相当する列数を指定します。
+
+
+テキストエリアの列数とは文字数と考えてください。
+例えば 10 と指定すれば 10文字分の文字が表示できるだけの幅となります。
+ただし 文字はそれぞれ幅が違うので、どんな文字でも 10 文字ぴったりとなるわけではありません。
+またあくまで見た目のサイズなので入力できる文字数とは関係がありません。
+フォントの設定によっても実際のサイズは変わってくるので、
+厳密にピクセル単位でサイズを指定するには別のページで解説する setPreferredSize メソッドを使います。
+
+実際の使い方は次のようになります。
+
+JTextArea textarea = new JTextArea(10, 40);
+またテキストエリアを作成したあとで、列数や行数を設定したり再設定したりすることができます。
+テキストエリアの列数を設定するには JTextArea クラスで用意されている setColumns メソッドを使います。
+
+
+・public void setColumns(int columns)
+このTextAreaの列数を設定します。
+ 新しい値を設定したあとにinvalidate()を実行します。
+
+パラメータ:
+columns - 列数>= 0
+
+例外:
+IllegalArgumentException - columns 0より小さい場合
+
+引数にはテキストエリアの幅を設定するための列数を指定します。
+
+テキストエリアの行数を設定するには JTextArea クラスで用意されている setRows メソッドを使います。
+
+
+・public void setRows(int rows)
+このTextAreaの行数を設定します。
+新しい値を設定したあとにinvalidate()を呼び出します。
+
+パラメータ:
+rows - 行数>= 0
+
+例外:
+IllegalArgumentException - 行が0より小さい場合
+
+引数にはテキストエリアの高さを設定するための行数を指定します。
+
+実際の使い方は次のようになります。
+
+JTextArea textarea = new JTextArea();
+textarea.setColumns(40);
+textarea.setRows(10);
+
+＊サンプルプログラム
+それでは簡単なサンプルプログラムを作って試してみます。
+テキストエディタで次のように記述したあと、 JSample1_1.java という名前で保存します。
+
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+import javax.swing.JPanel;
+import java.awt.Container;
+import java.awt.BorderLayout;
+
+class JSample1_1 extends JFrame{
+  public static void main(String args[]){
+    JSample1_1 frame = new JSample1_1("MyTitle");
+    frame.setVisible(true);
+  }
+
+  JSample1_1(String title){
+    setTitle(title);
+    setBounds(100, 100, 600, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JTextArea textarea1 = new JTextArea(3, 20);
+    JTextArea textarea2 = new JTextArea();
+    textarea2.setColumns(40);
+    textarea2.setRows(10);
+
+    JPanel p = new JPanel();
+    p.add(textarea1);
+    p.add(textarea2);
+
+    Container contentPane = getContentPane();
+    contentPane.add(p, BorderLayout.CENTER);
+  }
+}
+次のようにコンパイルを行います。
+
+javac JSample1_1.java
+(画像)テキストエリアの列数と行数を設定する(1)
+
+コンパイルが終わりましたら実行します。
+
+java JSample1_1
+テキストエリアが 2 つ追加されました。それぞれ幅と高さが設定されています。
+
+(画像)テキストエリアの列数と行数を設定する(2)
+
+テキストエリアにはテキストフィールドと同じく利用者がテキストを入力することができます。またテキストエリアの場合には [Enter] キーを入力することで改行を行って複数行にわたるテキストを入力することができます。
+
+(画像)テキストエリアの列数と行数を設定する(2)
+
+
+＊テキストエリアに初期値を設定する
+テキストエリアは利用者にテキストを入力してもらうためのコンポーネントですが、
+初期値として指定した文字列を設定しておくことができます。
+テキストエリアを初期値を指定して作成するには次のコンストラクタを使用します。
+
+・public JTextArea(String text)
+指定された表示テキストで新しいTextAreaを構築します。
+デフォルト・モデルが作成され、行/列数は0に設定されます。
+
+パラメータ:
+text - 表示されるテキストまたはnull
+
+引数には初期値として入力される文字列を String クラスのオブジェクトを使って指定します。
+このコンストラクタを使用した場合、
+テキストエリアのサイズは引数に指定した文字列がちょうど表示されるだけのサイズに設定されます。
+
+もしも複数行に渡る文字列を初期値として指定したい場合には「¥n」を改行文字として指定して下さい。
+なおご利用の環境に関係なく改行は「¥n」を使って下さい。
+
+また初期値に加えて列数と行数を指定することができます。
+次のコンストラクタを使用します。
+
+・public JTextArea(String text, int rows, int columns)
+指定されたテキストと行数と列数で新しいTextAreaを構築します。
+デフォルト・モデルが作成されます。
+
+パラメータ:
+text - 表示されるテキストまたはnull
+rows - 行数>= 0
+columns - 列数>= 0
+
+例外:
+IllegalArgumentException - 行または列の引数が負の数の場合。
+
+1 番目の引数には初期値として入力される文字列を String クラスのオブジェクトを使って指定します。
+2 番目の引数にはテキストエリアの高さに相当する行数を指定し、
+3 番目の引数には幅に相当する列数を指定します。
+
+実際の使い方は次のようになります。
+
+JTextArea textarea1 = new JTextArea("Hello!¥nBye!");
+JTextArea textarea2 = new JTextArea("Thank's", 20, 10);
+-- --
+
+テキストエリアのオブジェクトを作成したあとで、テキストエリアに初期値を設定することもできます。
+JTextArea クラスの親クラスである JTextComponent クラスで用意されている setText メソッドを使います。
+
+・public void setText(String t)
+このTextComponentのテキストに、指定されたテキストを設定します。
+テキストがnullまたは空の場合は、古いテキストを単に削除する効果があります。
+テキストが挿入されたときに結果として得られるキャレット位置は、
+キャレット・クラスの実装によって決定されます。
+
+テキストはバウンド・プロパティではないため、
+それが変更されてもPropertyChangeEvent はトリガーされません。
+テキストの変更を待機するには、DocumentListenerを使用してください。
+
+パラメータ:
+t - 設定する新しいテキスト
+
+引数には初期値として入力される文字列を String クラスのオブジェクトを使って指定します。
+
+実際の使い方は次のようになります。
+
+JTextArea textarea = new JTextArea();
+textarea.setText("Thank's");
+
+
+＊サンプルプログラム
+それでは簡単なサンプルプログラムを作って試してみます。
+テキストエディタで次のように記述したあと、 JSample1_2.java という名前で保存します。
+
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+import javax.swing.JPanel;
+import java.awt.Container;
+import java.awt.BorderLayout;
+
+class JSample1_2 extends JFrame{
+  public static void main(String args[]){
+    JSample1_2 frame = new JSample1_2("MyTitle");
+    frame.setVisible(true);
+  }
+
+  JSample1_2(String title){
+    setTitle(title);
+    setBounds(100, 100, 600, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JTextArea textarea1 = new JTextArea("Hello", 5, 40);
+    JTextArea textarea2 = new JTextArea();
+    textarea2.setText("My name is Tarou.\nThank you.");
+
+    JPanel p = new JPanel();
+    p.add(textarea1);
+    p.add(textarea2);
+
+    Container contentPane = getContentPane();
+    contentPane.add(p, BorderLayout.CENTER);
+  }
+}
+次のようにコンパイルを行います。
+
+javac JSample1_2.java
+(画像)テキストエリアに初期値を設定する(1)
+
+コンパイルが終わりましたら実行します。
+
+java JSample1_2
+テキストエリアが 2 つ追加されました。 1 つ目は列と行を指定した上で初期値を設定しています。 2 つ目は初期値だけを設定しています。
+
+(画像)テキストエリアに初期値を設定する(2)
+
+初期値だけを設定した場合はテキストエリアのサイズが初期値のテキストがちょうど表示されるサイズに拡張されます。
+
+-- --
+
+JTextArea クラスの定義やコンストラクトについて確認し、
+テキストエリアに初期値として値を設定する方法やテキストエリアの列数(幅)を設定する方法も解説しました。
+
+( Written by Tatsuo Ikura )
+
+
+◆テキストエリアへ入力済みのテキストに対する追加/挿入/置き換え
+https://www.javadrive.jp/tutorial/jtextarea/index14.html
+
+
+テキストエリアには初期値を設定する以外に入力済みのテキストに対してテキストを追加したり任意の位置に挿入したり、または既存のテキストを他のテキストで置き換えることができます。ここではテキストエリアのテキストに対する追加や挿入や置き換えを行う方法について解説します。
+
+目次
+＊テキストエリアにテキストを追加する
+＊テキストエリアの任意の位置にテキストを挿入する
+＊テキストエリアの任意の範囲のテキストを別のテキストで置き換える
+
+
+＊テキストエリアにテキストを追加する
+テキストエリアに入力済みのテキストの末尾に他のテキストを追加するには
+JTextArea クラスで定義されている append メソッドを使います。
+
+public void append(String str)
+
+指定されたテキストをドキュメントの末尾に追加します。
+モデルがnullの場合、あるいは文字列がnullか空の場合には何も行いません。
+
+パラメータ:
+str - 挿入するテキスト
+
+引数には末尾に追加する文字列を String クラスのオブジェクトを使って指定します。
+
+実際の使い方は次のようになります。
+
+JTextArea textarea = new JTextArea("Hello!");
+textarea.append("Bye!");
+この場合、テキストエリアに入力されているテキストは "Hello!Bye!" となります。
+
+＊サンプルプログラム
+それでは簡単なサンプルプログラムを作って試してみます。テキストエディタで次のように記述したあと、 JSample14_1.java という名前で保存します。
+
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.Container;
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+
+class JSample14_1 extends JFrame implements ActionListener{
+  JTextArea textarea;
+  JTextField text;
+
+  public static void main(String args[]){
+    JSample14_1 frame = new JSample14_1("MyTitle");
+    frame.setVisible(true);
+  }
+
+  JSample14_1(String title){
+    setTitle(title);
+    setBounds(100, 100, 600, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    textarea = new JTextArea();
+
+    text = new JTextField(20);
+    JButton button = new JButton("Append");
+    button.addActionListener(this);
+
+    JPanel p = new JPanel();
+    p.add(text);
+    p.add(button);
+
+    Container contentPane = getContentPane();
+    contentPane.add(textarea, BorderLayout.CENTER);
+    contentPane.add(p, BorderLayout.SOUTH);
+  }
+
+  public void actionPerformed(ActionEvent e){
+    String str = text.getText();
+    textarea.append(str);
+  }
+}
+次のようにコンパイルを行います。
+
+javac JSample14_1.java
+(画像)テキストエリアにテキストを追加する(1)
+
+コンパイルが終わりましたら実行します。
+
+java JSample14_1
+テキストエリアを画面中央いっぱいに追加し、画面下部にテキストフィールドとボタンを 1 つずつ追加しています。
+
+(画像)テキストエリアにテキストを追加する(2)
+
+テキストエリアにテキストを入力したあと、画面下部のテキストフィールドにテキストを入力してからボタンをクリックしてください。
+
+(画像)テキストエリアにテキストを追加する(3)
+
+(画像)テキストエリアにテキストを追加する(4)
+
+テキストエリアに入力されているテキストの末尾にテキストフィールドに入力したテキストが追加されました。
+
+
+＊テキストエリアの任意の位置にテキストを挿入する
+テキストエリアに入力済みのテキストの任意の位置に他のテキストを挿入するには JTextArea クラスで定義されている insert メソッドを使います。
+
+public void insert(String str, int pos)
+
+指定されたテキストを指定の位置に挿入します。
+モデルがnullの場合、あるいはテキストがnullまたは空の場合は何も行いません。
+
+パラメータ:
+str - 挿入するテキスト
+pos - 挿入位置>= 0
+
+例外:
+IllegalArgumentException - posがモデル内の無効な位置にある場合
+
+1 番目の引数には挿入する文字列を String クラスのオブジェクトを使って指定します。
+2 番目の引数には挿入する位置を int 型の数値で指定します。
+位置は先頭の文字の前の位置が 0 、先頭の位置と次の文字の間の位置が 1 、といった感じになります。
+
+実際の使い方は次のようになります。
+
+JTextArea textarea = new JTextArea("Hello!Bye!");
+textarea.insert("Thanks!", 6);
+この場合、テキストエリアに入力されているテキストは "Hello!Thanks!Bye!" となります。
+
+
+
+なおこの後のサンプルで、テキストエリアの中でキャレットが今置かれている位置を取得する方法として
+ JTextArea クラスの親クラスである JTextComponent で用意されている setCaretPosition メソッドを使っています。
+
+public int getCaretPosition()
+
+テキスト・コンポーネントのテキスト挿入キャレットの位置を返します。
+
+戻り値:
+テキスト・コンポーネントのテキスト挿入キャレットの位置(0以上)
+
+メソッドを実行すると、キャレットの位置を int 型の数値で返します。位置に関する考え方は insert? メソッドの位置の考え方と同じです。
+
+
+＊サンプルプログラム
+それでは簡単なサンプルプログラムを作って試してみます。
+テキストエディタで次のように記述したあと、 JSample14_2.java という名前で保存します。
+
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.Container;
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+
+class JSample14_2 extends JFrame implements ActionListener{
+  JTextArea textarea;
+  JTextField text;
+
+  public static void main(String args[]){
+    JSample14_2 frame = new JSample14_2("MyTitle");
+    frame.setVisible(true);
+  }
+
+  JSample14_2(String title){
+    setTitle(title);
+    setBounds(100, 100, 600, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    textarea = new JTextArea();
+
+    text = new JTextField(20);
+    JButton button = new JButton("Insert");
+    button.addActionListener(this);
+
+    JPanel p = new JPanel();
+    p.add(text);
+    p.add(button);
+
+    Container contentPane = getContentPane();
+    contentPane.add(textarea, BorderLayout.CENTER);
+    contentPane.add(p, BorderLayout.SOUTH);
+  }
+
+  public void actionPerformed(ActionEvent e){
+    String str = text.getText();
+    int pos = textarea.getCaretPosition();
+    textarea.insert(str, pos);
+  }
+}
+次のようにコンパイルを行います。
+
+javac JSample14_2.java
+(画像)テキストエリアの任意の位置にテキストを挿入する(1)
+
+コンパイルが終わりましたら実行します。
+
+java JSample14_2
+テキストエリアを画面中央いっぱいに追加し、画面下部にテキストフィールドとボタンを 1 つずつ追加しています。
+
+(画像)テキストエリアの任意の位置にテキストを挿入する(2)
+
+テキストエリアにテキストを入力したあと、テキストを挿入したい位置にキャレットを置いてください。
+
+(画像)テキストエリアの任意の位置にテキストを挿入する(3)
+
+その後で画面下部のテキストフィールドにテキストを入力してからボタンをクリックしてください。
+
+(画像)テキストエリアの任意の位置にテキストを挿入する(4)
+
+(画像)テキストエリアの任意の位置にテキストを挿入する(5)
+
+テキストエリアに入力されているテキストの中でキャレットがあった位置に
+テキストフィールドに入力したテキストが挿入されました。
+
+
+＊テキストエリアの任意の範囲のテキストを別のテキストで置き換える
+テキストエリアに入力済みのテキストの中で、任意の範囲のテキストを別のテキストで置き換えるには
+ JTextArea クラスで定義されている replaceRange メソッドを使います。
+
+public void replaceRange(String str, int start, int end)
+
+指定された開始位置から終了位置までのテキストを、新しい指定テキストで置き換えます。
+モデルがnullの場合は何も行いません。 新しい文字列がnullまたは空の場合は、単純にdeleteを実行します。
+
+パラメータ:
+str - 置換えに使用するテキスト
+start - 開始位置 >= 0
+end - 終了位置 >= start
+
+例外:
+IllegalArgumentException - 範囲の一部がモデル内の無効な位置にある場合
+
+
+
+1 番目の引数には置き換える文字列を String クラスのオブジェクトを使って指定します。
+2 番目の引数には置き換える位置の開始位置を int 型の数値で指定します。
+3 番目の引数には置き換える位置の終了位置を int 型の数値で指定します。
+位置は先頭の文字の前の位置が 0 、先頭の位置と次の文字の間の位置が 1 、といった感じになります。
+
+実際の使い方は次のようになります。
+
+JTextArea textarea = new JTextArea("Hello!Bye!");
+textarea.replaceRange?("ELLO", 1, 5);
+この場合、テキストエリアに入力されているテキストは "HELLO!Bye!" となります。
+
+なおこの後のサンプルで、テキストエリアの中で現在選択されている位置を取得する方法として
+JTextArea クラスの親クラスである JTextComponent で用意されている getSelectionStart メソッド
+および getSelectionEnd メソッドを使っています。
+
+public int getSelectionStart()
+
+選択したテキストの開始位置を返します。
+ドキュメントが空の場合は0、選択領域がない場合はドットの値を返します。
+
+戻り値:
+開始位置>= 0
+
+public int getSelectionEnd()
+
+選択したテキストの末尾位置を返します。 ドキュメントが空の場合は0、選択領域がない場合はドットの値を返します。
+
+戻り値:
+末尾位置>= 0
+
+それぞれのメソッドを実行すると、
+テキストエリアの中で現在選択されている位置の開始位置と終了位置をそれぞれ int 型の数値で返します。
+位置に関する考え方は replaceRange? メソッドの位置の考え方と同じです。
+
+
+＊サンプルプログラム
+それでは簡単なサンプルプログラムを作って試してみます。
+テキストエディタで次のように記述したあと、 JSample14_3.java という名前で保存します。
+
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.Container;
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+
+class JSample14_3 extends JFrame implements ActionListener{
+  JTextArea textarea;
+  JTextField text;
+
+  public static void main(String args[]){
+    JSample14_3 frame = new JSample14_3("MyTitle");
+    frame.setVisible(true);
+  }
+
+  JSample14_3(String title){
+    setTitle(title);
+    setBounds(100, 100, 600, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    textarea = new JTextArea();
+
+    text = new JTextField(20);
+    JButton button = new JButton("Replace");
+    button.addActionListener(this);
+
+    JPanel p = new JPanel();
+    p.add(text);
+    p.add(button);
+
+    Container contentPane = getContentPane();
+    contentPane.add(textarea, BorderLayout.CENTER);
+    contentPane.add(p, BorderLayout.SOUTH);
+  }
+
+  public void actionPerformed(ActionEvent e){
+    String str = text.getText();
+    int start_pos = textarea.getSelectionStart();
+    int end_pos = textarea.getSelectionEnd();
+    textarea.replaceRange(str, start_pos, end_pos);
+  }
+}
+次のようにコンパイルを行います。
+
+javac JSample14_3.java
+(画像)テキストエリアの任意の範囲のテキストを別のテキストで置き換える(1)
+
+コンパイルが終わりましたら実行します。
+
+java JSample14_2
+テキストエリアを画面中央いっぱいに追加し、画面下部にテキストフィールドとボタンを 1 つずつ追加しています。
+
+(画像)テキストエリアの任意の範囲のテキストを別のテキストで置き換える(2)
+
+テキストエリアにテキストを入力したあと、テキストを置き換えたい部分をマウスまたはテキストで選択してください。
+
+(画像)テキストエリアの任意の範囲のテキストを別のテキストで置き換える(3)
+
+その後で画面下部のテキストフィールドにテキストを入力してからボタンをクリックしてください。
+
+(画像)テキストエリアの任意の範囲のテキストを別のテキストで置き換える(4)
+
+(画像)テキストエリアの任意の範囲のテキストを別のテキストで置き換える(5)
+
+テキストエリアに入力されているテキストの中で選択されていた部分が
+テキストフィールドに入力したテキストで置き換えられました。
+
+-- --
+
+テキストエリアのテキストに対する追加や挿入や置き換えを行う方法について解説しました。
+
+( Written by Tatsuo Ikura )
+
+
+◆パネルで使用するレイアウトマネージャーを設定する
+https://www.javadrive.jp/tutorial/jpanel/index4.html
+
+パネルで使用されるデフォルトのレイアウトマネージャーは FlowLayout ですが
+他のレイアウトマネージャーを設定することもできます。
+ここではパネルで使用するレイアウトマネージャーを設定する方法について解説します。
+
+目次
+＊レイアウトマネージャーを設定する
+
+
+＊レイアウトマネージャーを設定する
+最初にコンストラクタで使用するレイアウトマネージャーを指定する方法です。
+次のコンストラクタを使用します。
+
+public JPanel(LayoutManager layout)
+
+指定されたレイアウト・マネージャで、新しいJPanelを作成します。
+
+パラメータ:
+layout - 使用するLayoutManager
+
+引数にはレイアウトマネージャーを表す LayoutManager インターフェースを実装したクラスのオブジェクトを指定します。
+
+実際の使い方は次のようになります。
+
+JPanel panel = new JPanel(new BorderLayout());
+この場合はレイアウトマネージャーとして BorderLayout を使用するパネルのオブジェクトが作成されます。
+
+-- --
+
+次に作成済みパネルのレイアウトマネージャーを設定する方法です。
+レイアウトマネージャーを設定するには JPanel クラスの親クラスである Container クラスで定義されている
+setLayout メソッドを使います。
+
+public void setLayout(LayoutManager mgr)
+
+このコンテナのレイアウト・マネージャを設定します。
+このメソッドではレイアウトに関連する情報が変更されるため、コンポーネント階層が無効になります。
+
+パラメータ:
+mgr - 指定されたレイアウト・マネージャ
+
+引数にはレイアウトマネージャーを表す LayoutManager インターフェースを実装したクラスのオブジェクトを指定します。
+
+実際の使い方は次のようになります。
+
+JPanel panel = new JPanel();
+panel.setLayout(new BorderLayout());
+
+この場合はレイアウトマネージャーとして BorderLayout を使用するパネルのオブジェクトが作成されます。
+
+＊サンプルプログラム
+それでは簡単なサンプルプログラムを作って試してみます。
+テキストエディタで次のように記述したあと、 JSample4_1.java という名前で保存します。
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.Container;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Dimension;
+
+class JSample4_1 extends JFrame{
+  public static void main(String args[]){
+    JSample4_1 frame = new JSample4_1("MyTitle");
+    frame.setVisible(true);
+  }
+
+  JSample4_1(String title){
+    setTitle(title);
+    setBounds(100, 100, 600, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    /* Changed Frame's layout manager to FlowLayout */
+    setLayout(new FlowLayout());
+
+    JPanel panel = new JPanel();
+    panel.setPreferredSize(new Dimension(300, 200));
+
+    /* Changed Panel's layout manager to BorderLayout */
+    panel.setLayout(new BorderLayout());
+
+    JButton button1 = new JButton("NORTH");
+    JButton button2 = new JButton("WEST");
+    JButton button3 = new JButton("SOUTH");
+    JButton button4 = new JButton("EAST");
+
+    panel.add(button1, BorderLayout.NORTH);
+    panel.add(button2, BorderLayout.WEST);
+    panel.add(button3, BorderLayout.SOUTH);
+    panel.add(button4, BorderLayout.EAST);
+
+    Container contentPane = getContentPane();
+    contentPane.add(panel);
+  }
+}
+次のようにコンパイルを行います。
+
+javac JSample4_1.java
+(画像)レイアウトマネージャーを設定する(1)
+
+コンパイルが終わりましたら実行します。
+
+java JSample4_1
+パネルのレイアウトマネジャーを BorderLayout に変更したあとで、 4 つのボタンをそれぞれパネルに追加しています。
+
+(画像)レイアウトマネージャーを設定する(2)
+
+今回の例では分かりやすいようにフレームのレイアウトマネジャーを FlowLayout に変更しています。
+
+-- --
+
+パネルで使用するレイアウトマネージャーを設定する方法について解説しました。
+
+( Written by Tatsuo Ikura )
+
+
+◆MouseEventからの情報取得
+https://www.javadrive.jp/applet/event/index3.html
+
+マウスがクリックされた時などはmouseClickedメソッドが内部的に呼び出されますが、
+これらのメソッドの引数として渡されてくるMouseEventには、イベントが発生した時の情報が含まれています。
+
+＊マウスがクリックされた座標
+まずgetPointメソッドでマウスがクリックされた座標を取得することが出来ます。
+
+getPoint
+public Point getPoint()
+発生元のコンポーネントを基準とする、イベントの相対 x、y 座標値を返します。
+
+戻り値:
+  発生元のコンポーネントを基準とする X 座標および Y 座標を保持する Point オブジェクト
+Pointクラスのオブジェクトとして、マウスイベントが発生した時の座標を取得します。
+PointクラスのオブジェクトからX座標及びY座標を取得するには「obj.x」や「obj.y」とします。
+使い方は下記のようになります。座標はアプレットの左上が原点となります。
+
+public void mouseClicked(MouseEvent e){
+  Point point = e.getPoint();
+  System.out.println("X座標:" + point.x);
+  System.out.println("Y座標:" + point.y);
+}
+
+＊マウスがクリックされた回数
+同じクリックでもダブルクリックされたかどうかを調べたい場合があると思います。
+getClickCountメソッドで短い時間内にクリックされた回数を取得することが出来ます。
+
+getClickCount
+public int getClickCount()
+このイベントに関連したマウスクリック数を返します。
+
+戻り値:
+  クリック数を表す整数値
+1回のマウスイベントとして複数回のクリックがあったのか、
+それともシングルクリックとしてマウスイベントが複数回発生するのかは、
+一定時間内にクリックされた回数を調べているのではなく、
+クリックとクリックの間隔がある一定時間内であれば連続クリックと判別されています。
+ただし何ミリ秒以内かなどの判定基準は分かりません。
+
+ダブルクリックを判定するには下記のような記述を行います。
+
+public void mouseClicked(MouseEvent e){
+  if (e.getClickCount() >= 2){
+     // ダブルクリック
+  }
+}
+
+＊右ボタンか左ボタンか
+マウスの右ボタンがクリックされたのか、それとも左ボタンがクリックされたのか判定をするには、getButtonメソッドを使います。
+
+getButton
+public int getButton()
+状態が変更されたマウスボタンがある場合、そのマウスボタンを返します。
+
+戻り値:
+  定数 NOBUTTON、BUTTON1、BUTTON2、またはBUTTON3 のいずれか
+帰ってくる値は整数型の値ですが、MouseEventクラスで定義されている下記の定数と比較することで、どのボタンが押されたのかを判別が可能です。
+
+MouseEvent.BUTTON1   左ボタン
+MouseEvent.BUTTON2   真ん中のボタン(ある場合)
+MouseEvent.BUTTON3   右ボタン
+下記のように使います。
+
+public void mouseClicked(MouseEvent e){
+  int btn = e.getButton();
+
+  if (btn == MouseEvent.BUTTON1){
+    System.out.println("左ボタンクリック"):
+  }else if (btn == MouseEvent.BUTTON2){
+    System.out.println("中ボタンクリック"):
+  }else if (btn == MouseEvent.BUTTON3){
+    System.out.println("右ボタンクリック"):
+  }
+}
+
+＊サンプルプログラム
+では簡単なサンプルで、実際に試してみます。
+
+EventTest2.java
+
+import java.applet.Applet;
+import java.awt.Graphics;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
+import java.awt.Point;
+
+/*
+<applet code="EventTest2.class" codebase="class" width="300" height="100">
+</applet>
+*/
+
+public class EventTest2 extends Applet implements MouseListener{
+  String msg;
+
+  public void init(){
+    msg = "";
+    addMouseListener(this);
+  }
+
+  public void paint(Graphics g){
+    g.drawString(msg, 10, 60);
+  }
+
+  public void mouseEntered(MouseEvent e){
+  }
+
+  public void mouseExited(MouseEvent e){
+  }
+
+  public void mousePressed(MouseEvent e){
+  }
+
+  public void mouseReleased(MouseEvent e){
+  }
+
+  public void mouseClicked(MouseEvent e){
+    StringBuilder sb = new StringBuilder();
+
+    Point point = e.getPoint();
+    sb.append("座標:(");
+    sb.append(point.x);
+    sb.append(",");
+    sb.append(point.y);
+    sb.append("の位置で");
+
+    int btn = e.getButton();
+
+    if (btn == MouseEvent.BUTTON1){
+      sb.append("左ボタンが");
+    }else if (btn == MouseEvent.BUTTON2){
+      sb.append("中ボタンが");
+    }else if (btn == MouseEvent.BUTTON3){
+      sb.append("右ボタンが");
+    }
+
+    sb.append(e.getClickCount());
+    sb.append("回クリック");
+
+    msg = new String(sb);
+
+    repaint();
+  }
+}
+下記で実際に試して頂くことができます。
+
+EventTest2.html
+
+左クリックした場合
+
+(画像)MouseEventテスト
+
+右クリックした場合
+
+(画像)MouseEventテスト
+
+連続してクリックした場合
+
+(画像)MouseEventテスト
+
+( Written by Tatsuo Ikura )
+
+
+■Let's プログラミング
+◆INDEX Swingを使ってみよう
+https://www.javadrive.jp/tutorial/
+
+
+■「Javaを復習する初心者」が復習・学習するブログ
+◆画像を動かす練習
+2019.09.02 2018.02.01
+https://java-beginner.com/practice-move-image/
+
+こんにちは。「Javaを復習する初心者」です。
+
+GUIプログラミングでゲームを作る場合、画像を表示させて動かすことがあると思います。
+今回はサンプル画像を表示して動くように表示するということをしました。
+
+目次
+＊星を表示させる
+＊左上から右下に動かしてみる
+＊回転
+＊回転して移動させる
+
+
+星を表示させる
+星を表示させて動かしてみようと思うので、最初に星の画像を表示させることをしました。
+star.pngという画像ファイルを用意して、フレームに表示させることをしてみました。
+
+ソース
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+
+public class MyJFrame extends JFrame {
+
+    private final static int FRAME_LENGTH = 300;
+
+    private final static String IMAGE_FILE_NAME ="star.png";
+
+    private BufferedImage bufferedImage = null;
+
+    public static void main(String[] args) {
+        new MyJFrame();
+    }
+
+    public MyJFrame() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setSize(FRAME_LENGTH, FRAME_LENGTH);
+
+        // 星を読み込む
+        try (InputStream inputStream = this.getClass().getResourceAsStream(IMAGE_FILE_NAME);){
+            bufferedImage = ImageIO.read(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 表示
+        setVisible(true);
+    }
+
+    public void paint(Graphics g) {
+        g.drawImage(getScreen(), 0, 0, this);
+    }
+
+    private Image getScreen() {
+        Image screen = createImage(FRAME_LENGTH, FRAME_LENGTH);
+        Graphics g = screen.getGraphics();
+        g.drawImage(bufferedImage, 50, 50, this);
+
+        return screen;
+    }
+
+}
+
+
+画像ファイルはクラスファイルと同じフォルダに格納しています。
+ClassクラスのgetResourceAsStream()メソッドで指定した画像ファイルのInputStreamインスタンスを取得することができます。
+ImageIOクラスのread()にそのインスタンスを指定することで、BufferedImageインスタンスを取得することができます。
+
+BufferedImageはjava.awt.Imageを継承しています。
+そのため、GraphicsクラスのdrawImage()の引数にしていすることができます。
+
+上記プログラムではフレームに直接、画像を描画することはしていません。
+いったん、バックスクリーンを用意して、そこに画像を描画しています。
+のちに画像を動かすことを考え、ちらつき防止のためにバックスクリーンを使うようにしました。
+
+左上から右下に動かしてみる
+フレームの左上から右下に移動させることをしてみました。タイマーを使って移動させることにしました。
+
+ソース
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+
+public class MyJFrame extends JFrame {
+
+    private final static int FRAME_LENGTH = 300;
+
+    private final static String IMAGE_FILE_NAME ="star.png";
+
+    private BufferedImage bufferedImage = null;
+
+    /** 星 位置 */
+    private int starX = 0;
+    private int starY = 0;
+
+    public static void main(String[] args) {
+        new MyJFrame();
+    }
+
+    public MyJFrame() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setSize(FRAME_LENGTH, FRAME_LENGTH);
+
+        // 星を読み込む
+        try (InputStream inputStream = this.getClass().getResourceAsStream(IMAGE_FILE_NAME);){
+            bufferedImage = ImageIO.read(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 星の位置初期化
+        starX = -bufferedImage.getWidth();
+        starY = -bufferedImage.getHeight();
+
+        // タイマー
+        Timer timer = new java.util.Timer();
+        timer.schedule(new MyTimeTask(), 1l, 10l);
+
+        // 表示
+        setVisible(true);
+    }
+
+    public void paint(Graphics g) {
+        g.drawImage(getScreen(), 0, 0, this);
+    }
+
+    private Image getScreen() {
+        Image screen = createImage(FRAME_LENGTH, FRAME_LENGTH);
+
+        // 星の移動
+        if (starX <= FRAME_LENGTH && starY <= FRAME_LENGTH ) {
+            starX ++;
+            starY ++;
+            Graphics g = screen.getGraphics();
+            g.drawImage(bufferedImage, starX, starY, this);
+        } else {
+            starX = -bufferedImage.getWidth();
+            starY = -bufferedImage.getHeight();
+        }
+
+        return screen;
+    }
+
+    private class MyTimeTask extends TimerTask {
+
+        @Override
+        public void run() {
+            repaint();
+        }
+
+    }
+
+}
+
+
+メンバ変数にint型変数starXとstarYを定義しました。
+星の画像の表示の指定で、左上の座標を(starX, starY)にするという考え方です。
+星の画像を読み込んだ直後で、starXとstarYの値を設定しています。
+これはちょうど画像の右下が画面左上になって、画像が画面の外に出ている状態です。
+
+画像描画時ではstarXとstarYをそれぞれ「+1」してから描画しています。
+タイマーでrepaint()メソッドを繰り返し呼び出すことで星が移動しているように描画されました。
+
+
+＊回転
+星を移動させることをしましたが、今度は星をその場で回転させることをしてみようと思いました。
+AffineTransformクラスというのがあり、これを使って回転が簡単にできました。
+以下のプログラムでは星をその場で回転させてます。
+
+ソース
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+
+public class MyJFrame extends JFrame {
+
+    private final static int FRAME_LENGTH = 300;
+
+    private final static String IMAGE_FILE_NAME ="star.png";
+
+    private BufferedImage bufferedImage = null;
+
+    /** 星 回転 */
+    private int degrees = 0;
+
+    public static void main(String[] args) {
+        new MyJFrame();
+    }
+
+    public MyJFrame() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setSize(FRAME_LENGTH, FRAME_LENGTH);
+
+        // 星を読み込む
+        try (InputStream inputStream = this.getClass().getResourceAsStream(IMAGE_FILE_NAME);){
+            bufferedImage = ImageIO.read(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // タイマー
+        Timer timer = new java.util.Timer();
+        timer.schedule(new MyTimeTask(), 1l, 10l);
+
+        // 表示
+        setVisible(true);
+    }
+
+    public void paint(Graphics g) {
+        g.drawImage(getScreen(), 0, 0, this);
+    }
+
+    private Image getScreen() {
+        Image image = createImage(bufferedImage.getWidth(), bufferedImage.getHeight());
+        Graphics2D g2 = (Graphics2D) image.getGraphics();
+        AffineTransform affineTransform = new AffineTransform();
+
+        degrees ++;
+        affineTransform.rotate(degrees * Math.PI / 180,
+                bufferedImage.getWidth() / 2, bufferedImage.getHeight() / 2);
+        g2.setTransform(affineTransform);
+        g2.drawImage(bufferedImage, 0, 0, this);
+
+        Image screen = createImage(FRAME_LENGTH, FRAME_LENGTH);
+        Graphics g = screen.getGraphics();
+        g.drawImage(image, 50, 50, this);
+        return screen;
+    }
+
+    private class MyTimeTask extends TimerTask {
+
+        @Override
+        public void run() {
+            repaint();
+        }
+
+    }
+
+}
+
+
+画像の表示位置は左上の座標(50, 50)固定にしました。この位置で星を回転させることをしています。
+回転のさせるための箇所は以下のような処理の流れです。
+
+Imageクラスのインスタンスを生成する。
+上記インスタンスに対して、Graphics2Dクラスのインスタンスを取得する。
+AffineTransformクラスのインスタンスを生成する。
+AffineTransformクラスのrotate()メソッドを呼び出す。
+Graphics2DクラスのsetTransform()メソッドの引数に上記インスタンスを指定する。
+Graphics2DクラスのdrawImage()メソッドを呼び出す。
+Imageクラスのインスタンスを生成して、そこに画像を描画するという考え方です。座標変換をすることで、
+画像を回転させて描画することができます。
+
+Graphics2Dクラスに定義されているsetTransform()メソッドで座標を変換することができます。
+このメソッドで指定するのがAffineTransformのインスタンスです。
+このクラスにはrotate()メソッドがいくつか用意されています。今回使ったのは回転角度と原点を引数で指定するメソッドです。
+原点は、imageオブジェクトの中心になるようにしました。
+そうすることで、のちのdrawImage()メソッドを呼び出すときの引数が簡単になりました。
+
+回転して移動させる
+ここまでくると、回転させて移動させるは簡単です。drawImage()メソッドの引数に変数を使えばよいです。
+
+ソース
+g.drawImage(image, starX, starY, this);
+
+描画するごとにstarXとstarYを変化させることで、回転して移動することができます。
+描画ごとにstarXとstarYを「+1」するようにした場合、左上から右下へ回転しながら移動します。
+
+今回は座標を「+1」するだけだったので斜めの移動だけですが、工夫すれば様々な軌道を動くように出来ると思います。
+
