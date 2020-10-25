@@ -1,0 +1,39 @@
+/**
+ * @title javaPractice / swing / Swing用語リンク集.txt
+ * @reference ◆Oracle API Reference/SE11/モジュール java.desktop/パッケージ java.awt
+ * @see https://docs.oracle.com/javase/jp/11/docs/api/java.desktop/java/awt/package-summary.html
+ * @see
+ * @editor shika
+ * @date 2020-10-25
+*/
+
+■Oracle API Reference/SE11/モジュール java.desktop/パッケージ java.awt
+https://docs.oracle.com/javase/jp/11/docs/api/java.desktop/java/awt/package-summary.html
+ 
+◆package java.awt 
+awt: Abstract Window Toolkit (AWT) 
+     Windowを作るための道具箱の抽象クラスを集めたパッケージ
+     
+◇Containerクラス:
+https://docs.oracle.com/javase/jp/11/docs/api/java.desktop/java/awt/Container.html
+・他のＡＷＴコンポーネントを含むことのできるクラス。
+  多くのコンポーネントを入れるための箱として利用する。
+・add​(Component comp): 
+    指定されたコンポーネントをこのコンテナの最後に追加します。
+・add​(Component comp, int index): 
+    指定されたコンポーネントを、このコンテナの指定された位置に追加します。
+    
+・getComponent​(int n)
+    コンテナ内のn番目のコンポーネントを取得します。
+    
+     :
+     :
+     
+◆
+◇JFrameクラス    
+getContentPane(): 
+＠フレームに含まれるペインの取得とコンポーネントの追加
+https://www.javadrive.jp/tutorial/jframe/index6.html#section2
+    コンポーネントを追加するには対象となるフレームから ContentPane のオブジェクトを取り出し、
+    取り出したペインに対してコンポーネントを追加します。
+    ContentPane を取得するには JFrame クラスで定義されている getContentPane メソッドを使います。
