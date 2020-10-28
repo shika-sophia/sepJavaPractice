@@ -1,8 +1,8 @@
 /**
  * @title javaPractice / DiceRV
- * @content Scanner, Random, StringBuilder
+ * @content Scanner, Random, while(true), StringBuilder
  * @author Nishio-san, SepJava2020, [Saikoro.java]
- * @author forked from Nishio-san, Revision by shika
+ * @author forked from Nishio-san / Revision by shika
  * @date 2020-10-28
  */
 
