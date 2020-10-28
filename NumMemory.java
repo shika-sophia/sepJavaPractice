@@ -1,8 +1,8 @@
 /**
  * @title javaPractice / NumMemory
  * @content
- * @author Iwata-san, SepJava2020
- * @author forked from Iwata-san at 2020-10-26
+ * @author Iwata-san, SepJava2020, [Num.java]
+ * @author forked from Iwata-san / Revision by shika
  * @date 2020-10-26
  */
 
@@ -119,6 +119,13 @@ public class NumMemory {
 
                 //過去リストに登録
                 pastNum.add(com);
+
+                //カウンターによる終了判定(BOUNDが奇数のとき)
+                if (pastNum.size() >= (BOUND + 1)) {
+                    System.out.println("COMの勝ちです。");
+                    scn.close();
+                    break loop;
+                }
 
                 comHit = false;
             } while(comHit);
