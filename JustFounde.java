@@ -1,6 +1,6 @@
 /**
  * @title javaPractice / JustFounde
- * @content
+ * @content 配列, for, try-catch, List, 
  * @author Okamoto-san, SepJava2020, [Skin.java][Skin2.java]
  * @author forked from Okamoto-san / Revision by shika
  * @date 2020-10-29
