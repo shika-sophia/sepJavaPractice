@@ -20,17 +20,18 @@ public class JustFounde {
     public static void main(String[] args) {
         System.out.println("・*＊ ファンデ診断 ＊*・");
 
-        //==== 質問と入力 ====
+        //==== 繰り返し質問と回答入力 ====
+        Scanner scn = new Scanner(System.in);
         int[] input = new int[QUEST];
 
         for (int i = 0; i < QUEST; i++) {
-            Scanner scn = new Scanner(System.in);
 
             //---- 質問表示 ----
             int choice = printQuest(i);
 
             //不正値チェック
             try {
+                //回答入力
                 input[i] = scn.nextInt();
                 System.out.println();
 
@@ -54,6 +55,7 @@ public class JustFounde {
         //==== 結果判定と表示 ====
         judgeFounde(input);
 
+        scn.close();
     }//main()
 
 
