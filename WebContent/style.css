@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+/* stylesheet for OshikaHP/index.html */
+
+h1{
+  text-align: center;
+  text-shadow: thistle 2px 2px;
+  color: hotpink;
+  background-color: pink;
+  font-family: "MS P明朝",serif;
+  font-size: 48px
+  
+}
+
+h2{
+  color:royalblue; 
+  background-color: thistle;
+  font-family: "MS P明朝",serif;
+  font-size: 24px
+}
+
+h3{
+  color: cornflowerblue;
+  font-family: "MS P明朝",serif;
+}
+
+hr{
+  /* color: white; 機能しない */
+  /* size: 5px */
+}
+
+body{
+  /* background-color:mistyrose; */
+} 
+ 
+ul {
+  list-style-type: none;
+}
+
+table{
+  background-color: pink;
+}
+
+/* table */
+.text-left{ 
+  background-color: pink;
+  text-align: left;
+}
+
+
+/* 隠しリンク用 */
+.hiddenLink{
+   color: mistyrose; /* もとのリンク色を背景色と同色か似た色にする */
+   text-decoration: none;  /* リンクの下線を消す */
+}
+
+
+.hiddenLink:hover {
+   color: deeppink;  /*カーソルを合わせると この色に変わる */               
+   text-decoration: none;  
+   }
+
