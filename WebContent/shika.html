@@ -9,16 +9,16 @@
     具体的に記述すると検索されやすくなるので、ネットのアクセス数に関心あるなら ちゃんと書く
     応募企業のＨＰはソースも閲覧して、keywords に何を入れているか確認しよう。
     どういう検索ワードで閲覧に結び付けようとしているかが判ります。">
-<meta name="keywords" content="HTML, CSS, meta, link, img, RecculentSchool">
+<meta name="keywords" content="HTML, CSS, meta, link, img, RecurrentSchool, profile">
 
 <title> HTML Lesson Lite </title>
 
 <!-- <link rel="stylesheet" href="style.css"> -->
-<!-- <style></style>の内容を上のタグ(コメントアウトを外す)でリンクして別ページに記述するのが普通 -->
+<!-- <style>～</style>の内容を上のタグ(コメントアウトを外す)でリンクして別ページに記述するのが普通 -->
 <style>
   body {
     background-color: mistyrose;
-    background: radial-gradient(ellipse farthest-side at center, white ,mistyrose 85% ,pink);
+    background: radial-gradient(ellipse farthest-side at center, white ,mistyrose 90% ,pink);
     font-family: "MS P明朝",serif;
   }
 
@@ -46,8 +46,8 @@
   div.content {
     width: 80%;
     text-align: left;
-    padding-left: 10%;
-    padding-left: 10%;
+    margin-left: 10%;
+    margin-right: 10%;
   }
 
   ul {
@@ -56,9 +56,14 @@
 
   table {
     table-layout: fixed;
+    align-self: center;
+    margin: 0 1em;
+    padding: 1em;
+
     font-size: medium;
     font-family: "MS P明朝",serif;
     background-color: lavenderblush;
+
     border-width: 2px;
     border-color: pink;
     border-spacing: 2px;
@@ -73,16 +78,27 @@
   table.example{
     line-height: 1.6em;
   }
+
+  img {
+    margin: 0 1em;
+  }
+
+  span {
+    color: deeppink;
+    font-size: large;
+    font-weight: bold;
+  }
 </style>
 </head>
 
 <body>
 <hr color="white" size="8">
-<h1><i>・*＊ HTML Lesson Lite ＊*・</i></h1>
+<h1 id="top"><i>・*＊ HTML Lesson Lite ＊*・</i></h1>
 <hr color="white" size="8">
 <br>
-<h2 id="top"><i>＊ ＩＮＤＥＸ ＊</i></h2>
-<table class="index" align="center">
+<h2><i>＊ ＩＮＤＥＸ ＊</i></h2>
+<div align="center">
+<table class="index">
   <tr><td>
   <ul>
     <li><a href="#utility">＊ よく使うタグ ＊</a>　　</li>
@@ -93,43 +109,42 @@
   </ul>
   </td></tr>
 </table>
-<br>
+</div>
 
 <!-- よく使うタグ -->
 
 <h2 id="utility"><i>＊ よく使うタグ ＊</i></h2>
 <div class="content" align="center">
-<h3>＊リンク &lt;a href="URL"&gt;文字列&lt;/a&gt;</h3>
-<p>&lt;a&gt;タグのことを「a タグ」「アンカータグ」と言います。<br>
-リンクを作るために使います。<br>
-リンク先に URLを指定すると外部サイトに飛びます。<br>
-相対パスを指定すると自分のＰＣ内の別ファイルに飛び、<br>
+<h3>＊リンク</h3>
+<span> &lt;a href="URL"&gt;文字列&lt;/a&gt;</span><br>
+<br>
+<p><span>&lt;a&gt;</span>タグのことを「a タグ」「アンカータグ」と言います。リンクを作るために使います。<br>
+リンク先に URLを指定すると外部サイトに飛びます。相対パスを指定すると自分のＰＣ内の別ファイルに飛び、
 id を付けると ページ内の移動にも使えます。(<a href="#localLink">ページ内リンク</a>は後述)<br>
+<br>
+上記の()のように文中にリンクを作ることもできます。<br>
 </p>
 <br>
 <table class="example" align="center">
 <tr><td>
-<span style="color:hotpink; font-weight: bold;">〔例〕<br>
-＊URLを指定:</span><br>
-　　<span style="color: deeppink; font-weight: bold">
-&lt;a href="https://sozosha-rs.jp/"&gt;創造社リカレントスクール&lt;/a&gt;<br></span>
+〔例〕<br>
+＊URLを指定:<br>
+　　<span>&lt;a href="https://sozosha-rs.jp/"&gt;創造社リカレントスクール&lt;/a&gt;<br></span>
 　　　　↓<br>
 　　<a href="https://sozosha-rs.jp/">創造社リカレントスクール</a><br>
 　　https://sozosha-rs.jp/<br>
 <br>
-　　リンクアウト(= リンクが つながらない)ときのために 隠したURLも付けてあげましょう。　<br>
-　　こうすると事前にどこへ飛ぶのか判り親切なリンクにもなります。<br>
+リンクアウト(= リンクが つながらない)ときのために 隠したURLも付けてあげましょう。
+こうすると事前にどこへ飛ぶのか判り親切なリンクにもなります。<br>
 <br>
 　　文字で代替せずに、このように表示することも可能です。<br>
-　　<span style="color: deeppink; font-weight: bold">
-    &lt;a href="https://sozosha-rs.jp/"&gt;https://sozosha-rs.jp/&lt;/a&gt;<br></span>
+　　<span>&lt;a href="https://sozosha-rs.jp/"&gt;https://sozosha-rs.jp/&lt;/a&gt;<br></span>
 　　　　↓<br>
 　　◇創造社リカレントスクール<br>
 　　<a href="https://sozosha-rs.jp/">https://sozosha-rs.jp/</a><br>
     <br>
-<span style="color:hotpink; font-weight: bold;">＊相対パスを指定</span><br>
-　　<span style="color: deeppink; font-weight: bold">
-    &lt;a href="index.html"&gt;index.html&lt;/a&gt;<br></span>
+＊相対パスを指定<br>
+　　<span>&lt;a href="index.html"&gt;index.html&lt;/a&gt;<br></span>
 　　　　↓<br>
 　　◇webProfile_09Java2020<br>
 　　<a href="index.html">index.html</a><br>
@@ -139,31 +154,41 @@ id を付けると ページ内の移動にも使えます。(<a href="#localLin
 <br>
 <h3>＊文字装飾とレイアウト</h3>
 いろいろな文字装飾です。ブラウザによっては反映されないタグもあります。<br>
- ・太字 <span style="color: deeppink; font-weight: bold">&lt;b&gt;太字&lt;/b&gt;</span> ⇒ <b>太字</b><br>
- ・斜体 <span style="color: deeppink; font-weight: bold">&lt;i&gt;斜体&lt;/i&gt;</span> ⇒ <i>斜体</i><br>
- ・下線 <span style="color: deeppink; font-weight: bold">&lt;u&gt;下線&lt;/u&gt;</span> ⇒ <u>下線</u><br>
- ・取消 <span style="color: deeppink; font-weight: bold">&lt;s&gt;取消&lt;/s&gt;</span> ⇒ <s>取消</s><br>
- ・改行 <span style="color: deeppink; font-weight: bold">&lt;br&gt;</span><br>
+ <b>・太字</b> <span>&lt;b&gt;太字&lt;/b&gt;</span> ⇒ <b>太字</b><br>
+ <b>・斜体</b> <span>&lt;i&gt;斜体&lt;/i&gt;</span> ⇒ <i>斜体</i><br>
+ <b>・下線</b> <span>&lt;u&gt;下線&lt;/u&gt;</span> ⇒ <u>下線</u><br>
+ <b>・取消</b> <span>&lt;s&gt;取消&lt;/s&gt;</span> ⇒ <s>取消</s><br>
+ <b>・改行</b> <span>&lt;br&gt;</span><br>
 <br>
- ・文字の色やサイズ<br>
- <span style="color: deeppink; font-weight: bold">
- &lt;font color="green"  size="6"&gt;フォントタグ&lt;/font&gt;</span> (HTML5から非推奨)<br>
+ <b>・文字の色やサイズ</b><br>
+ <span>&lt;font color="green"  size="6"&gt;フォントタグ&lt;/font&gt;</span><br>
   ⇒ <font color="green" size="6">フォントタグ</font><br>
 <br>
- ・範囲指定 インライン要素: 改行を伴わない。<br>
- <span style="color: deeppink; font-weight: bold">&lt;span &gt;&lt;/span&gt;<br></span>
- <span style="color: deeppink; font-weight: bold">
- &lt;span style="color: red;  background-color: gray;  font-size: x-large;"&gt;スパンタグ&lt;/span&gt;<br></span>
+ <b>・範囲指定 インライン要素: 前後に改行が入らない(行中にインラインで表示される)タグの総称。</b><br>
+ <span>&lt;span&gt;&lt;/span&gt;<br></span>
+ 繰り返し <span>&lt;font&gt;</span>タグで色などを指定すると、毎回 記事の文中に同じ色指定のタグが挿入され、
+ コンテンツ(= 中身)である本文が見づらくなるので、
+ <span>&lt;span&gt;</span>で範囲を指定し、CSS(= スタイルシート)で一括して色指定などを行う。
+ この方法だと色やサイズなどを変更したい場合も１か所だけ変えれば済む。
+ (<span>&lt;font&gt;</span>タグは文中の何か所も変えて回らねばならない)<br>
+ <br>
+
+ <span>&lt;span style="color: red;  background-color: gray;  font-size: x-large;"&gt;スパンタグ&lt;/span&gt;<br></span>
   ⇒ <span style="color: red; background-color: gray; font-size: x-large;">スパンタグ</span><br>
   <br>
- ・範囲指定 ブロック要素: 改行を伴う。<br>
- <span style="color: deeppink; font-weight: bold">&lt;div &gt;&lt;/div&gt;<br></span>
+  このように HTML中に style属性で CSSの記述をすることもできるが、上で述べたように
+  <span>&lt;font&gt;</span>タグの不利益と同じになるので、あまり使用しない。
+  複数の要素を記述したいときは style=""の中を「;」で区切る。
+  style属性の特殊な利点は後述するので、そのときにこの方法で記述する。<br>
+<br>
+ <b>・範囲指定 ブロック要素: 前後に改行が入るタグの総称。</b><br>
+ <span>&lt;div&gt;&lt;/div&gt;<br></span>
  数行にわたる まとまった内容のレイアウトなどに使う。<br>
 <br>
- ・align属性 align="center"<br>
-     開始タグ内に、配置位置を指定。センタリングや、right,leftも指定可<br>
+ <b>・align属性</b> align="center"<br>
+     開始タグ内に、配置位置を指定。センタリングや、right, leftも指定可<br>
 <br>
- ・style属性 style=""<br>
+ <b>・style属性</b> style=""<br>
      開始タグ内にスタイルシートの記述をできる。<br>
      style適用の優先度が一番高く、CSS(スタイルシート)の内容がブラウザの仕様で反映されないときなどに
      HTMLタグに style属性を使って記述すると反映されることがある。
@@ -172,17 +197,15 @@ id を付けると ページ内の移動にも使えます。(<a href="#localLin
 <h3>＊&lt;table&gt;タグ</h3>
 <table align="right">
 <tr><td>
-　<br><span style="color: deeppink; font-weight: bold">
-　&lt;table&gt;<br>
-　　&lt;tr&gt;&lt;td&gt;<br>
+　<span>&lt;table&gt;<br>
+　　&lt;tr&gt;&lt;td&gt;<br></span>
 　　　　(囲み記事の内容)　　<br>
-　　&lt;/tr&gt;&lt;/td&gt;<br>
-　&lt;table&gt;<br>
-　<br></span>
+　　<span>&lt;/td&gt;&lt;/tr&gt;<br>
+　&lt;/table&gt;<br></span>
 </td></tr>
 </table>
-&lt;table&gt;タグは授業でも学習した通り、本来 表を作成するタグだが、<br>
-１行１列のテーブルを作ることで、囲み記事を作ることができる。<br>
+<span>&lt;table&gt;</span>タグは授業でも学習した通り、本来 表を作成するタグだが、
+１行１列のテーブルを作ることで、囲み記事として使用できる。
 このページの囲み記事もこれを利用して表示している。<br clear="all" />
 <br>
 
@@ -193,50 +216,78 @@ id を付けると ページ内の移動にも使えます。(<a href="#localLin
 
 <h2 id="imageTag"><i>＊ 画像タグ ＊</i></h2>
 <div class="content" align="center">
-<h3>＊&lt;img  src="URL"  width="横幅"  height="縦高"  align="配置位置"  alt="代替文字列" /&gt;</h3>
+<h3>＊画像を表示する</h3>
+<span>&lt;img  src="URL"  width="横幅"  height="縦高"  align="配置位置"  alt="代替文字列" /&gt;</span>
 <p>
 <b>・src属性: 画像ファイルをここに探しにいく。</b><br>
-URLを指定するのが一般的だが、自分が管理していないサイトの画像を参照すると、<br>
-画像変更でファイル名が変わったり、サイト閉鎖などがあると画像を表示できなくなる。<br>
-できれば「imagesフォルダ」に画像を入れ、そこへの相対パスを記述したほうが安全。
+URLを指定するのが一般的だが、自分が管理していないサイトの画像を参照すると、
+画像変更でファイル名が変わったり、サイト閉鎖などで画像を表示できなくなる。
+できれば「imagesフォルダ」に画像を入れ、そこへの相対パスを記述したほうが安全。<br>
+<br>
+絶対パスだと移動するたびにパスを書き換えなければいけなくなる。
+相対パスで記述しておくと画像ファイルの置いてある場所との階層関係を同じにしておけば、
+画像フォルダごと移動するとパスを変えなくて良いという利点がある。<br>
 </p>
 <p>
 <b>・width属性・height属性: 画像の表示サイズを指定</b><br>
-どちらも指定せずとも、また width か heightのどちらかでも画像は表示されるが、<br>
+どちらも指定せずとも、また width か heightのどちらかでも画像は表示されるが、
 内部的に「元の画像サイズを取りに行き、表示画面のサイズも取り、更に縦横比から表示する画像のサイズを計算し」
 やっと画像を表示する。これら一連の処理のために画像表示が遅くなることは けっこうある。<br>
 <br>
-このタイムラグ(表示の遅れ)をなくすには、あらかじめ「width属性・height属性で表示サイズを指定しといてあげる」と
-表示が速くなる。また画像のデータサイズが「1 MB」(メガバイト)以上あると重くなるので、
-できれば事前に圧縮して「数百KB」(キロバイト)程度にしておくとタイムラグはほとんどない。
+このタイムラグ(表示の遅れ)をなくすには、あらかじめ「width属性・height属性で表示サイズを指定ておく」と
+表示が速くなる。サイズを指定する際、原画の縦横比を崩すと表示される画像が歪んで(ゆがんで)しまうので、
+原画のwidth, heightを同じ数で割ると良い。<br>
+<br>
+ＰＣがやる計算をあらかじめしておいてあげることで、コンマ何秒かの表示を速くする。
+今のＰＣやスマホの演算能力は高いので、そこまでしなくてもいいのかも。<br>
+<br>
+また画像のデータサイズが「1 MB」(メガバイト)以上あると重くなるので、
+できれば事前に圧縮して「数百KB」(キロバイト)程度にしておくとタイムラグは ほとんどない。
 </p>
 <p>
 <b>・align属性: 画像の配置位置を指定</b><br>
 　　center: センタリング<br>
 　　right: 右寄せ<br>
-　　left:  左寄せ<br></p>
+　　left:  左寄せ<br>
+</p>
+<p>
+<b>・alt属性: 画像表示ができない場合にここの文字列を表示</b><br>
+Ｗｅｂページは web上で見られることを前提としたページなので、
+ここには何らかの文字列を入れておくと検索ロボットが巡回してきたときに
+「ここに○○の画像が置いてある」と認識し検索ワードに加える。
+アクセス数を意識する場合は必ず alt属性を記入すると良い。<br>
+</p>
 <br>
-【画像の回り込み】<br>
-<span style="color: deeppink; font-weight: bold">&lt;img  src="images/webProfileAnnounceδ700×480.JPG"
-width="350"  height="200"  align="right"  alt="山本先生の伝言"&gt;</span>
-<p align="right" ><b>†700×480 / 宿題内容</b></p>
-<img src="images/webProfileAnnounceδ700×480.JPG" width="350" height="200" align="right" alt="山本先生の伝言">
-<p>画像タグ内に align="right" や  align="left"を指定すると、画像の横に文字列を書くことができる。
+<h3>＊画像の回り込み</h3>
+<span>&lt;img  src="images/webProfileAnnounceδ700×480.JPG"
+width="350"  height="240"  align="right"  alt="山本先生の伝言" /&gt;</span>
+
+<p align="right" ><b>†700×480 / 宿題内容　</b></p>
+
+<a href="images/webProfileAnnounceδ700×480.JPG">
+<img src="images/webProfileAnnounceδ700×480.JPG" width="350" height="240" align="right" alt="山本先生の伝言" />
+</a>
+
+<p>画像タグ内に <span>align="right"</span> や  <span>align="left"</span>を指定すると、画像の横に文字列を書くことができる。
 画像入りの文章で説明するときに、よく使う手法。<br>
 <br>
 回り込み文字を終了して、画像の下に文字を書く場合は<br>
-&lt;br  clear="all"/&gt; という特殊な改行タグを使う。<br>
+<span>&lt;br  clear="all" /&gt;</span>という特殊な改行タグを使う。<br>
 <br>
-&lt;table&gt;タグ内にalign属性を記述しても、同様にテーブルの横に文字列を回り込ませることができます。
-〔下記 文字参照の例がテーブル〕<br clear="all">
+<span>&lt;table&gt;</span>タグ内にalign属性を記述しても、同様にテーブルの横に文字列を回り込ませることができます。
+<br clear="all">
 </p>
-<p>
+<h3>＊画像にリンクを付ける</h3>
+<span>&lt;a  href="画像URL"&gt;&lt;img  src="画像URL" ～ /&gt;&lt;/a&gt;</span><br>
 <br>
-<b>・alt属性: 画像表示ができない場合にここの文字列を表示</b><br>
-Ｗｅｂページは web上で見られることを前提としたページなので、<br>
-ここには何らかの文字列を入れておくと検索ロボットが巡回してきたときに<br>
-「ここに○○の画像が置いてある」と認識し検索ワードに加える。<br>
-アクセス数を意識する場合は必ず alt属性を記入すると良い。
+このように<span>&lt;img&gt;</span>タグを<span>&lt;a  href=""&gt;&lt;/a&gt;</span> で囲えば良い。<br>
+ここの画像も原画にリンクさせてあるので、クリックすると拡大表示する。<br>
+<br>
+<h3>＊ＨＴＭＬのネスト(入れ子)規則</h3>
+HTMLはタグを入れ子にできるが、内側のタグを閉じてから外側のタグを閉じる。<br>
+例えて言うと、こういう感じ。<br>
+　　【　〔　《　(　)　(　)　》　〕　】<br>
+完全に内側に内包する形でタグを閉じていく。そうしないと、そのタグの内容を正しく読み取ってくれないので注意。
 </p>
 </div>
 <br>
@@ -248,16 +299,16 @@ width="350"  height="200"  align="right"  alt="山本先生の伝言"&gt;</span>
 <h3>＊特殊な文字の表示方法</h3>
 <table align="right">
 <tr><td>
-〔例〕&amp;lt; ⇒ &lt;　　　<br>
-　　　&amp;gt; ⇒ &gt;　　　<br>
-　　　&amp;amp; ⇒ &amp;　　　<br>
-　　　&amp;hearts; ⇒ &hearts; <br>
-　　　&amp;quot; ⇒ &quot;　　<br>
-　　　&amp;#39; ⇒ &#39;　　　<br>
+〔例〕<span>&amp;lt;</span> ⇒ &lt;　　　<br>
+　　　<span>&amp;gt;</span> ⇒ &gt;　　　<br>
+　　　<span>&amp;amp;</span> ⇒ &amp;　　　<br>
+　　　<span>&amp;quot;</span> ⇒ &quot;　　<br>
+　　　<span>&amp;#39;</span> ⇒ &#39;　　　<br>
+　　　<span>&amp;hearts;</span> ⇒ &hearts; <br>
 </td></tr>
 </table>
 <p>
-HTMLでは「&lt;」「&gt;」「&amp;」「&hearts;」を表示するのが難しく、
+HTMLでは「&lt;」「&gt;」「&amp;」を表示するのが難しく、
 「&lt;」「&gt;」はHTMLタグと解釈されてしまうので、
 これを表示させるには「&amp;○○;」のような書き方をします。<br>
 一般文字もこの方法で記述できます。<br clear="all" />
@@ -270,21 +321,17 @@ HTMLでは「&lt;」「&gt;」「&amp;」「&hearts;」を表示するのが難�
 <h2 id="localLink"><i>＊ ページ内リンク ＊</i></h2>
 <div class="content" align="center">
 <h3>＊ページ内を移動するリンク</h3>
-<span style="color: deeppink; font-weight: bold">&lt;h2 id="utility"&gt;</span> のようにタグ内に id 属性で移動させたい場所の名前をつけます。<br>
-<span style="color: deeppink; font-weight: bold">&lt;a href="#utility"&gt;</span> その後 a タグで このように行き先を指定します。<br>
+<span>&lt;h2 id="utility"&gt;</span> のようにタグ内に id 属性で移動させたい場所の名前をつけます。<br>
+<span>&lt;a href="#utility"&gt;</span> その後 a タグで このように行き先を指定します。<br>
 <br>
 <table align="center">
 <tr><td>
-<br>
 ＊ id で名前を付ける<br>
-<span style="color: deeppink; font-weight: bold">
-&lt;h2 id="localLink"&gt;&lt;i&gt;＊ ページ内リンク ＊&lt;/i&gt;&lt;/h2&gt;</span><br>
+<span>&lt;h2 id="localLink"&gt;&lt;i&gt;＊ ページ内リンク ＊&lt;/i&gt;&lt;/h2&gt;</span><br>
 <br>
 ＊リンクに「href="#名前"」と行き先を指定する<br>
-<span style="color: deeppink; font-weight: bold">
-&lt;a href="#localLink"&gt;ページ内リンク&lt;/a&gt;</span>
+<span>&lt;a href="#localLink"&gt;ページ内リンク&lt;/a&gt;</span>
 ⇒ <a href="#localLink">ページ内リンク</a>　<br>
-<br>
 </td></tr>
 </table>
 </div>
@@ -303,9 +350,56 @@ HTMLでは「&lt;」「&gt;」「&amp;」「&hearts;」を表示するのが難�
 <br>
 ＊(株)アンク『ホームページ辞典 HTML, CSS, JavaScript 第６版』翔泳社,2017<br>
 <br>
+</div>
+<h2><i>＊　お　ま　け　＊</i></h2>
+<div class="content" align="center">
+<p>
+最後まで見てくれた方に「おまけ」として、上の目次には載っていない「<b>謎の大鹿プロフィール</b>」をお届けしよう。<br>
 <br>
-<p align="left"><b>†1200×800 / Takaki "Fantasia"</b></p>
-<img src="images/TakakiFantasia1200×800.jpg" width="900" height="600" align="center" alt="TakakiFantasia1200×800.jpg">
+↑要らん？<br>
+<br>
+そうか。なら、やめとこう。<br>
+<br>
+<br>
+いえね。「HTMLミニ講座」としては、キレイにまとまった(と自分では思っている)ところで、
+私のプロフィールを付けてもなぁと。でも一応「webProfile」という お題だし、趣旨と違うファイルをアップするのもアレだから、
+プロフィールも付けておこう。(←しぶしぶかっ)<br>
+<br>
+私、大鹿はリカレントスクールの職業訓練Javaコースの修了生です。
+なので学校や自分の勉強と就職活動を並行して進めていく大変さを身をもって体験しています。<br>
+<br>
+私が訓練生の頃のアダ名は なぜか「姉さん」でした。こうして改めてお知らせすることもないのだけど、
+47歳の おっちゃんが「姉さん」って・・(←本人は けっこう気に入ってたらしい)<br>
+<br>
+リカレントに来る前は 10年も ひきこもりをしていました。その間に たまに怪しげなお仕事もして(わるいことはしてないよ)、
+その前は８年ほど 個別指導の塾で おもに小学生相手に「中学受験の算数」を教えていました。
+なので大鹿は子供と仲良くなるのが とても早いです。<br>
+<br>
+あるとき、小学５年生の男の子と一緒に教室で遊んでいたら、こんなことを言われました。<br>
+
+<b><i>　　小学生「大鹿先生って、子供だねぇ・・」</i></b><br>
+・・って、おいおい。私は小学生の子と一緒の目線で話そうとしているだけではないか。<br>
+<br>
+なので「<s>大鹿は子供と仲良くなるのが とても早い</s>です」ではなく「<b>大鹿は精神年齢が子供</b>」なのらしい。<br>
+<br>
+<br>
+<b>＊おまけの おまけ</b><br>
+<b>◇私の GitHubアカウント</b><br>
+<a href="https://github.com/shika-sophia">https://github.com/shika-sophia</a><br>
+私の拙い(つたない)コードを全世界に公開しちゃってます。私の経歴も丸わかり。<br>
+最近は Gitの「<b>芝を植える</b>」(= GitHubにコードをアップしたり、何か更新すると その日の色が緑に変わる)
+ことにハマッテます。毎日ＰＣを開いて何かアップできるものを作るいい励みになってます。
+とはいえ、たまにはモチベ上がらない日も・・そんなときは、ごくたまにインチキアップでごまかしてしまう私であった・・
+まぁ無理せず、楽しみながらやっていきましょ～<br>
+</p>
+<b>◇好きな画像</b><br>
+私の好きな画像を貼っておきます。<br>
+「貴希(たかき)」さん作。この画像は私のＰＣのロック画面にしているので、いつも見ています。<br>
+<br>
+<p align="left"><b>　†1200×800 / Takaki "Fantasia"</b></p>
+<a href="images/TakakiFantasia1200×800.jpg">
+<img src="images/TakakiFantasia1200×800.jpg" width="900" height="600" alt="TakakiFantasia1200×800.jpg">
+</a>
 　<br>
 　<br>
 　<br>
