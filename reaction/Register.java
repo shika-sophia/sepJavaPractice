@@ -27,7 +27,7 @@ public class Register {
         int day = 0;
         String address = "";
 
-        //---- nameLoop until nameAcceptable ----
+        //==== nameLoop until nameAcceptable ====
         nameLoop:
         while(true) {
             scn = new Scanner(System.in);
@@ -44,7 +44,7 @@ public class Register {
             }
         }//while nameLoop
 
-        //---- birthLoop until birthAcceptable ----
+        //==== birthLoop until birthAcceptable ====
         birthLoop:
         while(true) {
             scn = new Scanner(System.in);
@@ -76,7 +76,7 @@ public class Register {
             }
         }//while birthLoop
 
-        //---- addressLoop until addressAcceptable ----
+        //==== addressLoop until addressAcceptable ====
         addressLoop:
         while(true) {
             scn = new Scanner(System.in);
@@ -99,6 +99,7 @@ public class Register {
         //データベース用の加工
         //LocalDate birthData = LocalDate.of(year, month, day);
 
+        //==== 登録情報の表示 ====
         printRegister(name, birth, address);
 
         scn.close();
