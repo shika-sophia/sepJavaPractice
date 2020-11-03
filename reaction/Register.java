@@ -228,7 +228,7 @@ public class Register {
     }//printError()
 
 
-    //登録内容の表示
+    //==== 登録内容の表示 ====
     private static void printRegister(String name, String birth, String address) {
         StringBuilder bld = new StringBuilder();
         bld.append("お名前　: ").append(name).append("さん\n");
