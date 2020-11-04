@@ -197,7 +197,7 @@ public class TarotRV {
         //出たタロットカードを取得
         String card = TAROT[fortune];
 
-        //==== 説明文を上記ファイルから読み込み ====
+        //==== 説明文をファイルから読み込み ====
         //読み込むデータファイル名
         //ここ相対パスでは読み込めず、絶対パスにしました。みんな違うので書き換えてください。
         String fileName = "C:\\Program Files\\pleiades\\workspace-web\\sepJavaRecurrent\\src\\javaPractice\\reaction\\TarotData.txt";
