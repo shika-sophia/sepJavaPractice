@@ -140,11 +140,11 @@ public class TarotRV {
             break;
 
         case 1://カード枚数で割った余りは 0～(tarot.length - 1) になる
-            fortune = birth % cardNum;
+            fortune = (birth + sec) % cardNum;
             break;
 
-        case 2://birthに 秒を加算
-            fortune = (birth + sec) % cardNum;
+        case 2://birthに 年, 日, 秒を加算
+            fortune = (birth + year+ day + sec) % cardNum;
             break;
 
         case 3://birthに 年と秒を加算
