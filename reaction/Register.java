@@ -142,10 +142,10 @@ public class Register {
             nameAccept = true;
         } else {
             nameAccept = false;
-        }
 
-        //---- エラーメッセージの表示 ----
-        printError(message);
+            //---- エラーメッセージの表示 ----
+            printError(message);
+        }
 
         return nameAccept;
     }//judgeName()
@@ -161,12 +161,14 @@ public class Register {
        //年月日の適正判定、３つとも適合する必要があるので独立した if文３つ
         List<String> message = new ArrayList<>();
 
+        //---- judge year ----
         if (1800 < year && year <= currentYear) {
             ;
         } else {
             message.add("年の値が不正です。");
         }
 
+        //---- judge month ----
         if (1 <= month && month <= 12) {
             ;
         } else {
@@ -176,10 +178,11 @@ public class Register {
         //year, monthが適正値ならその年月の最終日を取得
         int lastDay = 0;
         if (message.size() == 0) {
-            LocalDate user = LocalDate.of(year, month, 1);
-            lastDay = user.lengthOfMonth();
+            LocalDate temp = LocalDate.of(year, month, 1);
+            lastDay = temp.lengthOfMonth();
         }
 
+        //---- judge day ----
         if (1 <= day && day <= lastDay) {
             ;
         }else {
@@ -191,10 +194,10 @@ public class Register {
             birthAccept =true;
         } else {
             birthAccept =false;
-        }
 
-        //---- エラーメッセージの表示 ----
-        printError(message);
+            //---- エラーメッセージの表示 ----
+            printError(message);
+        }
 
         return birthAccept;
     }//judgeBirth()
@@ -258,7 +261,7 @@ public class Register {
 ＡＩ作りのいい練習になるだろう。
 
 
-【考察】
+【考察】私自身のリメイクコードについて
 ・本来は登録前に「この内容でよろしいですか？」と聞いて
   YESなら登録、NOなら入力のやり直しとすべきところだが、whileループをもう１つ追加すればできるだろう。
 
