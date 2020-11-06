@@ -25,18 +25,20 @@
  *     そういうときに要素をいくつでも追加できる ArrayListを使う。
  *
  * 《Arraylistの使い方》
- * ・終端に値を代入      add(値)
- * ・indexを指定して代入 add(index, 値)
- * ・値を取得            get(index)
- * ・リストの要素数      list.size()
- *
- * メソッドは違っても配列と同じように使える。
- *
  * インスタンスは
  *   ArrayList<String> list = new ArrayList<>();
- *   ArrayList<Integer> list = new ArrayList<>();
+ *   ArrayList<Integer> list = new ArrayList<>(); intではなく Integerを用いることに注意
  *
- *   intではなく Integerを用いることに注意
+ * ・終端に値を代入      list.add(値)
+ * ・indexを指定して代入 list.add(index, 値)
+ * ・indexの値を置換     list.set(index, 値)
+ * ・値を取得            list.get(index)
+ * ・リストの要素数      list.size()
+ *
+ * メソッドと使い方を覚えてしまえばそれほど難しくはないです。
+ * むしろ配列より優先的に Listを使うほうが値の追加に強いコードになります。
+ *
+ *
  */
 package javaPractice.exercise;
 
