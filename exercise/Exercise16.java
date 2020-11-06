@@ -21,7 +21,6 @@
  * 火力: 1200
  * 装甲: 2800
  */
-package javaPractice.exercise;
 
 public class Exercise16{
 
