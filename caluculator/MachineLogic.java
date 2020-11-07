@@ -32,21 +32,27 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MachineLogic {
-    private static List<String> textArea;   //入力途中の計算式を保存
     private static List<Integer> inputList; //user inputの履歴を保存
+    private static StringBuilder textArea;   //入力途中の計算式を保存
     private static int inputNum; //計算のオペランド(リテラル)を入力
     private static int inputWay; //計算方法を数字で入力
     private static String CALC_WAY;   //計算方法の文字列(固定値)
     private static Scanner scn;
 
     public MachineLogic() {
-        textArea = new ArrayList<String>(32);
         inputList = new ArrayList<Integer>(32);
-
+        textArea = new StringBuilder();
+        inputNum = 0;
+        inputWay = 0;
     }
 
     public static void main(String[] args) {
-    //public void inputLoop(){
+        inputList = new ArrayList<Integer>(32);
+        textArea = new StringBuilder();
+        inputNum = 0;
+        inputWay = 0;
+
+    //public void inputLoop(CalcProcess calc){
 
         //==== user input until acceptable input / 適正値まで入力ループ ====
         input:
@@ -56,18 +62,41 @@ public class MachineLogic {
             try {
                 //input 偶数回のみ値の入力から、奇数回は計算方法から
                 if(inputList.size() % 2 == 0) {
+
                     //---- inputNum ----
                     System.out.print("値を入力してください。");
+
+                    //初回でなければ、入力経過の表示
+                    if(!(inputList.isEmpty())){
+                        System.out.printf("\n〔 %s 〕", textArea.toString());
+                    }
+
                     inputNum = scn.nextInt();
                     System.out.println();
+
+                    //---- add inputNum to inputList and textArea ----
+                    inputList.add(inputNum);
+                    textArea.append(inputNum);
                 }
 
-                //---- add inputNum to both List ----
-                textArea.add(String.valueOf(inputNum));
-                inputList.add(inputNum);
+                //---- 不正値チェック (０除算)----
+                //「÷」「剰余」のとき
+                if (inputWay == 4 || inputWay == 5) {
+                    //かつ直近の値が 0で inputListの入力が４つ以上のとき
+                    if(inputNum == 0 && inputList.size() >= 3) {
+                        System.out.println("< ！ > ０で割ることはできません。\n");
 
-                //---- print CALC_WAY ----
+                        //直近の値をリストから消去
+                        inputList.remove(inputList.size() - 1);
+                        textArea.deleteCharAt(textArea.length() - 1);
+
+                        continue input;
+                    }//if
+                }//if
+
+                //---- print CALC_WAY and textArea ----
                 printCalcWay();
+                System.out.printf("〔 %s 〕", textArea.toString());
 
                 //---- inputWay ----
                 inputWay = scn.nextInt();
@@ -87,39 +116,150 @@ public class MachineLogic {
                 continue input;
             }
 
-            //---- 計算方法の分岐 ----
-            boolean isEnd = selectCalcWay();
+            //inputWay [0]～[5]のみ対応、編集中
+            if (0 <= inputWay && inputWay <= 5) {
+                ;
+            } else {
+                System.out.println("<！> [6]～[9]は現在 未対応です。\n");
+                continue input;
+            }
 
-            //「 = 」のときのみ while inputループを抜ける
-            if (isEnd) {
+            //---- add inputWay to inputList and textArea----
+            inputList.add(inputWay);
+
+            String wayStr = textFormat(inputWay);
+            textArea.append(wayStr);
+
+            //値が１つしかないと計算不可なので入力を続ける
+            if(inputList.size() < 4) {
+                //---- 不正値チェック (値１つなのに「＝」) ----
+                if(inputWay == 0) {
+                    System.out.println("< ！ > 値が１つだと計算できません。");
+
+                    //直近の計算方法をリストから消去
+                    inputList.remove(inputList.size() - 1);
+                    textArea.delete(textArea.length() - 3, textArea.length());
+                }
+
+                continue input;
+            }
+
+            //「＝」のとき while inputループを抜ける
+            if (inputWay == 0 && inputList.size() >= 4) {
+                System.out.printf("〔 %s 〕\n", textArea.toString());
                 break input;
             }
         }//while input
+        //System.out.println("inputLoop() 終了");
 
         scn.close();
+        //return this.inputList;
     }//inputLoop() or main() for Test
 
+
+    private static String textFormat(int inputWay) {
+        String[] calcArray = new String[] {
+            " ＝ "," ＋ "," ー "," × "," ÷ ", " ％(剰余) "
+        };
+        String wayStr = calcArray[inputWay];
+
+        return wayStr;
+    }//textFormat()
 
     //====== 計算方法の表示 ======
     private static void printCalcWay() {
         //初回のみ計算方法の作成
         if (CALC_WAY == null) {
             StringBuilder bld = new StringBuilder();
-            bld.append("[1] + , [2] - , [3] * , [4] / ,[5]剰余 \n");
-            bld.append("[6] C , [7] ←, [8] ( , [9] ) ,[0] =   \n");
-            bld.append("計算方法を選んでください。[0]～[9] ");
+            bld.append("[1] ＋ , [2] ー , [3] × , [4] ÷ ,[5]剰余 \n");
+            bld.append("[6] Ｃ , [7] ← , [8] (  , [9] )  ,[0] ＝  \n");
+            bld.append("計算方法を選んでください。[0]～[9] \n");
 
             CALC_WAY = bld.toString();
         }
 
-        System.out.println(CALC_WAY);
+        System.out.print(CALC_WAY);
     }//inputCalcWay()
 
-
-    //====== 計算方法の分岐 ======
-    private static boolean selectCalcWay() {
-        boolean isEnd = false;
-
-        return isEnd;
-    }//selectCalcWay()
 }//class
+
+/*
+//====== エラーテスト ======
+値を入力してください。
+3
+
+[1] ＋ , [2] ー , [3] × , [4] ÷ ,[5]剰余
+[6] Ｃ , [7] ← , [8] (  , [9] )  ,[0] ＝
+計算方法を選んでください。[0]～[9]
+〔 3 〕4
+
+値を入力してください。
+〔 3 ÷  〕0
+
+< ！ > ０で割ることはできません。
+
+値を入力してください。
+〔 3 ÷  〕3
+------------------------------------------
+値を入力してください。
+〔 12 ％(剰余)  〕0
+
+< ！ > ０で割ることはできません。
+
+値を入力してください。
+〔 12 ％(剰余)  〕2
+------------------------------------------
+[1] ＋ , [2] ー , [3] × , [4] ÷ ,[5]剰余
+[6] Ｃ , [7] ← , [8] (  , [9] )  ,[0] ＝
+計算方法を選んでください。[0]～[9]
+〔 4 〕6
+
+<！> [6]～[9]は現在 未対応です。
+
+[1] ＋ , [2] ー , [3] × , [4] ÷ ,[5]剰余
+[6] Ｃ , [7] ← , [8] (  , [9] )  ,[0] ＝
+計算方法を選んでください。[0]～[9]
+〔 4 〕-1
+
+<！> [0]～[9]で入力してください
+
+[1] ＋ , [2] ー , [3] × , [4] ÷ ,[5]剰余
+[6] Ｃ , [7] ← , [8] (  , [9] )  ,[0] ＝
+計算方法を選んでください。[0]～[9]
+------------------------------------------
+値を入力してください。
+7
+
+[1] ＋ , [2] ー , [3] × , [4] ÷ ,[5]剰余
+[6] Ｃ , [7] ← , [8] (  , [9] )  ,[0] ＝
+計算方法を選んでください。[0]～[9]
+〔 7 〕0
+
+< ！ > 値が１つだと計算できません。
+[1] ＋ , [2] ー , [3] × , [4] ÷ ,[5]剰余
+[6] Ｃ , [7] ← , [8] (  , [9] )  ,[0] ＝
+計算方法を選んでください。[0]～[9]
+〔 7 〕1
+
+値を入力してください。
+〔 7 ＋  〕
+------------------------------------------
+値を入力してください。
+値
+<！> 整数で入力してください。
+
+値を入力してください。
+1
+
+[1] ＋ , [2] ー , [3] × , [4] ÷ ,[5]剰余
+[6] Ｃ , [7] ← , [8] (  , [9] )  ,[0] ＝
+計算方法を選んでください。[0]～[9]
+〔 1 〕＝
+<！> 整数で入力してください。
+
+[1] ＋ , [2] ー , [3] × , [4] ÷ ,[5]剰余
+[6] Ｃ , [7] ← , [8] (  , [9] )  ,[0] ＝
+計算方法を選んでください。[0]～[9]
+〔 1 〕
+------------------------------------------
+*/
