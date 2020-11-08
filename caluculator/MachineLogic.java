@@ -4,25 +4,28 @@
  * @content 3 class ,following
  *
  * @class CalculatorMain / main() /
+ *     field: opeList, wayList, x, y
+ *     method: main(),separateOperand(), putXY(), selectCalcWay()
  *     全体の司令塔、各クラスのインスタンス, 計算方法の分岐、 データの授受
  *
  * @class CalcProcess
- *     field: result, prevResult, memoSum
- *     method: calcAdd(), calcSubstract(), calcMultiply(), calcDevide()[except 0], calcRest()[except 0]
- *     overload: calcAdd(double d) as BigDecimal.add() ...etc (appendix function)
+ *     field: result
+ *     method: calcAdd(), calcSubstract(), calcMultiply(), calcDevide(), calcRest()
+ *    〔overload: calcAdd(double d) as BigDecimal.add() ...etc〕(appendix function)
  *
- *     計算処理と計算結果の保持、除算と剰余はゼロチェック機能
+ *     計算処理と計算結果の保持、除算と剰余
  *     (追加機能: 小数の計算に正確を期すために BigDecimalクラスによる各メソッドのオーバーロード)
  *
  * @class MachineLogic
  *     field: inputList, textArea, inputNum, inputWay, CALC_WAY, scn
- *     method: inputLoop(), textFormat(), printCalcWay(), printResult()
- *     ユーザーの入力、不正値ループ、入力途中の計算式表示、計算結果の表示
+ *     method: inputLoop(), excreptZero(), ckeckWay(),
+ *             textFormat(), printCalcWay(), printResult()
+ *     ユーザーの入力、不正値ループ、ゼロ除算チェック、入力途中の計算式表示、計算結果の表示
  *
  * @see 関連src: javaPractice / exercise / Exercise04Ans ～ add, subStract, multiply, devide, except 0
  * @see 関連src: javaPracrice / chapter05 / Pracitce5_4 ～ BigDecimal
  * @author shika
- * @date 2020-11-07 / 0930-
+ * @date 2020-11-07 ,11-08
  */
 package javaPractice.caluculator;
 
