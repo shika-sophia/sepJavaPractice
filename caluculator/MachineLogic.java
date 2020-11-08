@@ -194,7 +194,7 @@ public class MachineLogic {
     //====== inputWayの数字から記号に変換 ======
     private String textFormat(int inputWay) {
         String[] calcArray = new String[] {
-            " ＝ "," ＋ "," ー "," × "," ÷ ", " ％(剰余) "
+            " ＝ "," ＋ "," ― "," × "," ÷ ", " ％(剰余) "
         };
         String wayStr = calcArray[inputWay];
 
@@ -207,7 +207,7 @@ public class MachineLogic {
         //初回のみ計算方法の作成
         if (CALC_WAY == null) {
             StringBuilder bld = new StringBuilder();
-            bld.append("[1] ＋ , [2] ー , [3] × , [4] ÷ ,[5]剰余 \n");
+            bld.append("[1] ＋ , [2] ― , [3] × , [4] ÷ ,[5]剰余 \n");
             bld.append("[6] Ｃ , [7] ← , [8]小数, [9] Ｍ ,[0] ＝  \n");
             bld.append("計算方法を選んでください。[0]～[9] \n");
 
