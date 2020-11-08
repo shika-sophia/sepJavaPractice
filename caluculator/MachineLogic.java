@@ -1,7 +1,7 @@
 /**
  * @title javaPractice / calculator / Calculator.java
- * @content 計算機をコンソールで再現するアプリ
- * @content 3 class ,following
+ * @content ３数以上の整数計算をするアプリ
+ * @content ３ class ,following
  *
  * @class CalculatorMain / main() /
  *     field: opeList, wayList, x, y
@@ -112,7 +112,17 @@ public class MachineLogic {
             inputList.add(inputWay);
 
             String wayStr = textFormat(inputWay);
-            textArea.append(wayStr);
+
+            //「×」「÷」「％」のとき ()を挿入
+            if ((inputWay == 3 || inputWay == 4 || inputWay == 5) && inputList.size() >= 3) {
+                textArea.insert(0, "( ");
+                textArea.append(" )").append(wayStr);
+            } else {
+                textArea.append(wayStr);
+            }
+
+
+
 
             //「＝」のとき while inputループを抜ける
             //値が１つだと計算不可なので入力継続
