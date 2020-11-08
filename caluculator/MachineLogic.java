@@ -18,7 +18,7 @@
  *
  * @class MachineLogic
  *     field: inputList, textArea, inputNum, inputWay, CALC_WAY, scn
- *     method: inputLoop(), excreptZero(), ckeckWay(),
+ *     method: inputLoop(), excreptZero(), checkWay(),
  *             textFormat(), printCalcWay(), printResult()
  *     ユーザーの入力、不正値ループ、ゼロ除算チェック、入力途中の計算式表示、計算結果の表示
  *
