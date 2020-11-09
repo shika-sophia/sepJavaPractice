@@ -30,18 +30,27 @@ public class CalculatorMain2nd {
     static List<Double> opeList; //オペランドを保存
     static List<Integer> wayList;//計算方法を保存
     static List<Double> resultList;//計算結果を保存
-    static Scanner scn = null;
+    static List<Double> memoryList;  //計算途中のメモリを保持
+    static Scanner scn;
 
-    public static void main(String[] args) {
+    //static初期化子 (staticはインスタンスしないのでコンストラクタの代わり)
+    static {
         opeList = new ArrayList<Double>(32);
         wayList = new ArrayList<Integer>();
         resultList = new ArrayList<Double>();
+        memoryList = new ArrayList<Double>();
+        scn = null;
+    }
 
+    public static void main(String[] args) {
         CalcDouble calc = new CalcDouble();
         CalcLogic logic = new CalcLogic();
 
         //入力ループ
         inputLoop(calc, logic);
+
+        //全計算式と最終計算結果の表示
+        //logic.printResult(opeList, wayList);
 
         scn.close();
     }//main()
@@ -106,22 +115,7 @@ public class CalculatorMain2nd {
             }
 
             //---- 不正値チェック (inputWay)----
-            String flag = logic.judgeWay(inputWay, opeList);
-
-            //==== continueで while input 先頭へ====
-            if(flag.equals("clear")) {
-                opeList.clear();
-                wayList.clear();
-                continue input;
-            }
-
-            if(flag.equals("prev")) {
-                opeList.remove(opeList.size() - 1);
-                if (wayList.size() >= 1) {
-                    wayList.remove(wayList.size() - 1);
-                }
-                continue input;
-            }
+            String flag = logic.judgeWay(inputWay, opeList, wayList, memoryList);
 
             if(flag.contains("continue input")) {
                 continue input;
@@ -130,6 +124,7 @@ public class CalculatorMain2nd {
             //---- inputWayをリストに記録 ----
             wayList.add(inputWay);
 
+            //---- オペランド２数以上かつ「＝」でwhile inputを抜ける ----
             if (flag.equals("break input")) {
                 break input;
             }
@@ -215,6 +210,51 @@ public class CalculatorMain2nd {
 
         return result;
     }//selectCalcMethod()
+
+
+    //====== 「Ｃ」clearの処理 from logic.judgeWay() ======
+    public static void clearLogic() {
+        //両リストを全消去
+        opeList.clear();
+        wayList.clear();
+        //continueは logic.judgeWay()から flagで指示
+    }//clearLogic()
+
+
+    //====== 「←」prevの処理 from logic.judgeWay() ======
+    public static void prevLogic() {
+        //直近のオペランドと計算方法を１つずつ消去
+        opeList.remove(opeList.size() - 1);
+
+        if (wayList.size() >= 1) {
+            wayList.remove(wayList.size() - 1);
+        }
+
+        //continueは logic.judgeWay()から flagで指示
+    }//prevLogic()
+
+
+    //====== memoryの処理 from logic.judgeWay() ======
+    public static void memoryLogic(int inputWay) {
+        if(inputWay == 8) { //[8] Ｍ＋
+            //値１つなら値を、値２つ以上なら最終の仮結果をＭメモリに登録
+            if (opeList.size() == 1) {
+                memoryList.add(opeList.get(0));
+            } else {
+                memoryList.add(resultList.get(resultList.size() - 1));
+            }
+        }
+
+        if(inputWay == 9) { //[9] ＭＲ
+
+        }
+
+        if(inputWay == 10) { //[10] ＭＣ
+            memoryList.clear();
+        }
+
+        //continueは logic.judgeWay()から flagで指示
+    }// memoryLogic(int inputWay)
 
 }//class
 

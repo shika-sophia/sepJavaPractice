@@ -11,9 +11,9 @@ package javaPractice.calculator;
 import java.util.List;
 
 public class CalcLogic {
-    StringBuilder textArea;
-    private String CALC_WAY;
-    private String[] calcArray;
+    StringBuilder textArea;     //途中式を表示するための箱
+    private String CALC_WAY;   //計算方法の表示(calcArrayから自動生成)
+    private String[] calcArray;//計算方法の文字列変換用 配列
 
     CalcLogic(){
         textArea = new StringBuilder();
@@ -49,7 +49,7 @@ public class CalcLogic {
                 }
             }//for
 
-            bld.append("計算方法を選んでください。[0]～[10] \n");
+            bld.append(String.format("計算方法を選んでください。[0]～[%d] \n", calcArray.length - 1));
 
             CALC_WAY = bld.toString();
         }
@@ -59,7 +59,9 @@ public class CalcLogic {
 
 
     //====== 計算方法の適正判定 ======
-    public String judgeWay(int inputWay, List<Double> opeList) {
+    public String judgeWay(int inputWay,
+            List<Double> opeList, List<Integer> wayList, List<Double> memoryList) {
+
         String flag = "";
 
         switch(inputWay) {
@@ -77,27 +79,55 @@ public class CalcLogic {
 
         case 1://「＋」
         case 2://「―」
+            textArea.append(calcArray[inputWay]);
+            break;
+
         case 3://「×」
         case 4://「÷」
         case 5://「％」
+            //最終計算方法を取得し「＝」の後の表示のみ()を挿入
+            if(wayList.get(wayList.size() - 1) == 0) {
+                textArea.insert(0, "(");
+                textArea.append(")");
+            }
             textArea.append(calcArray[inputWay]);
             break;
 
         case 6://「Ｃ」
-            flag = "clear";
+            //textAreaを全消去
             textArea.delete(0, textArea.length());
+
+            //Main.両リストの処理
+            CalculatorMain2nd.clearLogic();
+
+            //inputLoop()に戻って continue
+            flag = "continue input";
             break;
 
         case 7://「←」
-            flag = "prev";
-            textArea.delete((textArea.length() - 1), textArea.length());
+            textArea.delete((textArea.length() - 4), textArea.length());
+            CalculatorMain2nd.prevLogic();
+            flag = "continue input";
             break;
 
         case 8://「Ｍ＋」
+            if (memoryList.size() == 0) {
+                textArea.insert(0, "Ｍ | ");
+            }
+            CalculatorMain2nd.memoryLogic(inputWay);
+            flag = "continue input";
+            break;
+
         case 9://「ＭＲ」
         case 10://「ＭＣ」
+            if (memoryList.size() == 0) {
+                System.out.println("< ！ > Ｍメモリはありません。\n");
+                flag = "continue input";
+                return flag;
+            }
+
+            CalculatorMain2nd.memoryLogic(inputWay);
             flag = "continue input";
-            System.out.println("< ！ > 未対応です。(編集中)");
             break;
 
         default:
