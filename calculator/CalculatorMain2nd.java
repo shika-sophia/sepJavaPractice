@@ -31,6 +31,9 @@ public class CalculatorMain2nd {
     static List<Integer> wayList;//計算方法を保存
     static List<Double> resultList;//計算結果を保存
     static List<Double> memoryList;  //計算途中のメモリを保持
+
+    static CalcDouble calc;
+    static CalcLogic logic;
     static Scanner scn;
 
     //static初期化子 (staticはインスタンスしないのでコンストラクタの代わり)
@@ -39,26 +42,28 @@ public class CalculatorMain2nd {
         wayList = new ArrayList<Integer>();
         resultList = new ArrayList<Double>();
         memoryList = new ArrayList<Double>();
+
+        calc = new CalcDouble();
+        logic = new CalcLogic();
         scn = null;
     }
 
     public static void main(String[] args) {
-        CalcDouble calc = new CalcDouble();
-        CalcLogic logic = new CalcLogic();
 
         //入力ループ
-        inputLoop(calc, logic);
+        inputLoop();
 
         //全計算式と最終計算結果の表示
-        //logic.printResult(opeList, wayList);
+        logic.printResult(opeList, wayList, resultList, memoryList);
 
         scn.close();
     }//main()
 
 
-    private static void inputLoop(CalcDouble calc, CalcLogic logic) {
+    private static void inputLoop() {
         double inputNum = 0d;//オペランドの入力
         int inputWay = 0;    //計算方法の入力
+        String text = "";
 
         //適正値が入るまでループ、「＝」で終了
         input:
@@ -71,7 +76,7 @@ public class CalculatorMain2nd {
                 if (opeList.size() > wayList.size()) {
                     ;
                 } else {
-                    System.out.println("値を入力してください。(整数,小数)");
+                    System.out.print("値を入力してください。(整数,小数)");
 
                     //初回は表示なし
                     if(opeList.isEmpty()) {
@@ -82,19 +87,19 @@ public class CalculatorMain2nd {
 
                     inputNum = scn.nextDouble();
                     System.out.println();
-                }
 
-                //---- inputNumをリストに記録 ----
-                opeList.add(inputNum);
+                    //---- inputNumをリストに記録 ----
+                    opeList.add(inputNum);
 
-                //---- 値のtextArea か 仮の計算結果temp を表示 ----
-                String text = tempAns(calc, logic);
+                    //---- 値のtextArea か 仮の計算結果temp を表示 ----
+                    text = tempAns();
 
-                //---- ０除算の処理 ----
-                if(text.contains("< ！ > ０")){
-                    System.out.println(text);
-                    opeList.remove(opeList.size() - 1);
-                    continue input;
+                    //---- ０除算の処理 ----
+                    if(text.contains("< ！ > ０")){
+                        System.out.println(text);
+                        opeList.remove(opeList.size() - 1);
+                        continue input;
+                    }
                 }
 
                 //==== 計算方法の入力 inputWay ====
@@ -115,7 +120,8 @@ public class CalculatorMain2nd {
             }
 
             //---- 不正値チェック (inputWay)----
-            String flag = logic.judgeWay(inputWay, opeList, wayList, memoryList);
+            String flag = logic.judgeWay(inputWay,
+                opeList, wayList, resultList, memoryList);
 
             if(flag.contains("continue input")) {
                 continue input;
@@ -135,13 +141,13 @@ public class CalculatorMain2nd {
 
 
     //====== 値入力時のtextArea表示
-    private static String tempAns(CalcDouble calc, CalcLogic logic) {
+    private static String tempAns() {
         String text = "";
 
         //計算可能なら計算結果を取得
         if(opeList.size() >= 2) {
             //----計算メソッドを選択し計算結果を取得 ----
-            String result = selectCalcMethod(calc);
+            String result = selectCalcMethod();
 
             //０除算のエラーメッセージが戻ってきたので表示
             //result をinputLoop()に戻してcontinue
@@ -162,11 +168,11 @@ public class CalculatorMain2nd {
         }
 
         return text;
-    }//printTemp()
+    }//tempAns()
 
 
     //====== 計算方法を分岐、計算結果を取得 ======
-    private static String selectCalcMethod(CalcDouble calc) {
+    private static String selectCalcMethod() {
         String result = "";
 
         //---- x,yを生成 ----
@@ -245,8 +251,9 @@ public class CalculatorMain2nd {
             }
         }
 
-        if(inputWay == 9) { //[9] ＭＲ
-
+        if(inputWay == 9) { //[9] Ｍ＝
+             double sum = integralMemory();
+             resultList.add(sum);
         }
 
         if(inputWay == 10) { //[10] ＭＣ
@@ -254,7 +261,88 @@ public class CalculatorMain2nd {
         }
 
         //continueは logic.judgeWay()から flagで指示
-    }// memoryLogic(int inputWay)
+    }// memoryLogic()
+
+    //====== memoryList の各要素を合計する ======
+    //普通のリストの和ではなくBigDecimalでやらないといけない
+    private static double integralMemory() {
+        double sum = 0d;
+        double x = 0d;
+        double y = 0d;
+
+        if(memoryList.size() == 1) {
+            sum = memoryList.get(0);
+            return sum;
+        }
+
+        for(int i = 0; i < memoryList.size(); i++) {
+            if(i == 0) {
+                x = memoryList.get(0);
+            } else if (i == 1) {
+                y = memoryList.get(1);
+            } else {
+                x = sum;
+                y = memoryList.get(i);
+            }
+            String result = calc.calcAdd(x, y);
+            sum = Double.parseDouble(result);
+
+        }//for memoryList
+
+        return sum;
+    }//integralMemory()
 
 }//class
 
+/*
+値を入力してください。(整数,小数)
+4.66
+
+[0]  ＝ , [1]  ＋ , [2]  ― , [3]  × , [4]  ÷ , [5]  ％(剰余) ,
+[6]  Ｃ , [7]  ← , [8] Ｍ＋, [9] Ｍ＝, [10] ＭＣ,
+計算方法を選んでください。[0]～[10]
+〔 4.66.. 〕1
+
+値を入力してください。(整数,小数)
+〔 4.66.. ＋  〕5.55
+
+[0]  ＝ , [1]  ＋ , [2]  ― , [3]  × , [4]  ÷ , [5]  ％(剰余) ,
+[6]  Ｃ , [7]  ← , [8] Ｍ＋, [9] Ｍ＝, [10] ＭＣ,
+計算方法を選んでください。[0]～[10]
+〔 10.21.. 〕3
+
+値を入力してください。(整数,小数)
+〔 10.21.. ×  〕45
+
+[0]  ＝ , [1]  ＋ , [2]  ― , [3]  × , [4]  ÷ , [5]  ％(剰余) ,
+[6]  Ｃ , [7]  ← , [8] Ｍ＋, [9] Ｍ＝, [10] ＭＣ,
+計算方法を選んでください。[0]～[10]
+〔 459.45.. 〕4
+
+値を入力してください。(整数,小数)
+〔 459.45.. ÷  〕56
+
+[0]  ＝ , [1]  ＋ , [2]  ― , [3]  × , [4]  ÷ , [5]  ％(剰余) ,
+[6]  Ｃ , [7]  ← , [8] Ｍ＋, [9] Ｍ＝, [10] ＭＣ,
+計算方法を選んでください。[0]～[10]
+〔 8.20.. 〕0
+
+((4.66 ＋ 5.55) × 45.0) ÷ 56.0 ＝ 8.20446
+
+--------------------------------------------
+値を入力してください。(整数,小数)45.22
+
+[0]  ＝ , [1]  ＋ , [2]  ― , [3]  × , [4]  ÷ , [5]  ％(剰余) ,
+[6]  Ｃ , [7]  ← , [8] Ｍ＋, [9] Ｍ＝, [10] ＭＣ,
+計算方法を選んでください。[0]～[10]
+〔 45.22.. 〕0
+
+< ！ > 値が１つしかないと計算できません。
+
+[0]  ＝ , [1]  ＋ , [2]  ― , [3]  × , [4]  ÷ , [5]  ％(剰余) ,
+[6]  Ｃ , [7]  ← , [8] Ｍ＋, [9] Ｍ＝, [10] ＭＣ,
+計算方法を選んでください。[0]～[10]
+〔 45.22.. 〕
+----------------------------------------------
+
+*/

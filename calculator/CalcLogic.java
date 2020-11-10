@@ -19,7 +19,7 @@ public class CalcLogic {
         textArea = new StringBuilder();
         calcArray = new String[] {
             " ＝ "," ＋ "," ― "," × "," ÷ ", " ％(剰余) ",
-            " Ｃ "," ← ","Ｍ＋","ＭＲ","ＭＣ"
+            " Ｃ "," ← ","Ｍ＋","Ｍ＝","ＭＣ"
         };
     }
 
@@ -59,8 +59,8 @@ public class CalcLogic {
 
 
     //====== 計算方法の適正判定 ======
-    public String judgeWay(int inputWay,
-            List<Double> opeList, List<Integer> wayList, List<Double> memoryList) {
+    public String judgeWay(int inputWay, List<Double> opeList, List<Integer> wayList,
+            List<Double> resultList, List<Double> memoryList) {
 
         String flag = "";
 
@@ -86,7 +86,9 @@ public class CalcLogic {
         case 4://「÷」
         case 5://「％」
             //最終計算方法を取得し「＝」の後の表示のみ()を挿入
-            if(wayList.get(wayList.size() - 1) == 0) {
+            if(wayList.isEmpty()) {
+                ;
+            } else if(wayList.get(wayList.size() - 1) == 0) {
                 textArea.insert(0, "(");
                 textArea.append(")");
             }
@@ -105,38 +107,72 @@ public class CalcLogic {
             break;
 
         case 7://「←」
-            textArea.delete((textArea.length() - 4), textArea.length());
+            textArea.delete(0, textArea.length());
             CalculatorMain2nd.prevLogic();
+
+            if(resultList.isEmpty()) {
+                textArea.append(opeList.get(opeList.size() - 1));
+            } else {
+                textArea.append(resultList.get(resultList.size() -1));
+            }
+
             flag = "continue input";
             break;
 
         case 8://「Ｍ＋」
-            if (memoryList.size() == 0) {
+            if (memoryList.isEmpty()) {
                 textArea.insert(0, "Ｍ | ");
             }
             CalculatorMain2nd.memoryLogic(inputWay);
             flag = "continue input";
             break;
 
-        case 9://「ＭＲ」
-        case 10://「ＭＣ」
-            if (memoryList.size() == 0) {
+        case 9://「Ｍ＝」
+            if (memoryList.isEmpty()) {
                 System.out.println("< ！ > Ｍメモリはありません。\n");
                 flag = "continue input";
                 return flag;
             }
 
             CalculatorMain2nd.memoryLogic(inputWay);
+            textArea.delete(0, textArea.length());
+            textArea.append(resultList.get(resultList.size() - 1));
+            flag = "continue input";
+            break;
+
+        case 10://「ＭＣ」
+            if (memoryList.isEmpty()) {
+                System.out.println("< ！ > Ｍメモリはありません。\n");
+                flag = "continue input";
+                return flag;
+            }
+
+            CalculatorMain2nd.memoryLogic(inputWay);
+            textArea.delete(0, 3);
             flag = "continue input";
             break;
 
         default:
             flag = "continue input";
-            System.out.printf("< ！ > [0]～[%d]で入力してください。\n", (calcArray.length - 1));
+            System.out.printf("< ！ > [0]～[%d]で入力してください。\n\n", (calcArray.length - 1));
             break;
         }//switch
 
         return flag;
     }//judgeWay()
+
+
+    //====== 最終結果の表示 ======
+    public void printResult(List<Double> opeList, List<Integer> wayList, List<Double> resultList, List<Double> memoryList) {
+        textArea.delete(0, textArea.length());
+
+        for(int i = 0; i < wayList.size(); i++) {
+            textArea.append(opeList.get(i));
+            judgeWay(wayList.get(i), opeList, wayList, resultList, memoryList);
+        }
+        textArea.append(resultList.get(resultList.size() - 1));
+
+        System.out.println(textArea.toString());
+    }//printResult()
 
 }//class
