@@ -115,7 +115,7 @@ public class CalculatorMain2nd {
 
             //---- 不正値チェック(非数値)----
             } catch (InputMismatchException e) {
-                System.out.println("< ！ > 数値で入力してください。\n");
+                System.out.println("\n< ！ > 数値で入力してください。\n");
                 continue input;
             }
 
