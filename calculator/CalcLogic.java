@@ -99,6 +99,10 @@ public class CalcLogic {
             //textAreaを全消去
             textArea.delete(0, textArea.length());
 
+            if(memoryList.size() >= 1) {
+                textArea.append(" Ｍ | ");
+            }
+
             //Main.両リストの処理
             CalculatorMain2nd.clearLogic();
 
@@ -108,11 +112,17 @@ public class CalcLogic {
 
         case 7://「←」
             textArea.delete(0, textArea.length());
-            CalculatorMain2nd.prevLogic();
 
-            if(resultList.isEmpty()) {
+            if(memoryList.size() >= 1) {
+                textArea.append(" Ｍ | ");
+            }
+
+            CalculatorMain2nd.prevLogic();
+            if(opeList.isEmpty()) {
+                ;
+            }else if(resultList.isEmpty() && opeList.size() >= 1) {
                 textArea.append(opeList.get(opeList.size() - 1));
-            } else {
+            } else if (resultList.size() >= 1){
                 textArea.append(resultList.get(resultList.size() -1));
             }
 
@@ -120,6 +130,7 @@ public class CalcLogic {
             break;
 
         case 8://「Ｍ＋」
+            //Ｍメモリ初回のみ追加表示
             if (memoryList.isEmpty()) {
                 textArea.insert(0, "Ｍ | ");
             }
@@ -135,8 +146,16 @@ public class CalcLogic {
             }
 
             CalculatorMain2nd.memoryLogic(inputWay);
+
+            //表面表示用
             textArea.delete(0, textArea.length());
-            textArea.append(resultList.get(resultList.size() - 1));
+
+            if(resultList.isEmpty() && opeList.size() >= 1) {
+                textArea.append(opeList.get(opeList.size() - 1));
+            } else if (resultList.size() >= 1){
+                textArea.append(resultList.get(resultList.size() -1));
+            }
+
             flag = "continue input";
             break;
 
@@ -148,7 +167,7 @@ public class CalcLogic {
             }
 
             CalculatorMain2nd.memoryLogic(inputWay);
-            textArea.delete(0, 3);
+            textArea.delete(0, 4);
             flag = "continue input";
             break;
 
@@ -163,13 +182,20 @@ public class CalcLogic {
 
 
     //====== 最終結果の表示 ======
-    public void printResult(List<Double> opeList, List<Integer> wayList, List<Double> resultList, List<Double> memoryList) {
+    public void printResult(List<Double> opeList, List<Integer> wayList,
+                            List<Double> resultList, List<Double> memoryList) {
+
         textArea.delete(0, textArea.length());
 
-        for(int i = 0; i < wayList.size(); i++) {
-            textArea.append(opeList.get(i));
-            judgeWay(wayList.get(i), opeList, wayList, resultList, memoryList);
+        if(CalculatorMain2nd.memoryFin.length() >= 1) {
+            textArea.append(CalculatorMain2nd.memoryFin.toString());
         }
+
+        for(int i = 0; i < wayList.size(); i++) {           
+            textArea.append(opeList.get(i));
+            judgeWay(wayList.get(i), opeList, wayList, resultList, memoryList);           
+        }//for wayList
+
         textArea.append(resultList.get(resultList.size() - 1));
 
         System.out.println(textArea.toString());

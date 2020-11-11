@@ -35,6 +35,7 @@ public class CalculatorMain2nd {
     static CalcDouble calc;
     static CalcLogic logic;
     static Scanner scn;
+    static StringBuilder memoryFin;
 
     //static初期化子 (staticはインスタンスしないのでコンストラクタの代わり)
     static {
@@ -46,6 +47,7 @@ public class CalculatorMain2nd {
         calc = new CalcDouble();
         logic = new CalcLogic();
         scn = null;
+        memoryFin = new StringBuilder();
     }
 
     public static void main(String[] args) {
@@ -76,14 +78,10 @@ public class CalculatorMain2nd {
                 if (opeList.size() > wayList.size()) {
                     ;
                 } else {
-                    System.out.print("値を入力してください。(整数,小数)");
+                    System.out.println("値を入力してください。(整数,小数) ");
 
-                    //初回は表示なし
-                    if(opeList.isEmpty()) {
-                        ;
-                    } else {
-                        System.out.printf("〔 %s 〕", logic.textArea.toString());
-                    }
+                    //---- textAreaを表示 ----
+                    System.out.printf("〔 %s 〕", logic.textArea.toString());
 
                     inputNum = scn.nextDouble();
                     System.out.println();
@@ -107,7 +105,7 @@ public class CalculatorMain2nd {
                 logic.printCalcWay();
 
                 //---- textAreaを表示 ----
-                System.out.printf("〔 %s 〕", text);
+                System.out.printf("〔 %s 〕", logic.textArea.toString());
 
                 //---- inputWay ----
                 inputWay = scn.nextInt();
@@ -160,6 +158,11 @@ public class CalculatorMain2nd {
 
             //----textAreaを消去、計算結果を加工し入れる----
             logic.textArea.delete(0, logic.textArea.length());
+
+            if(memoryList.size() >= 1) {
+                logic.textArea.append(" Ｍ | ");
+            }
+
             text = logic.opeFormat(Double.parseDouble(result));
 
         //計算不可なら値を加工し取得
@@ -230,7 +233,9 @@ public class CalculatorMain2nd {
     //====== 「←」prevの処理 from logic.judgeWay() ======
     public static void prevLogic() {
         //直近のオペランドと計算方法を１つずつ消去
-        opeList.remove(opeList.size() - 1);
+        if (opeList.size() >= 1) {
+            opeList.remove(opeList.size() - 1);
+        }
 
         if (wayList.size() >= 1) {
             wayList.remove(wayList.size() - 1);
@@ -243,8 +248,8 @@ public class CalculatorMain2nd {
     //====== memoryの処理 from logic.judgeWay() ======
     public static void memoryLogic(int inputWay) {
         if(inputWay == 8) { //[8] Ｍ＋
-            //値１つなら値を、値２つ以上なら最終の仮結果をＭメモリに登録
-            if (opeList.size() == 1) {
+            //値１つなら値を、値２つ以上なら最新の仮結果をＭメモリに登録
+            if (resultList.isEmpty() && opeList.size() == 1) {
                 memoryList.add(opeList.get(0));
             } else {
                 memoryList.add(resultList.get(resultList.size() - 1));
@@ -252,8 +257,12 @@ public class CalculatorMain2nd {
         }
 
         if(inputWay == 9) { //[9] Ｍ＝
-             double sum = integralMemory();
-             resultList.add(sum);
+            double sum = integralMemory();
+            resultList.add(sum);
+            opeList.clear();
+            opeList.add(sum);
+            wayList.clear();
+            memoryList.clear();
         }
 
         if(inputWay == 10) { //[10] ＭＣ
@@ -272,17 +281,30 @@ public class CalculatorMain2nd {
 
         if(memoryList.size() == 1) {
             sum = memoryList.get(0);
+            memoryFin.append(memoryList.get(0));
             return sum;
         }
 
         for(int i = 0; i < memoryList.size(); i++) {
             if(i == 0) {
                 x = memoryList.get(0);
+                memoryFin.append(memoryList.get(0)).append(" ＋ ");
             } else if (i == 1) {
                 y = memoryList.get(1);
+                memoryFin.append(memoryList.get(1));
+                if(memoryList.size() > 2) {
+                    memoryFin.append(" ＋ ");
+                }
             } else {
                 x = sum;
                 y = memoryList.get(i);
+                memoryFin.append(memoryList.get(i));
+
+                if(i == memoryList.size() - 1) {
+                    ;
+                } else {
+                    memoryFin.append(" ＋ ");
+                }
             }
             String result = calc.calcAdd(x, y);
             sum = Double.parseDouble(result);
@@ -328,6 +350,15 @@ public class CalculatorMain2nd {
 〔 8.20.. 〕0
 
 ((4.66 ＋ 5.55) × 45.0) ÷ 56.0 ＝ 8.20446
+
+--------------------------------------------
+値を入力してください。(整数,小数)
+〔  Ｍ |999.90.. ＋  〕0.1
+
+[0]  ＝ , [1]  ＋ , [2]  ― , [3]  × , [4]  ÷ , [5]  ％(剰余) ,
+[6]  Ｃ , [7]  ← , [8] Ｍ＋, [9] Ｍ＝, [10] ＭＣ,
+計算方法を選んでください。[0]～[10]
+〔  Ｍ |1000 〕
 
 --------------------------------------------
 値を入力してください。(整数,小数)45.22
