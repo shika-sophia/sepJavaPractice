@@ -98,6 +98,17 @@ public class CalculatorMain2nd {
                         opeList.remove(opeList.size() - 1);
                         continue input;
                     }
+
+                    //---- Infinityの防止 ----
+                    //doubleの範囲 -4.94..×10 ^ -324 ～ 1.79.. × 10 ^ 308
+                    if (text.length() >= 100) {
+                        System.out.println("< ！ > 計算結果が100桁以上になったので、一度クリアします。\n");
+                        logic.textArea.delete(0, logic.textArea.length());
+                        memoryList.clear();
+                        clearLogic();
+                        continue input;
+                    }
+
                 }
 
                 //==== 計算方法の入力 inputWay ====
@@ -114,6 +125,13 @@ public class CalculatorMain2nd {
             //---- 不正値チェック(非数値)----
             } catch (InputMismatchException e) {
                 System.out.println("\n< ！ > 数値で入力してください。\n");
+                continue input;
+
+            } catch (NumberFormatException e) {
+                System.out.println("\n< ！ > 数値に変換できません。一度クリアします。\n");
+                logic.textArea.delete(0, logic.textArea.length());
+                clearLogic();
+                memoryList.clear();
                 continue input;
             }
 
@@ -138,8 +156,8 @@ public class CalculatorMain2nd {
     }//inputLoop()
 
 
-    //====== 値入力時のtextArea表示
-    private static String tempAns() {
+    //====== 値入力時のtextArea表示 ======
+    private static String tempAns() throws NumberFormatException {
         String text = "";
 
         //計算可能なら計算結果を取得
@@ -405,4 +423,18 @@ BigDecimalクラスで小数計算は正確に求められるようになりま�
 今後、気が向いたら直すかも・・←気が向いたらかいっ
 
 計算機のテストを何回もしすぎて、くるくるパーになってます。しばらく置いておこう。
+
+【考察】追記 2020-11-11-2000
+2020-11-11-1730頃、西尾さんによる挙動テストで大量の桁の掛け算により
+Double.Infinityとなり、その後の演算で NumberFormatExceptionとなったので、それに対応。
+
+〔修正後〕
+値を入力してください。(整数,小数)
+〔 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.00.. ×  〕
+1000000000000000000000000000000000000000000000000000000000000000000000000000
+
+< ！ > 計算結果が100桁以上になったので、一度クリアします。
+
+値を入力してください。(整数,小数)
+〔  〕
 */
