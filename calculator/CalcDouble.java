@@ -140,4 +140,26 @@ public class Main {
         System.out.println(bd3 + " ÷ " + bd4 + " = " + result2);
     }
 }
+
+◆[ Java ] String.Format は小数点の末端の桁は四捨五入される。切り捨てるには？
+http://hensa40.cutegirl.jp/archives/5620
+
+float halfUp = 99.455f; // 小数点第3位が5
+float halfDn = 99.454f; // 小数点第3位が4
+
+// 四捨五入されて指定の桁数にまるめられる模様
+String strUp = String.format("%.2f", halfUp); // 99.46
+String strDn = String.format("%.2f", halfDn); // 99.45
+
+// BigDecimal 型に変換
+BigDecimal bd = new BigDecimal(halfUp);
+
+// 小数点第3位で切り捨てて総数点2桁にまるめる
+bd = bd.setScale(2, BigDecimal.ROUND_FLOOR);
+String.format("%.2f", bd); // 99.45
+
+// BigDecimal型の場合、文字列への出力は以下のようにも記述できる、
+// str = bd.setScale(2, BigDecimal.ROUND_FLOOR).toString();
+// str = bd.setScale(2, BigDecimal.ROUND_FLOOR).toPlainString();
+
 */

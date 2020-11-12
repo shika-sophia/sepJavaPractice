@@ -8,6 +8,7 @@
 
 package javaPractice.calculator;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CalcLogic {
@@ -24,11 +25,14 @@ public class CalcLogic {
     }
 
     //====== 表示枠にオペランドを追加 / 小数点以下のフォーマット======
+    @SuppressWarnings("deprecation")
     public String opeFormat(double inputNum) {
+        BigDecimal inputNumBD = new BigDecimal(String.valueOf(inputNum));
+        inputNumBD.setScale(2, BigDecimal.ROUND_FLOOR);
         if(inputNum == (int)inputNum) {
-            textArea.append(String.format("%.0f" ,inputNum));
+            textArea.append(String.format("%.0f" ,inputNumBD));
         } else {
-            textArea.append(String.format("%.2f.." ,inputNum));
+            textArea.append(String.format("%.2f.." ,inputNumBD));
         }
 
         return textArea.toString();
@@ -191,9 +195,9 @@ public class CalcLogic {
             textArea.append(CalculatorMain2nd.memoryFin.toString());
         }
 
-        for(int i = 0; i < wayList.size(); i++) {           
+        for(int i = 0; i < wayList.size(); i++) {
             textArea.append(opeList.get(i));
-            judgeWay(wayList.get(i), opeList, wayList, resultList, memoryList);           
+            judgeWay(wayList.get(i), opeList, wayList, resultList, memoryList);
         }//for wayList
 
         textArea.append(resultList.get(resultList.size() - 1));

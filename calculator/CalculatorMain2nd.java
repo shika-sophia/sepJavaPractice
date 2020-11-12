@@ -277,12 +277,19 @@ public class CalculatorMain2nd {
 
         if(inputWay == 9) { //[9] Ｍ＝
             double sum = integralMemory();
-            resultList.add(sum);
-            opeList.clear();
-            opeList.add(sum);
+
+            //sumが100桁以上のとき全クリア
+            if (logic.textArea.length() == 0) {
+                resultList.clear();
+                opeList.clear();
+            } else {
+                resultList.add(sum);
+                opeList.clear();
+                opeList.add(sum);
+            }
             wayList.clear();
             memoryList.clear();
-        }
+         }
 
         if(inputWay == 10) { //[10] ＭＣ
             memoryList.clear();
@@ -326,6 +333,17 @@ public class CalculatorMain2nd {
                 }
             }
             String result = calc.calcAdd(x, y);
+
+          //---- Infinityの防止 ----
+            //doubleの範囲 -4.94..×10 ^ -324 ～ 1.79.. × 10 ^ 308
+            if (result.length() >= 100) {
+                System.out.println("< ！ > 計算結果が100桁以上になったので、一度クリアします。\n");
+                logic.textArea.delete(0, logic.textArea.length());
+
+                return 0;
+            }
+
+
             sum = Double.parseDouble(result);
 
         }//for memoryList
@@ -437,4 +455,31 @@ Double.Infinityとなり、その後の演算で NumberFormatExceptionとなっ�
 
 値を入力してください。(整数,小数)
 〔  〕
+----------------------------------
+
+＊新しいバグを見つけてしまった。2020-11-12
+999を入れるとString.format(%f, %.2f)で小数点以下を四捨五入するので
+1000になってしまう。inputNumの値はそのままだが、表示が変化し、
+計算結果も違って表示されてしまうので修正
+
+〔修正後〕
+値を入力してください。(整数,小数)
+〔  〕999
+
+[0]  ＝ , [1]  ＋ , [2]  ― , [3]  × , [4]  ÷ , [5]  ％(剰余) ,
+[6]  Ｃ , [7]  ← , [8] Ｍ＋, [9] Ｍ＝, [10] ＭＣ,
+計算方法を選んでください。[0]～[10]
+〔 999 〕2
+
+値を入力してください。(整数,小数)
+〔 999 ―  〕0.1
+
+[0]  ＝ , [1]  ＋ , [2]  ― , [3]  × , [4]  ÷ , [5]  ％(剰余) ,
+[6]  Ｃ , [7]  ← , [8] Ｍ＋, [9] Ｍ＝, [10] ＭＣ,
+計算方法を選んでください。[0]～[10]
+〔 998.90.. 〕0
+
+999.0 ― 0.1 ＝ 998.9
+-----------------------------------
+
 */
