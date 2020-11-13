@@ -32,23 +32,32 @@
  */
 package javaPractice.exercise;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class Exercise19Ans {
     private static int powerRdm = 0;
     private static int armorRdm = 0;
+    private static final int PRODUCT_NUM = 500;//生産数
+    private static final BigDecimal RATE = new BigDecimal("0.03");//不良品率
 
+    //配列の必要個数は生産数 + (生産数× 5 / 100)
+    private static final int BOUND = PRODUCT_NUM + PRODUCT_NUM / 20;
 
     public static void main(String[] args) {
-        final int PRODUCT_NUM = 500;//生産数
 
-        ZakPrivate[] productArr = new ZakPrivate[PRODUCT_NUM];
+
+        ZakPrivate[] productArr = new ZakPrivate[BOUND];
 
         //====== Product ======
         //Sharr Product Line
         int count = 0;
         String type = "sharr";
-        for(int i = 0; i < (PRODUCT_NUM * 0.05); i++) {
+
+        for(int i = 0; i < (PRODUCT_NUM / 20); i++) {
             //---- 火力,装甲を決定
             decideSpec(type);
 
@@ -56,8 +65,7 @@ public class Exercise19Ans {
             String name = "SharrZak_NO." + i ;
             productArr[i] = new ZakSpecial(name, powerRdm, armorRdm, 128000);
             count++;
-        }
-
+        }//for PRODUCT_NUM / 20
 
         //Mass Product Line
         type = "mass";
@@ -68,9 +76,16 @@ public class Exercise19Ans {
             //---- インスタンス ----
             String name = "Zak_NO." + i ;
             productArr[i] = new ZakPrivate(name, powerRdm, armorRdm);
-
-
         }//for PRODUCT_NUM
+
+        //====== delivery / 納品 ======
+        List<ZakPrivate> deliveryList = new ArrayList<>(BOUND);
+
+        //---- sharr selection ----
+        deliveryList = sharrMax(productArr, deliveryList, count);
+
+        //---- except mass error / 不良品の除外----
+        deliveryList = massError(productArr, deliveryList, count);
 
         //====== print product ======
         printProduct(productArr);
@@ -95,6 +110,59 @@ public class Exercise19Ans {
             armorRdm = rdm.nextInt(specData[7]) + specData[6] + 1;
         }
     }//decideSpec
+
+
+    //====== sharr selection / 最高スペックの選定 ======
+    private static List<ZakPrivate> sharrMax(
+            ZakPrivate[] productArr, List<ZakPrivate> deliveryList, int count) {
+
+        //spec合計を保存する List
+        List<Integer> specList = new ArrayList<>();
+
+        //各productのspecを取得し合計、Listに保存
+        for (int i = 0; i < count; i++) {
+            int specSum = 0;
+            specSum += ((ZakSpecial)productArr[i]).getPower();
+            specSum += ((ZakSpecial)productArr[i]).getArmor();
+
+            specList.add(specSum);
+        }
+
+        //sort()する前に List をコピー
+        List<Integer> copy = new ArrayList<>(specList);
+
+        //sort()をして最大specを取得し、元のリストのindexを取得
+        Collections.sort(specList);
+        int specMax = specList.get(specList.size() - 1);
+        int indexMax = copy.indexOf(specMax);
+
+        //最大specの sharr製品を納品Listに登録
+        deliveryList.add(productArr[indexMax]);
+
+        return deliveryList;
+    }//sharrMax()
+
+
+    //====== except mass error ======
+    private static List<ZakPrivate> massError(
+            ZakPrivate[] productArr, List<ZakPrivate> deliveryList, int count) {
+        //不良品indexのList
+        List<Integer> errorList = new ArrayList<>();
+
+        //RATE％の確率で不良品
+        for(int i = count; i < BOUND; i++) {
+            double errValue = Math.random();
+            String errStr = String.valueOf(errValue);
+            BigDecimal errBD = new BigDecimal(errStr);
+
+            //compareTo() -> 0: 一致, 1: 前置オブジェクトより引数が大きい
+            if(errBD.compareTo(RATE) >= 0) {
+                errorList.add(i);
+            }
+        }//for i
+
+        return null;
+    }//massError()
 
 
     //====== print product ======
