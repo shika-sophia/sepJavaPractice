@@ -29,8 +29,6 @@ div#index {
 
 /* ==== table ==== */
 table {
-    margin: 1em
-    padding: 1em;
     table-layout: fixed;
     font-size: x-large;
     font-family: "MS P明朝",serif;
@@ -71,11 +69,21 @@ th {
 }
 
 .error {
-  color: deeppink;
-  font-size: large;
+    color: deeppink;
+    font-size: large;
     font-weight: bold;
 }
 
+.showHand {
+    font-size: medium;
+    font-weight: bold;
+}
+
+.result {
+    color: deeppink;
+    font-size: large;
+    font-weight: bold;
+}
 a {
     color: deeppink;
     font-weight: bold;

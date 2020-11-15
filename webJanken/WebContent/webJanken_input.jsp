@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-
 <% Integer count = (Integer)request.getAttribute("count"); %>
 <% String message = (String)request.getAttribute("message"); %>
 
@@ -41,11 +40,11 @@
 </tr>
 <tr><td>
     <form action="/sepJavaRecurrent/WebJankenServlet" method="post">
-        <p><input type="radio" name="userHand" value="rock">グー　　</p>
-        <p><input type="radio" name="userHand" value="clipper">チョキ　</p>
-        <p><input type="radio" name="userHand" value="paper">パー　　</p>
+        <p><input type="radio" name="userHand" value="0">グー　　</p>
+        <p><input type="radio" name="userHand" value="1">チョキ　</p>
+        <p><input type="radio" name="userHand" value="2">パー　　</p>
 
-        <p class="buttan"><input type="submit" value="じゃんけんポン">　</p>
+        <p><input type="submit" value="じゃんけんポン"  style="color: hotpink; font-weight: bold;">　</p>
     </form>
     <br>
 </td></tr></table>
