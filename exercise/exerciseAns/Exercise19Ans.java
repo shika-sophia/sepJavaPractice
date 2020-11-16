@@ -43,13 +43,15 @@ public class Exercise19Ans {
     private static int armorRdm = 0;
     private static final int PRODUCT_NUM = 500;//生産数
     private static final BigDecimal RATE = new BigDecimal("0.05");//不良品率
+    private static ZakPrivate[] productArr;
 
     //配列の必要個数は生産数 + (生産数× 5 / 100)
     private static final int BOUND = PRODUCT_NUM + PRODUCT_NUM / 20;
 
+
     public static void main(String[] args) {
 
-        ZakPrivate[] productArr = new ZakPrivate[BOUND];
+        productArr = new ZakPrivate[BOUND];
 
         //====== Product ======
         //---- Sharr Product Line ----
@@ -78,13 +80,13 @@ public class Exercise19Ans {
         }//for PRODUCT_NUM
 
         //====== delivery / 納品 ======
-        List<ZakPrivate> deliveryList = new ArrayList<>(BOUND);
+        List<Integer> deliveryList = new ArrayList<>(BOUND);
 
         //---- sharr selection ----
-        deliveryList = sharrMax(productArr, deliveryList, count);
+        deliveryList = sharrMax(deliveryList, count);
 
         //---- except mass error / 不良品の除外----
-        deliveryList = massError(productArr, deliveryList, count);
+        deliveryList = massError(deliveryList, count);
 
         //====== print product ======
         printProduct(deliveryList);
@@ -112,8 +114,8 @@ public class Exercise19Ans {
 
 
     //====== sharr selection / 最高スペックの選定 ======
-    private static List<ZakPrivate> sharrMax(
-            ZakPrivate[] productArr, List<ZakPrivate> deliveryList, int count) {
+    private static List<Integer> sharrMax(
+            List<Integer> deliveryList, int count) {
 
         //spec合計を保存する List
         List<Integer> specList = new ArrayList<>();
@@ -136,15 +138,15 @@ public class Exercise19Ans {
         int indexMax = copy.indexOf(specMax);
 
         //最大specの sharr製品を納品Listに登録
-        deliveryList.add(productArr[indexMax]);
+        deliveryList.add(indexMax);
 
         return deliveryList;
     }//sharrMax()
 
 
     //====== except mass error ======
-    private static List<ZakPrivate> massError(
-            ZakPrivate[] productArr, List<ZakPrivate> deliveryList, int count) {
+    private static List<Integer> massError(
+            List<Integer> deliveryList, int count) {
         //不良品indexのList
         List<Integer> errorList = new ArrayList<>();
 
@@ -171,20 +173,20 @@ public class Exercise19Ans {
                     }
             }
 
-            deliveryList.add(productArr[i]);
+            deliveryList.add(i);
 
         }//for i
 
         //---- Test Print ----
-        System.out.println("errorList:" + errorList);
-        System.out.println("errorList.size()" + errorList.size());
+        //System.out.println("errorList:" + errorList);
+        //System.out.println("errorList.size()" + errorList.size());
 
         return deliveryList;
     }//massError()
 
 
     //====== print product ======
-    private static void printProduct(List<ZakPrivate> deliveryList) {
+    private static void printProduct(List<Integer> deliveryList) {
         StringBuilder bld = new StringBuilder();
 
         //---- print mass Zak ----
@@ -192,7 +194,7 @@ public class Exercise19Ans {
             if (i == 0) {//sharr型
                 ;
             } else {
-                ZakPrivate zak = deliveryList.get(i);
+                ZakPrivate zak = productArr[deliveryList.get(i)];
                 bld.append(String.format("〔%s:火力%d, 装甲%d〕",
                     zak.getName(),zak.getPower(),zak.getArmor() ));
             }
@@ -204,7 +206,7 @@ public class Exercise19Ans {
         bld.append("\n");
 
         //---- print Sharr ----
-        ZakPrivate sharrZak = deliveryList.get(0);
+        ZakPrivate sharrZak = productArr[deliveryList.get(0)];;
 
         bld.append(String.format("【 %s: 火力 %d, 装甲 %d, 熟練 %d 】\n",
             sharrZak.getName(), sharrZak.getPower(),
