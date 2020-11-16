@@ -6,7 +6,7 @@
  */
 /*
  * ◆Exercise19Ans
- * 前問17,18において ZakPrivateクラス, ZakSpecialクラスを原型として
+ * 前問17,18において設計した ZakPrivateクラス, ZakSpecialクラスを原型として
  * 「ザク」を大量生産するときが来た。
  * まずは 500体を生産してほしい。今後、生産数を増減させるときのために
  * final定数１つを変更すれば済むように作ってほしい。
@@ -15,7 +15,7 @@
  * [量産型ザク]火力900～1500, 装甲2500～3000
  * [シャア専用ザク]火力4500～5500, 装甲6000～7200
  *
- * 量産型ザクは生産中に３％の確率で不良品が出る。
+ * 量産型ザクは生産中に10％の確率で不良品が出る。
  * シャア専用ザクは予算的に量産型100体につき５体を固定生産する。
  *
  * 量産型の不良品はスペックに関係なく納品せずとも良い。
@@ -42,18 +42,17 @@ public class Exercise19Ans {
     private static int powerRdm = 0;
     private static int armorRdm = 0;
     private static final int PRODUCT_NUM = 500;//生産数
-    private static final BigDecimal RATE = new BigDecimal("0.03");//不良品率
+    private static final BigDecimal RATE = new BigDecimal("0.05");//不良品率
 
     //配列の必要個数は生産数 + (生産数× 5 / 100)
     private static final int BOUND = PRODUCT_NUM + PRODUCT_NUM / 20;
 
     public static void main(String[] args) {
 
-
         ZakPrivate[] productArr = new ZakPrivate[BOUND];
 
         //====== Product ======
-        //Sharr Product Line
+        //---- Sharr Product Line ----
         int count = 0;
         String type = "sharr";
 
@@ -88,7 +87,7 @@ public class Exercise19Ans {
         deliveryList = massError(productArr, deliveryList, count);
 
         //====== print product ======
-        printProduct(productArr);
+        printProduct(deliveryList);
 
     }//main()
 
@@ -155,20 +154,72 @@ public class Exercise19Ans {
             String errStr = String.valueOf(errValue);
             BigDecimal errBD = new BigDecimal(errStr);
 
-            //compareTo() -> 0: 一致, 1: 前置オブジェクトより引数が大きい
-            if(errBD.compareTo(RATE) >= 0) {
+            //compareTo() -> 0: 一致, -1: 前置オブジェクトは引数より小さい
+            if(errBD.compareTo(RATE) <= 0) {
                 errorList.add(i);
             }
         }//for i
 
-        return null;
+        for(int i = count; i < BOUND; i++) {
+
+            if (errorList.isEmpty()) {
+                ;
+            } else {
+                for (int j = 0; j < errorList.size(); j++)
+                    if (i == errorList.get(j)) {
+                        continue;
+                    }
+            }
+
+            deliveryList.add(productArr[i]);
+
+        }//for i
+
+        //---- Test Print ----
+        System.out.println("errorList:" + errorList);
+        System.out.println("errorList.size()" + errorList.size());
+
+        return deliveryList;
     }//massError()
 
 
     //====== print product ======
-    private static void printProduct(ZakPrivate[] productArr) {
+    private static void printProduct(List<ZakPrivate> deliveryList) {
+        StringBuilder bld = new StringBuilder();
 
+        //---- print mass Zak ----
+        for(int i = 0; i< deliveryList.size(); i++) {
+            if (i == 0) {//sharr型
+                ;
+            } else {
+                ZakPrivate zak = deliveryList.get(i);
+                bld.append(String.format("〔%s:火力%d, 装甲%d〕",
+                    zak.getName(),zak.getPower(),zak.getArmor() ));
+            }
 
+            if(i % 4 == 1) {
+                bld.append("\n");
+            }
+        }//for deliveryList
+        bld.append("\n");
+
+        //---- print Sharr ----
+        ZakPrivate sharrZak = deliveryList.get(0);
+
+        bld.append(String.format("【 %s: 火力 %d, 装甲 %d, 熟練 %d 】\n",
+            sharrZak.getName(), sharrZak.getPower(),
+            sharrZak.getArmor(), ((ZakSpecial)sharrZak).getPilot()));
+        bld.append("「上出来だなっ！ ﾌｯ」\n");
+        bld.append("\n");
+
+        //---- print data ----
+        bld.append("総生産数: ").append(BOUND).append("\n");
+        bld.append("シャア型生産数: ").append(PRODUCT_NUM / 20).append("\n");
+        bld.append("シャア型納品数: 1 \n");
+        bld.append("量産型納品数: ").append(deliveryList.size() - 1).append("\n");
+        bld.append("不良品数: ").append(BOUND - deliveryList.size() - 1).append("\n");
+
+        System.out.println(bld.toString());
     }//printProduct()
 
 }//class
