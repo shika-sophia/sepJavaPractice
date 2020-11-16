@@ -15,9 +15,9 @@
 <% String comHand = data.getComHand(); %>
 <% int winNum = data.getWinNum(); %>
 <% double winRate = data.getWinRate(); %>
+<% String rateFormat = String.format("%.3f", winRate); %>
 <% List<String> winList = data.getWinList(); %>
 
-<% String rateFormat = String.format("%.3f", winRate); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,16 +37,12 @@
 <br>
 <div id="index" align="center">
 <table class="index">
-<tr>
-  <th>
+<tr><th>
 <br>
 <i>＊ Result ＊</i>
-  </th>
-</tr>
-<tr>
-  <td>【 <%= count %>回目 】　<br>
-  </td>
-</tr>
+</th></tr>
+<tr><td>【 <%= count %>回目 】　<br>
+</td></tr>
 <tr>
   <td>
     <p class="showHand">〔あなた: <%= userHand %> 〕  VS  〔COM : <%= comHand %> 〕</p>

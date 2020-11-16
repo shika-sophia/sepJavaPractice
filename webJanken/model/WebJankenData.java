@@ -67,10 +67,6 @@ public class WebJankenData {
         return winList;
     }
 
-    public void setWinList(List<String> winList) {
-        this.winList = winList;
-    }
-
     public void setWinList(String win) {
         this.winList.add(win);
     }

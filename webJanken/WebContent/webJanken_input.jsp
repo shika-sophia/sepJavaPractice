@@ -22,13 +22,11 @@
 <br>
 <br>
 <div id="index" align="center">
-<table class="index">
-<tr>
-  <th>
+<table>
+<tr><th>
 <br>
 <i>＊ Select Your Hand ＊</i>
-  </th>
-</tr>
+</th></tr>
 <tr>
   <td>【 <%= count %>回目 】　<br>
   <% if(message.contains("必ず")){ %>
@@ -47,7 +45,8 @@
         <p><input type="submit" value="じゃんけんポン"  style="color: hotpink; font-weight: bold;">　</p>
     </form>
     <br>
-</td></tr></table>
+</td></tr>
+</table>
 </div>
 </body>
 </html>

@@ -3,12 +3,10 @@ package webPractice.webJanken.model;
 import java.util.Random;
 
 public class WebJankenLogic {
-    public final String[] HAND;//じゃんけんの文字列(固定値)
+    private final String[] HAND;//じゃんけんの文字列(固定値)
 
     public WebJankenLogic() {
-        HAND = new String[] {
-            "グー","チョキ","パー"
-        };
+        HAND = new String[] {"グー","チョキ","パー"};
     }
 
     //====== userとcomの手を準備 ======
@@ -38,18 +36,18 @@ public class WebJankenLogic {
 
         switch((comIndex - userIndex + 3) % 3 ) {
         case 0:
-            result = "【DRAW: あいこ 】";
+            result = "【 DRAW: あいこ 】";
             winIndex = 0;
             break;
 
         case 1:
-            result = "【YOU WIN: 勝ち 】";
+            result = "【 YOU WIN: 勝ち 】";
             winIndex = 1;
             winNum++;
             break;
 
         case 2:
-            result = "【YOU LOSE: 負け 】";
+            result = "【 YOU LOSE: 負け 】";
             winIndex = 2;
             break;
         }//switch

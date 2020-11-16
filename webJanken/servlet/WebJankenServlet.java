@@ -131,6 +131,6 @@ public class WebJankenServlet extends HttpServlet {
         String path = "/webJanken_result.jsp";
         RequestDispatcher dis = request.getRequestDispatcher(path);
         dis.forward(request, response);
-    }//doPost
+    }//doPost()
 
 }//class
