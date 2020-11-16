@@ -206,7 +206,7 @@ public class Exercise19Ans {
         bld.append("\n");
 
         //---- print Sharr ----
-        ZakPrivate sharrZak = productArr[deliveryList.get(0)];;
+        ZakPrivate sharrZak = productArr[deliveryList.get(0)];
 
         bld.append(String.format("【 %s: 火力 %d, 装甲 %d, 熟練 %d 】\n",
             sharrZak.getName(), sharrZak.getPower(),
