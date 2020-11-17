@@ -15,6 +15,7 @@
  * @webContent primeResult.jsp
  * @webContent primeStyle.css
  *
+ * @see 関連src: javaPractice / exercise / Exercise15Ans.java
  * @author shika
  * @date 2020-11-17
  */
@@ -30,6 +31,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import webPractice.prime.model.PrimeData;
 import webPractice.prime.model.PrimeLogic;
@@ -75,17 +77,9 @@ public class PrimeServlet extends HttpServlet {
 //
 //        }//switch
 
-        //---- set (x, y), message to request scorp ----
-        request.setAttribute("x", x);
-        request.setAttribute("y", y);
-
-        String message = "整数を入力してください。(１つでも可)";
-        request.setAttribute("message", message);
-
         //---- forward to input ----
-        String path = "primeInput.jsp";
-        RequestDispatcher dis = request.getRequestDispatcher(path);
-        dis.forward(request, response);
+        String message = "自然数を入力してください。(１つでも可)";
+        forwardInput(request, response, message);
     }//doGet()
 
 
@@ -96,6 +90,7 @@ public class PrimeServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String calcWay = request.getParameter("calcWay");
 
+        //---- 不正値チェック ----
         String message = "";
         try {
             x = Integer.parseInt(request.getParameter("x"));
@@ -110,31 +105,61 @@ public class PrimeServlet extends HttpServlet {
 
         } catch (NumberFormatException e) {
             message = "必ず整数で入力してください。";
-
             x = null;
             y = null;
-            //---- set (x, y), message to request scorp ----
-            request.setAttribute("x", x);
-            request.setAttribute("y", y);
-            request.setAttribute("message", message);
 
-            //---- forward to input << again >>----
-            String path = "primeInput.jsp";
-            RequestDispatcher dis = request.getRequestDispatcher(path);
-            dis.forward(request, response);
+            //---- inputに再forward ----
+            forwardInput(request, response, message);
         }//try-catch
 
-        //====== instance of data ======
-        if (x == data.getX() && y == data.getY()) {
+        if (x < 0 || y < 0) {
+            message = "必ず自然数で入力してください。(正の数)";
+            forwardInput(request, response, message);
+        }
+
+        //---- instance of data ----
+        if (data == null) {
+             data = new PrimeData(x, y);
+        } else if (x== data.getX() && y == data.getY()) {
             ;
         } else {
             data = new PrimeData(x, y);
         }
 
-        //====== separate calcWay ======
+        //---- separate calcWay -> 計算結果を data.fieldに格納 ----
         logic.calcWay(x, y, calcWay, data);
+
+        //---- set data to session scorp ----
+        HttpSession session = request.getSession();
+        session.setAttribute("data", data);
+
+        //---- set (x, y) , calcWay to request scorp ----
+        request.setAttribute("x", x);
+        request.setAttribute("y", y);
+        request.setAttribute("calcWay", calcWay);
+
+        //---- forward to result ----
+        String path = "primeResult.jsp";
+        RequestDispatcher dis = request.getRequestDispatcher(path);
+        dis.forward(request, response);
     }//doPost()
 
+
+    //====== inputに再forward ======
+    private void forwardInput(
+        HttpServletRequest request, HttpServletResponse response, String message)
+        throws ServletException, IOException {
+
+        //---- set (x, y), message to request scorp ----
+        request.setAttribute("x", x);
+        request.setAttribute("y", y);
+        request.setAttribute("message", message);
+
+        //---- forward to input << again >>----
+        String path = "primeInput.jsp";
+        RequestDispatcher dis = request.getRequestDispatcher(path);
+        dis.forward(request, response);
+    }//inputAgain()
 
     public void destroy() {
 

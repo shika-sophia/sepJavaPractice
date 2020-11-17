@@ -29,7 +29,7 @@
 <body>
 <div id="upper">
 <hr color="white" size="5">
-<h1><i>・*＊ Prime Number ＊*・　</i></h1>
+<h1><i>・*＊ Prime Number ＊*・</i></h1>
 <hr color="white" size="5">
 </div>
 <div id="content" align="center">

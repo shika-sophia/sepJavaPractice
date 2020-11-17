@@ -1,9 +1,10 @@
 package webPractice.prime.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrimeData {
+public class PrimeData implements Serializable {
     private final int BOUND = 120;//倍数の表示個数
     private Integer x;
     private Integer y;
@@ -15,6 +16,9 @@ public class PrimeData {
     private List<Integer> yMultiple;
     private List<Integer> commonDivisor;
     private List<Integer> commonMulitiple;
+    private String xResult;
+    private String yResult;
+    private String zResult;
 
     public PrimeData() {
         x = 0;
@@ -27,6 +31,9 @@ public class PrimeData {
         yMultiple = new ArrayList<Integer>(BOUND);
         commonDivisor = new ArrayList<Integer>();
         commonMulitiple = new ArrayList<Integer>(BOUND);
+        xResult = "";
+        yResult = "";
+        zResult = "";
     }
 
     public PrimeData(Integer x, Integer y) {
@@ -40,6 +47,9 @@ public class PrimeData {
         yMultiple = new ArrayList<Integer>(BOUND);
         commonDivisor = new ArrayList<Integer>((int)Math.max(x, y));
         commonMulitiple = new ArrayList<Integer>(BOUND);
+        xResult = "";
+        yResult = "";
+        zResult = "";
     }
 
 
@@ -126,6 +136,30 @@ public class PrimeData {
 
     public void setCommonMulitiple(List<Integer> commonMulitiple) {
         this.commonMulitiple = commonMulitiple;
+    }
+
+    public String getxResult() {
+        return xResult;
+    }
+
+    public void setxResult(String xResult) {
+        this.xResult = xResult;
+    }
+
+    public String getyResult() {
+        return yResult;
+    }
+
+    public void setyResult(String yResult) {
+        this.yResult = yResult;
+    }
+
+    public String getzResult() {
+        return zResult;
+    }
+
+    public void setzResult(String zResult) {
+        this.zResult = zResult;
     }
 
 }//class

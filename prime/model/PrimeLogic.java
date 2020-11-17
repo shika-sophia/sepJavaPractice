@@ -11,42 +11,68 @@ public class PrimeLogic {
 
     //====== 計算方法の分岐 -> data.fieldに格納 ======
     public void calcWay(Integer x, Integer y, String calcWay, PrimeData data) {
+        String calcWayJP = "";
+        List<Integer> listX = new ArrayList<>();
+        List<Integer> listY = new ArrayList<>();
+        List<Integer> listZ = new ArrayList<>();
 
         switch(calcWay) {
-        case "prime"://素数
-            List<Integer> xPrime = calcPrime(x, calcWay);
-            List<Integer> yPrime = calcPrime(y, calcWay);
-            data.setxPrime(xPrime);
-            data.setyPrime(yPrime);
+        case "prime":
+            calcWayJP = "素数";
+            listX = calcPrime(x, calcWay);
+            listY = calcPrime(y, calcWay);
+            data.setxPrime(listX);
+            data.setyPrime(listY);
             break;
 
-        case "divisor"://約数
-            List<Integer> xDivisor = calcPrime(x, calcWay);
-            List<Integer> yDivisor = calcPrime(y, calcWay);
-            data.setxDivisor(xDivisor);
-            data.setyDivisor(yDivisor);
+        case "divisor":
+            calcWayJP = "約数";
+            listX = calcPrime(x, calcWay);
+            listY = calcPrime(y, calcWay);
+            data.setxDivisor(listX);
+            data.setyDivisor(listY);
             break;
 
-        case "multiple"://倍数
-            List<Integer> xMultiple = calcMultiple(x, data);
-            List<Integer> yMultiple = calcMultiple(y, data);
-            data.setxMultiple(xMultiple);
-            data.setyMultiple(yMultiple);
+        case "multiple":
+            calcWayJP = "倍数";
+            listX = calcMultiple(x, data);
+            listY = calcMultiple(y, data);
+            data.setxMultiple(listX);
+            data.setyMultiple(listY);
             break;
 
         case "gcd"://ＧＣＤ: 最大公約数 Greatest Common Divisor
-            List<Integer> commonDivisor = calcGCD(x, y);
-            data.setCommonDivisor(commonDivisor);
+            calcWayJP = "最大公約数";
+            listX = calcPrime(x, "divisor");
+            listY = calcPrime(y, "divisor");
+            listZ = retainList(listX, listY);
+            data.setCommonDivisor(listZ);
             break;
 
         case "lcm"://ＬＣＭ: 最小公倍数 Least Common Multiple
-            calcLCM(x, y, data);
+            calcWayJP = "最小公倍数";
+            listX = calcMultiple(x, data);
+            listY = calcMultiple(y ,data);
+            listZ = retainList(listX, listY);
+            data.setCommonMulitiple(listZ);
             break;
 
         default:  //none
             throw new IllegalArgumentException("in logic.calcWay().swich(calcWay)");
-
         }//switch
+
+        //---- 結果表示を作成 ----
+        String xResult= buildResult(x, "X", calcWayJP, listX);
+        String yResult= buildResult(y, "Y", calcWayJP, listY);
+        data.setxResult(xResult);
+        data.setyResult(yResult);
+
+        if (listZ.isEmpty()) {
+            ;
+        } else {
+             String zResult= buildResult(x, y, calcWayJP, listZ);
+             data.setzResult(zResult);
+        }
     }//calcWay
 
 
@@ -57,7 +83,7 @@ public class PrimeLogic {
         List<Integer> divisorList = new ArrayList<>(num);
 
         // 0 から num までの素数を Listに格納
-        for (int i = 0; i < num; i++) {
+        for (int i = 0; i <= num; i++) {
             divisorList.clear();
             divisorList.add( 1 );
 
@@ -72,7 +98,7 @@ public class PrimeLogic {
             if(divisorList.size() == 2) {
                 primeList.add(i);
             }
-        }
+        }//for i
 
         if(calcWay.equals("prime")) {
             return primeList;
@@ -98,32 +124,6 @@ public class PrimeLogic {
     }//calcMultiple()
 
 
-    //====== 公約数 ======
-    //最大公約数は表示の際に抽出
-    private List<Integer> calcGCD(Integer x, Integer y) {
-        //各約数を取得
-        String calcWay = "divisor";
-        List<Integer> xDivisor = calcPrime(x, calcWay);
-        List<Integer> yDivisor = calcPrime(y, calcWay);
-
-        List<Integer> commonDivisor = retainList(xDivisor, yDivisor);
-
-        return commonDivisor;
-    }//calcGCD()
-
-
-    //====== 公倍数 ======
-    //最小公倍数は表示の際に抽出
-    private List<Integer> calcLCM(Integer x, Integer y, PrimeData data) {
-        List<Integer> xMultiple = calcMultiple(x, data);
-        List<Integer> yMultiple = calcMultiple(y ,data);
-
-        List<Integer> commonMultiple = retainList(xMultiple, yMultiple);
-
-        return commonMultiple;
-    }//calcLCM()
-
-
     //====== ListからSetにして -> 積集合 commonList ======
     private List<Integer> retainList(List<Integer> list1, List<Integer> list2){
         //Setに入れて積集合
@@ -138,4 +138,50 @@ public class PrimeLogic {
         return common;
     }//retainList()
 
+
+    //====== 結果表示を作成 ======
+    public String buildResult(int num, String numStr, String calcWayJP, List<Integer> list) {
+        StringBuilder bld = new StringBuilder();
+
+        if (calcWayJP.equals("最大公約数") || calcWayJP.equals("最小公倍数")) {
+            bld.append(String.format("◆%s / %s = %d <br>", calcWayJP.substring(3), numStr, num));
+        } else {
+            bld.append(String.format("◆%s / %s = %d <br>", calcWayJP, numStr, num));
+        }
+
+        if (list.isEmpty()) {
+            bld.append(calcWayJP).append(" なし \n");
+
+        } else {
+            for(int i = 0 ; i < list.size(); i++) {
+                bld.append(list.get(i)).append(" ");
+
+                if (i % 9 == 1) {
+                    bld.append("\n");
+                }
+            }//for i
+        }
+        String result = bld.toString();
+
+        return result;
+    }//buildResult()
+
+
+    //====== 結果表示を作成 ======
+    public String buildResult(int x, int y, String calcWayJP, List<Integer> list) {
+        StringBuilder bld = new StringBuilder();
+
+        bld.append(String.format("◆%s / Ｘ＝%d　Ｙ＝%d  <br>", calcWayJP.substring(2), x, y));
+
+        for(int i = 0 ; i < list.size(); i++) {
+            bld.append(list.get(i)).append("　");
+
+            if (i % 9 == 1) {
+                bld.append("<br>");
+            }
+        }//for i
+
+        String result = bld.toString();
+        return result;
+    }//buildResult()
 }//class
