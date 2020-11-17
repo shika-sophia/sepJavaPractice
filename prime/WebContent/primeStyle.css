@@ -1,0 +1,77 @@
+@charset "UTF-8";
+/* StyleSheet for [primeInput.jsp], [primeResult.jsp]  */
+
+body {
+  background: radial-gradient(ellipse farthest-side at center, white ,lavender 30% ,cornflowerblue);
+  font-family: "MS P明朝",serif;
+}
+
+h1 {
+    text-align: center;
+    text-shadow: thistle 2px 2px;
+    color: royalblue;
+    background-color: lavender;
+    font-family: "MS P明朝",serif;
+    font-size: 24px
+}
+
+/* ==== div ==== */
+div#upper{
+    text-align: center;
+    width: 100%;
+    height: 60px;
+}
+
+div#content {
+    width: 100%;
+    height: 80%;
+}
+
+/* ==== table ==== */
+table {
+  table-layout: fixed;
+    text-align: center;
+    width: 400px;
+    height: 400px;
+    margin: 3em;
+    padding: 1em;
+
+    font-size: x-large;
+    font-family: "MS P明朝",serif;
+    line-height: 1em;
+    color: mediumblue;
+
+    border-collapse: separate;
+    background-color: lavender;
+    border-width: 2px;
+    border-color: cornflowerblue;
+    border-spacing: 2px;
+    border-radius: 10px;
+    border-style: ridge;
+}
+
+.message {
+    color: mediumblue;
+    font-size: large;
+    font-weight: bold;
+}
+
+.error {
+    color: deeppink;
+    font-size: large;
+    font-weight: bold;
+}
+
+.showWay {
+  text-align: left;
+  text-indent: 25%;
+    font-size: medium;
+    font-weight: bold;
+
+}
+
+.result {
+    color: deeppink;
+    font-size: large;
+    font-weight: bold;
+}
