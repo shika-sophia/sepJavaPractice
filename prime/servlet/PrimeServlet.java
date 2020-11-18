@@ -49,6 +49,7 @@ public class PrimeServlet extends HttpServlet {
     //---- initialize ----
     public void init(ServletConfig config) throws ServletException {
         logic = new PrimeLogic();
+        data = new PrimeData();
         x = null;
         y = null;
     }//init()
@@ -60,24 +61,28 @@ public class PrimeServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
 
-        //switchAction(action);
-//        if (action == null) {
-//            ;
-//        }
-//
-//        switch (action) {
-//        case "init":
-//            x = null;
-//            y = null;
-//            break;
-//
-//        case "again":
-//            ;
-//            break;
-//
-//        }//switch
+        //nullは初回なので処理なし。上記 init()で処理済
+        if (action == null) {
+            ;
+        } else {
+            switch (action) {
+            // ?action=init は再初期化
+            case "init":
+                x = null;
+                y = null;
+                data = new PrimeData();
+                break;
 
-        //---- forward to input ----
+            // ?action=again は元の x, yを保持して再びinputへ
+            // ここでの処理はないため 本当は?action=again や switch-case不要
+            // 以後、actionの追加や againの仕様変更のため switch文を残す
+            case "again":
+                ;
+                break;
+            }//switch
+        }
+
+       //---- forward to input ----
         String message = "自然数を入力してください。(１つでも可)";
         forwardInput(request, response, message);
     }//doGet()
@@ -112,8 +117,10 @@ public class PrimeServlet extends HttpServlet {
             forwardInput(request, response, message);
         }//try-catch
 
-        if (x < 0 || y < 0) {
-            message = "必ず自然数で入力してください。(正の数)";
+        //x = 100000を入力すると、ここに来るまでにフリーズするときあり
+        //どの計算処理もList容量を確保するので大量になりすぎないよう 10000を限界とする。
+        if (x < 0 || y < 0 || x >10000 || y > 10000) {
+            message = "必ず [0～10000] で入力してください。";
             forwardInput(request, response, message);
         }
 
@@ -145,7 +152,7 @@ public class PrimeServlet extends HttpServlet {
     }//doPost()
 
 
-    //====== inputに再forward ======
+    //====== inputにforward ======
     private void forwardInput(
         HttpServletRequest request, HttpServletResponse response, String message)
         throws ServletException, IOException {
@@ -155,11 +162,12 @@ public class PrimeServlet extends HttpServlet {
         request.setAttribute("y", y);
         request.setAttribute("message", message);
 
-        //---- forward to input << again >>----
+        //---- forward to input ----
         String path = "primeInput.jsp";
         RequestDispatcher dis = request.getRequestDispatcher(path);
         dis.forward(request, response);
     }//inputAgain()
+
 
     public void destroy() {
 

@@ -67,12 +67,18 @@ table {
     text-indent: 25%;
     font-size: medium;
     font-weight: bold;
-
 }
 
 .result {
     padding: 2em;
     text-align: left;
     font-size: medium;
+    font-weight: bold;
+}
+
+.common{
+    text-align: left;
+    font-size: medium;
+    color: deeppink;
     font-weight: bold;
 }

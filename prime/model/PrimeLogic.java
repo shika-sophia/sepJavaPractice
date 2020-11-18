@@ -82,14 +82,14 @@ public class PrimeLogic {
         List<Integer> primeList = new ArrayList<>(num);
         List<Integer> divisorList = new ArrayList<>(num);
 
-        // 0 から num までの素数を Listに格納
-        for (int i = 0; i <= num; i++) {
+        // 2 から num までの素数を Listに格納
+        for (int i = 2; i <= num; i++) {
             divisorList.clear();
             divisorList.add( 1 );
 
             //割り切れる数は約数
             for (int j = 2; j <= num; j++) {
-                if (num % j == 0) {
+                if (i % j == 0) {
                     divisorList.add(j);
                 }
             }//for j
@@ -150,11 +150,15 @@ public class PrimeLogic {
         }
 
         if (list.isEmpty()) {
-            bld.append(calcWayJP).append(" なし \n");
+            if (calcWayJP.equals("最大公約数") || calcWayJP.equals("最小公倍数")) {
+                ;
+            } else {
+                bld.append(calcWayJP).append(" なし \n");
+            }
 
         } else {
             for(int i = 0 ; i < list.size(); i++) {
-                bld.append(list.get(i)).append(" ");
+                bld.append(list.get(i)).append("　");
 
                 if (i % 9 == 1) {
                     bld.append("\n");
@@ -173,11 +177,27 @@ public class PrimeLogic {
 
         bld.append(String.format("◆%s / Ｘ＝%d　Ｙ＝%d  <br>", calcWayJP.substring(2), x, y));
 
+        if(calcWayJP.equals("最大公約数")) {
+            bld.append("<span class='common'>")
+             .append("◆")
+             .append(calcWayJP)
+             .append(":  ")
+             .append(list.get(list.size()- 1))
+             .append("</span><br>");
+        } else if(calcWayJP.equals("最小公倍数")) {
+            bld.append("<span class='common'>")
+            .append("◆")
+            .append(calcWayJP)
+            .append(":  ")
+            .append(list.get(0))
+            .append("</span><br>");
+        }
+
         for(int i = 0 ; i < list.size(); i++) {
             bld.append(list.get(i)).append("　");
 
             if (i % 9 == 1) {
-                bld.append("<br>");
+                bld.append("\n");
             }
         }//for i
 

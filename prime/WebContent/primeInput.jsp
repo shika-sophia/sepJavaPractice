@@ -52,10 +52,12 @@
       <p class="showWay"><input type="radio" name="calcWay" value="lcm" > ＬＣＭ 最小公倍数 </p>
 
       <p><input type="submit" value="Submit"
-            style="color: hotpink; text-weight: bold">&emsp;
-         <input type="reset" value="Reset"
-            style="color: hotpink; text-weight: bold"></p>
-    </form>
+            style="color: hotpink; font-weight: bold"></p>
+</form>
+       <!-- input type="reset" は 前の値を保持し表示する仕様なので無効-->
+       <!-- <form>内だと リンクもdoPost()に飛ぶ。<form>外で Servletに飛ばして初期化 -->
+       <p><a href="/sepJavaRecurrent/PrimeServlet?action=init">
+         <button style="color:hotpink; font-weight:bold"> Reset </button></a></p>
   </td>
 </tr>
 </table>

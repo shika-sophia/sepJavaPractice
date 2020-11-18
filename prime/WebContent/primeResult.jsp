@@ -42,6 +42,14 @@
   <% } %>
   </td>
 </tr>
+<tr>
+  <td>
+  <p><a href="/sepJavaRecurrent/PrimeServlet?action=again">
+         <button style="color:hotpink; font-weight:bold">別の結果</button></a>&emsp;
+     <a href="/sepJavaRecurrent/PrimeServlet?action=init">
+         <button style="color:hotpink; font-weight:bold">最初から</button></a>
+  </td>
+</tr>
 </table>
 </div>
 </body>
