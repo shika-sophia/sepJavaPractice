@@ -1,7 +1,6 @@
 package webPractice.prime.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PrimeData implements Serializable {
@@ -23,14 +22,14 @@ public class PrimeData implements Serializable {
     public PrimeData() {
         x = 0;
         y = 0;
-        xPrime = new ArrayList<Integer>();
-        yPrime = new ArrayList<Integer>();
-        xDivisor = new ArrayList<Integer>();
-        yDivisor = new ArrayList<Integer>();
-        xMultiple = new ArrayList<Integer>(BOUND);
-        yMultiple = new ArrayList<Integer>(BOUND);
-        commonDivisor = new ArrayList<Integer>();
-        commonMulitiple = new ArrayList<Integer>(BOUND);
+//        xPrime = new ArrayList<Integer>();
+//        yPrime = new ArrayList<Integer>();
+//        xDivisor = new ArrayList<Integer>();
+//        yDivisor = new ArrayList<Integer>();
+//        xMultiple = new ArrayList<Integer>(BOUND);
+//        yMultiple = new ArrayList<Integer>(BOUND);
+//        commonDivisor = new ArrayList<Integer>();
+//        commonMulitiple = new ArrayList<Integer>(BOUND);
         xResult = "";
         yResult = "";
         zResult = "";
@@ -39,14 +38,14 @@ public class PrimeData implements Serializable {
     public PrimeData(Integer x, Integer y) {
         this.x = x;
         this.y = y;
-        xPrime = new ArrayList<Integer>(x);
-        yPrime = new ArrayList<Integer>(y);
-        xDivisor = new ArrayList<Integer>(x);
-        yDivisor = new ArrayList<Integer>(y);
-        xMultiple = new ArrayList<Integer>(BOUND);
-        yMultiple = new ArrayList<Integer>(BOUND);
-        commonDivisor = new ArrayList<Integer>((int)Math.max(x, y));
-        commonMulitiple = new ArrayList<Integer>(BOUND);
+//        xPrime = new ArrayList<Integer>(x);
+//        yPrime = new ArrayList<Integer>(y);
+//        xDivisor = new ArrayList<Integer>(x);
+//        yDivisor = new ArrayList<Integer>(y);
+//        xMultiple = new ArrayList<Integer>(BOUND);
+//        yMultiple = new ArrayList<Integer>(BOUND);
+//        commonDivisor = new ArrayList<Integer>((int)Math.max(x, y));
+//        commonMulitiple = new ArrayList<Integer>(BOUND);
         xResult = "";
         yResult = "";
         zResult = "";
