@@ -21,24 +21,18 @@ public class PrimeLogic {
             calcWayJP = "素数";
             listX = calcPrime(x, calcWay);
             listY = calcPrime(y, calcWay);
-            data.setxPrime(listX);
-            data.setyPrime(listY);
             break;
 
         case "divisor":
             calcWayJP = "約数";
             listX = calcPrime(x, calcWay);
             listY = calcPrime(y, calcWay);
-            data.setxDivisor(listX);
-            data.setyDivisor(listY);
             break;
 
         case "multiple":
             calcWayJP = "倍数";
             listX = calcMultiple(x, data);
             listY = calcMultiple(y, data);
-            data.setxMultiple(listX);
-            data.setyMultiple(listY);
             break;
 
         case "gcd"://ＧＣＤ: 最大公約数 Greatest Common Divisor
@@ -46,7 +40,6 @@ public class PrimeLogic {
             listX = calcPrime(x, "divisor");
             listY = calcPrime(y, "divisor");
             listZ = retainList(listX, listY);
-            data.setCommonDivisor(listZ);
             break;
 
         case "lcm"://ＬＣＭ: 最小公倍数 Least Common Multiple
@@ -54,7 +47,6 @@ public class PrimeLogic {
             listX = calcMultiple(x, data);
             listY = calcMultiple(y ,data);
             listZ = retainList(listX, listY);
-            data.setCommonMulitiple(listZ);
             break;
 
         default:  //none
@@ -79,8 +71,8 @@ public class PrimeLogic {
     //====== 素数と約数の抽出は同じメソッドで行う ======
     private List<Integer> calcPrime(Integer num, String calcWay) {
         //ローカル用 Listのインスタンス
-        List<Integer> primeList = new ArrayList<>(num);
-        List<Integer> divisorList = new ArrayList<>(num);
+        List<Integer> primeList = new ArrayList<>();
+        List<Integer> divisorList = new ArrayList<>();
 
         // 2 から num までの素数を Listに格納
         for (int i = 2; i <= num; i++) {

@@ -17,7 +17,7 @@
  *
  * @see 関連src: javaPractice / exercise / Exercise15Ans.java
  * @author shika
- * @date 2020-11-17
+ * @date 2020-11-17,11-21
  */
 
 package webPractice.prime.servlet;
@@ -73,9 +73,6 @@ public class PrimeServlet extends HttpServlet {
                 data = new PrimeData();
                 break;
 
-            // ?action=again は元の x, yを保持して再びinputへ
-            // ここでの処理はないため 本当は?action=again や switch-case不要
-            // 以後、actionの追加や againの仕様変更のため switch文を残す
             case "again":
                 ;
                 break;
