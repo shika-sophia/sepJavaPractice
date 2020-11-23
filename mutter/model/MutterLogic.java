@@ -11,7 +11,7 @@ public class MutterLogic {
         //---- 現在の日時を取得 ----
         String dateTime = nowDateTime();
 
-        //---- ユーザー用のListに追加 ----
+        //---- ユーザー用のListの先頭に追加 ----
         data.setMutterList(mutter);
         data.setDateTimeList(dateTime);
 

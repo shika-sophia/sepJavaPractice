@@ -8,8 +8,8 @@ public class MutterData implements Serializable{
     private String name;  //ユーザー名
     private String pass;  //パスワード
     private String passCode; //passを「****」に置換
-    private List<String> mutterList;//ユーザー用のList
-    private List<String> dateTimeList;
+    private List<String> mutterList;  //ユーザー用のList(最新のものが先頭)
+    private List<String> dateTimeList;//つぶやき時の日時(最新のものが先頭)
 
     public MutterData() {
         name = "";
@@ -21,7 +21,7 @@ public class MutterData implements Serializable{
         setName(name);
         setPass(pass);
         setPassCode(passCode);
-        mutterList = new ArrayList<String>();
+        setMutterList(new ArrayList<String>());
         setDateTimeList(new ArrayList<String>());
     }
 
@@ -59,7 +59,7 @@ public class MutterData implements Serializable{
     }
 
     public void setMutterList(String mutter) {
-        this.mutterList.add(mutter);
+        this.mutterList.add(0, mutter);
     }
 
     public List<String> getDateTimeList() {
@@ -71,6 +71,6 @@ public class MutterData implements Serializable{
     }
 
     public void setDateTimeList(String dateTime) {
-        this.dateTimeList.add(dateTime);
+        this.dateTimeList.add(0, dateTime);
     }
 }//class
