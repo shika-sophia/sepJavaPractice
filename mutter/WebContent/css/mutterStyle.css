@@ -84,3 +84,9 @@ button{
     font-family: "MS P明朝",serif;
     color: forestgreen;
 }
+
+.printMutter{
+    text-align: left;
+    text-indent: 10%;
+    font-size: large;
+}

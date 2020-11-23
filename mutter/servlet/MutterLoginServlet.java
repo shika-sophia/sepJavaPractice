@@ -1,3 +1,25 @@
+/**
+ * @title webPractice / mutter / servlet / MutterLoginServlet
+ * @content つぶやき投稿のWebアプリ
+ *
+ *        ---- servlet ----
+ * @class MutterLoginServlet //◆Start Point / Login機能のControl
+ * @class MutterServlet      //Mutter機能のControl
+ *
+ *        ---- model ----
+ * @class MutterLoginLogic  //Loginの適正判定、LoginDAOの呼び出し
+ * @class MutterLogic       //MutterのList追加、MutterDAOの呼び出し
+ * @class MutterData        //データの保持 User,Mutterを統合
+ *
+ *        ---- WebContent ----
+ * @page /WEB-INF/mutter/mutterLogin.jsp //Login View
+ * @page /WEB-INF/mutter/mutterConfirm.jsp //確認 View
+ * @page /WEB-INF/mutter/mutter.jsp      //つぶやき投稿・表示 View
+ * @page /css/mutterStyle.css            //StyleSheet
+ *
+ * @author shika
+ * @date 2020-11-22, 11-23
+ */
 package webPractice.mutter.servlet;
 
 import java.io.IOException;

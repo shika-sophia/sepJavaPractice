@@ -14,7 +14,7 @@
 <body>
 <div id="upper">
 <hr color="white" size="5">
-<h1><i>・*＊ Mutter WebApplication ＊*・</i></h1>
+<h1><i>・*＊ Mutter ＊*・</i></h1>
 <hr color="white" size="5">
 </div>
 <div id="content" align="center">
@@ -39,7 +39,7 @@
       <p class="input">Name: <input type="text" name="name" size="10" required="required"></p>
       <p class="input">Pass:　<input type="password" name="pass" size="10" required="required"></p>
       <br>
-      <p align="right"><button type="submit">Login</button>　　</p>
+      <p align="right"><button type="submit"><i> Login </i></button>　　</p>
     </form>
 </table>
 </div>

@@ -16,7 +16,7 @@
 <body>
 <div id="upper">
 <hr color="white" size="5">
-<h1><i>・*＊ Mutter WebApplication ＊*・</i></h1>
+<h1><i>・*＊ Mutter ＊*・</i></h1>
 <hr color="white" size="5">
 </div>
 <div id="content" align="center">
@@ -30,11 +30,11 @@
 <tr>
   <td>
       <p class="input">Name: 　<%= name %> さん</p>
-      <p class="input">Pass: 　　<%= passCode %></p>
+      <p class="input">Pass:　　<%= passCode %></p>
       <br>
-      <p><a href="/sepJavaRecurrent/MutterServlet?action=admit"><button>　ＯＫ　</button></a>&emsp;
+      <p><a href="/sepJavaRecurrent/MutterServlet?action=admit"><button><i>　ＯＫ　</i></button></a>&emsp;
 
-      <a href="/sepJavaRecurrent/MutterLoginServlet?action=init"><button>やり直し</button></a>
+      <a href="/sepJavaRecurrent/MutterLoginServlet?action=init"><button><i>やり直し</i></button></a>
 
       </p>
 
