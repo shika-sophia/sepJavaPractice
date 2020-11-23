@@ -11,14 +11,12 @@
 <% List<String> dateTimeList = data.getDateTimeList(); %>
 
 <% String mutterFlag = ""; %>
-<% String dateTime = "";%>
 <% int lastIndex = mutterList.size() - 1; %>
 
 <% if (mutterList.isEmpty()){
     ;
    } else {
      mutterFlag = mutterList.get(lastIndex);
-     dateTime = dateTimeList.get(lastIndex);
    }
 %>
 
@@ -61,20 +59,20 @@
    <% if (mutterFlag == null || mutterFlag.equals("")){
         ;
       } else {
-          for(String mtr : mutterList){ %>
-                  <p class="printMutter"><%= name %> : <%= mtr %>
+          for(int i = 0; i < mutterList.size(); i++){ %>
+              <p class="printMutter"><%= name %> : <%= mutterList.get(i) %>
 
-                  <!-- mtrが長いときは改行 / nameに合わせてインデント -->
-                  <% if(mtr.length() > 18){%>
-                        <br><span style="text-indent: 10%;">
-                  <%    for(int i = 0; i < name.length(); i++){ %>
-                            　
-                  <%     } //for i%>
-                        </span>
-                  <% } //if %>
+              <!-- mtrが長いときは改行 / nameに合わせてインデント -->
+              <% if(mutterList.get(i).length() > 18){%>
+                    <br><span style="text-indent: 10%;">
+              <%    for(int j = 0; j < name.length(); j++){ %>
+                        &emsp;
+              <%     } //for j%>
+                    </span>
+              <% } //if %>
 
-                  <span style="font-size: medium;"><%= dateTime %></span></p>
-   <%     }//for %>
+              <span style="font-size: medium;"><%= dateTimeList.get(i) %></span></p>
+   <%     }//for i %>
    <% }//if-else %>
   </td>
 </tr>

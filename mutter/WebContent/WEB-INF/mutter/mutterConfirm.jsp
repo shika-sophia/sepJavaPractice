@@ -33,11 +33,10 @@
       <p class="input">Pass:　　<%= passCode %></p>
       <br>
       <p><a href="/sepJavaRecurrent/MutterServlet?action=admit"><button><i>　ＯＫ　</i></button></a>&emsp;
-
       <a href="/sepJavaRecurrent/MutterLoginServlet?action=init"><button><i>やり直し</i></button></a>
-
       </p>
-
+  </td>
+</tr>
 </table>
 </div>
 </body>
