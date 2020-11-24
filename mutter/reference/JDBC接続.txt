@@ -1,0 +1,9 @@
+/* JavaのDAOからの接続 */
+//接続先データベースの情報 IPアドレス書いたらほかのパソコンをデータベースにできる
+"jdbc:mysql://「IPアドレス」:3306/「データベース名」?characterEncoding=utf-8&serverTimezone=JST"
+
+//データベースのユーザー情報
+"root"
+
+//データベースのパスワード
+"root"
