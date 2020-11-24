@@ -74,6 +74,31 @@ public class MutterServlet extends HttpServlet {
         @SuppressWarnings("unchecked")
         List<String> mutterListAll = (List<String>) application.getAttribute("mutterList");
 
+        //---- except web-Reload ----
+        boolean reloadFlag = false;
+//        int preIndex = 0;
+//        int lastIndex = 0;
+//
+//        if(mutterListAll.isEmpty()) {
+//            ;
+//        } else {
+//            preIndex = lastIndex;
+//            lastIndex = (mutterListAll.size() - 1);
+//
+//            //indexが更新されていなければリロード
+//            if(preIndex == lastIndex) {
+//                reloadFlag = true;
+//
+//                //---- set to necessary scorp ----
+//                necessarySetting(request, mutterListAll, reloadFlag);
+//
+//                //---- forward to mutter without addMutter() ----
+//                String path = "/WEB-INF/mutter/mutter.jsp";
+//                doForward(request, response, path);
+//                return;
+//            }//if reload
+//        }//if-else
+
         //---- logic -> this.field ----
         logic = new MutterLogic();
 
@@ -81,11 +106,13 @@ public class MutterServlet extends HttpServlet {
         mutterListAll = logic.addMutter(mutter, mutterListAll, data);
 
         //---- set to necessary scorp ----
-        necessarySetting(request, mutterListAll);
+        necessarySetting(request, mutterListAll, reloadFlag);
 
         //---- forward to mutter ----
         String path = "/WEB-INF/mutter/mutter.jsp";
         doForward(request, response, path);
+
+
     }//doPost()
 
 
@@ -109,12 +136,19 @@ public class MutterServlet extends HttpServlet {
 
     //====== set to necessary scorp for doPost() -> [mutter.jsp] ======
     private void necessarySetting(
-            HttpServletRequest request, List<String> mutterListAll) {
+            HttpServletRequest request, List<String> mutterListAll, boolean reloadFlag) {
 
         //---- set message List to request scorp ----
         List<String> msgList = inLogic.getMsgList();
         msgList.clear();
-        msgList.add(String.format("%sさんが投稿しました。", data.getName()));
+
+        if(reloadFlag) {
+            msgList.add("同じ内容は投稿できません。");
+            msgList.add("Ｗｅｂページのリロードは使わないでください。");
+        } else {
+            msgList.add(String.format("%sさんが投稿しました。", data.getName()));
+        }
+
         inLogic.setMsgList(msgList);
         request.setAttribute("msgList", msgList);
 
