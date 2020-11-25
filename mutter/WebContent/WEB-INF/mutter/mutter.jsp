@@ -4,6 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="webPractice.mutter.model.MutterData" %>
+
 <% List<String> msgList = (List<String>) request.getAttribute("msgList"); %>
 <% List<String> mutterList = (List<String>) application.getAttribute("mutterList"); %>
 <% MutterData data = (MutterData) session.getAttribute("data"); %>
@@ -20,6 +21,7 @@
    }
 %>
 
+<% boolean reloadFlag = false; %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,8 +41,14 @@
 <tr>
   <th>
   <i>＊ Mutter ＊</i><br>
-  <p class="message">
+
       <% for(String msg : msgList){ %>
+      <%   if(msg.contains("できません") || msg.contains("リロード")){ %>
+              <p class="errMsg">
+      <%      reloadFlag = true;%>
+      <%    } else { %>
+              <p class="message">
+      <%    } %>
           <%= msg %><br>
       <% }//for msgList%>
   </p>
@@ -60,20 +68,22 @@
         ;
       } else {
           for(int i = 0; i < mutterList.size(); i++){ %>
+
               <p class="printMutter"><%= name %> : <%= mutterList.get(i) %>
 
-              <!-- mtrが長いときは改行 / nameに合わせてインデント -->
+              <!-- mutterが長いときは改行 / nameに合わせてインデント -->
               <% if(mutterList.get(i).length() > 18){%>
                     <br><span style="text-indent: 10%;">
               <%    for(int j = 0; j < name.length(); j++){ %>
                         &emsp;
               <%     } //for j%>
                     </span>
-              <% } //if %>
+              <% } //if length %>
 
               <span style="font-size: medium;"><%= dateTimeList.get(i) %></span></p>
+
    <%     }//for i %>
-   <% }//if-else %>
+   <% }//if-else null%>
   </td>
 </tr>
 <tr><!-- mutter数に応じて下部の余白を生成 -->

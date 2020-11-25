@@ -86,7 +86,7 @@ public class MutterLoginServlet extends HttpServlet {
         String pass = request.getParameter("pass");
 
         //---- judge Login ----
-        boolean isLogin = inLogic.loginLogic(name, pass);
+        boolean isLogin = inLogic.checkInput(name, pass);
 
         List<String> msgList;
         if (isLogin) {
@@ -111,9 +111,20 @@ public class MutterLoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("data", data);
 
-        //---- forward to confirm ----
-        String path = "/WEB-INF/mutter/mutterConfirm.jsp";
-        doForward(request, response, path);
+        //---- DBと照合して登録が存在すればLogin ----
+        //登録が存在しなければ 登録のため RegisterServletへ
+        boolean isRegister = inLogic.existRegiter(data);
+
+        if(isRegister) {
+            //---- forward to confirm ----
+            String path = "/WEB-INF/mutter/mutterConfirm.jsp";
+            doForward(request, response, path);
+
+        } else {
+            //---- forward to register ----
+            String path = "/mutterRegisterServlet";
+            doForward(request, response, path);
+        }
     }//doPost()
 
 

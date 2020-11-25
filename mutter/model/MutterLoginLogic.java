@@ -3,6 +3,8 @@ package webPractice.mutter.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import webPractice.mutter.DAO.LoginDAO;
+
 public class MutterLoginLogic {
     private List<String> msgList;
 
@@ -10,7 +12,7 @@ public class MutterLoginLogic {
         msgList = new ArrayList<String>();
     }
 
-    public boolean loginLogic(String name, String pass) {
+    public boolean checkInput(String name, String pass) {
         boolean isLogin = false;
         msgList.clear();
 
@@ -27,12 +29,17 @@ public class MutterLoginLogic {
         if(msgList.isEmpty()) {
             isLogin = true;
         }
-
-        //---- DBとの照合 ----
-        //MutterInDAO inDAO = new MutterInDAO();
-        //
         return isLogin;
-    }//loginLogic()
+    }//checkInput()
+
+
+    public boolean existRegiter(MutterData data) {
+        //---- DBとの照合 ----
+        LoginDAO inDAO = new LoginDAO();
+        boolean isRegister = inDAO.select(data);
+
+        return isRegister;
+    }//existRegiter()
 
 
     //====== make passCode as like "****" of passLength ======

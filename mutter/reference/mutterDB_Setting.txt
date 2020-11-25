@@ -15,17 +15,3 @@ Query OK, 0 rows affected (2.42 sec)
 | MUTTER   | varchar(150) | NO   |     | NULL    |                |
 | DATETIME | datetime     | NO   |     | NULL    |                |
 +----------+--------------+------+-----+---------+----------------+
-
-Sample Data
-INSERT INTO MUTTER (NAME, PASS, MUTTER, DATETIME) 
-  VALUES ('NAME', 'PASS', 'MUTTER', '2020-11-24 15:00:00');
-Query OK, 1 row affected (0.20 sec)
-
-SELECT * FROM MUTTER;
-+----+------+------+--------+---------------------+
-| ID | NAME | PASS | MUTTER | DATETIME            |
-+----+------+------+--------+---------------------+
-|  1 | NAME | PASS | MUTTER | 2020-11-24 15:00:00 |
-+----+------+------+--------+---------------------+
-
-
