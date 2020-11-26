@@ -3,15 +3,15 @@ package webPractice.mutter.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import webPractice.mutter.DAO.LoginDAO;
-
 public class MutterLoginLogic {
     private List<String> msgList;
+
 
     public MutterLoginLogic() {
         msgList = new ArrayList<String>();
     }
 
+    //====== name, pass の文字数チェック ======
     public boolean checkInput(String name, String pass) {
         boolean isLogin = false;
         msgList.clear();
@@ -32,15 +32,35 @@ public class MutterLoginLogic {
         return isLogin;
     }//checkInput()
 
+    //====== mailの文字数チェック ======
+    public void checkMail(String mail) {
+        int mailLength = mail.length();
 
-    public boolean existRegiter(MutterData data) {
-        //---- DBとの照合 ----
-        LoginDAO inDAO = new LoginDAO();
-        boolean isRegister = inDAO.select(data);
+        if(10 < mailLength && mailLength < 50) {
+            ;
+        } else {
+            msgList.add("Mailは[ 10～50 ]文字で入力してください。");
+        }
 
-        return isRegister;
-    }//existRegiter()
+        String[] divideMail = mail.split("@");
+        if (divideMail[0].length() < 6) {
+            msgList.add("「@」の前のアカウント部分は６文字以上で入力してください。");
+        }
+    }//checkMail()
 
+    //====== Login時のpassと Register時のpassが一致するか ======
+    public boolean identifyPass(String pass, MutterData data) {
+        String loginPass = data.getPass();
+
+        if (loginPass.equals(pass)) {
+            return true;
+
+        } else {
+            msgList.add("ログイン時と登録時の Passが違います。");
+            msgList.add("確認のためログインからやり直してください。");
+            return false;
+        }
+    }//identifyPass
 
     //====== make passCode as like "****" of passLength ======
     public String passCode(String pass) {
@@ -57,6 +77,24 @@ public class MutterLoginLogic {
         return passCode;
     }//passCode()
 
+    //==== make mailCode as like "shi********@domain.co.jp" ======
+    public String mailCode(String mail) {
+        StringBuilder bld = new StringBuilder();
+
+        String initial = mail.substring(0, 3);
+        bld.append(initial);
+
+        String[] divideMail = mail.split("@");
+
+        for (int i = 4; i <= divideMail[0].length(); i++) {
+            bld.append("*");
+        }
+        bld.append("@");
+        bld.append(divideMail[1]);
+
+        return bld.toString();
+    }//mailCode()
+
 
     //====== getter, setter ======
     public List<String> getMsgList() {
@@ -70,4 +108,16 @@ public class MutterLoginLogic {
     public void setMsgList(String message) {
         msgList.add(message);
     }
+
+//  //====== 単体テスト用 main() ======
+//  public static void main(String[] args) {
+//      MutterLoginLogic inLogic = new MutterLoginLogic();
+//      String mail = "shika-sophia@dammy.co.jp";
+//      String mailCode = inLogic.mailCode(mail);
+//
+//      System.out.println(mail + " -> " + mailCode);
+//      //◇実行結果
+//      //shika-sophia@dammy.co.jp -> shi*********@dammy.co.jp
+//  }//main()
+
 }//class

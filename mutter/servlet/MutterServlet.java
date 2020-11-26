@@ -51,6 +51,11 @@ public class MutterServlet extends HttpServlet {
                 inLogic.setMsgList("ログインしました。");
                 inLogic.setMsgList("つぶやきを投稿してください。");
                 break;
+
+            case "doneRegister":
+                inLogic.setMsgList("登録完了。ログインしました。");
+                inLogic.setMsgList("つぶやきを投稿してください。");
+                break;
             }//switch
         }//if-else
 

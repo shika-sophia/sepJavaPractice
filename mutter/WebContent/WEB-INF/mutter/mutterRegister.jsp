@@ -8,7 +8,7 @@
 <% List<String> msgList = (List<String>) request.getAttribute("msgList"); %>
 <% MutterData data = (MutterData) session.getAttribute("data"); %>
 <% String name = data.getName(); %>
-<% String pass = data.getPass(); %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +28,7 @@
   <th>
   <i>＊ Register ＊</i><br>
   <% if(msgList.isEmpty()){ %>
-      <p class="message">登録してください</p>
+      <p class="message">登録してください。</p>
   <% } else { %>
       <p class="errMsg">
       <% for(String msg : msgList){ %>
@@ -42,7 +42,7 @@
   <td>
     <form action="/sepJavaRecurrent/MutterRegisterServlet" method="post">
       <p class="input">Name: <input type="text" name="name" value="<%= name %>" size="10" required="required"></p>
-      <p class="input">Pass:　<input type="password" name="pass" value="<%= pass %>" size="10" required="required"></p>
+      <p class="input">Pass:　<input type="password" name="pass" size="10" required="required"></p>
       <p class="input">Mail:　<input type="email" name="mail" size="10" required="required"></p>
       <br>
       <p align="right"><button type="submit"> 登録  </button>　　</p>

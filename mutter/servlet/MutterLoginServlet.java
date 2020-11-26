@@ -36,18 +36,21 @@ import javax.servlet.http.HttpSession;
 
 import webPractice.mutter.model.MutterData;
 import webPractice.mutter.model.MutterLoginLogic;
+import webPractice.mutter.model.MutterRegister;
 
 
 @WebServlet("/MutterLoginServlet")
 public class MutterLoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private MutterLoginLogic inLogic;
+    private MutterRegister regist;
     private MutterData data;
 
     //======◆Start Point ======
     //---- initalize ----
     public void init(ServletConfig config) throws ServletException {
         inLogic = new MutterLoginLogic();
+        regist = new MutterRegister();
         data = new MutterData();
     }//init()
 
@@ -113,7 +116,7 @@ public class MutterLoginServlet extends HttpServlet {
 
         //---- DBと照合して登録が存在すればLogin ----
         //登録が存在しなければ 登録のため RegisterServletへ
-        boolean isRegister = inLogic.existRegiter(data);
+        boolean isRegister = regist.existRegiter(data);
 
         if(isRegister) {
             //---- forward to confirm ----
@@ -121,9 +124,9 @@ public class MutterLoginServlet extends HttpServlet {
             doForward(request, response, path);
 
         } else {
-            //---- forward to register ----
-            String path = "/mutterRegisterServlet";
-            doForward(request, response, path);
+            //---- Redirect to register ----
+            String path = "/sepJavaRecurrent/MutterRegisterServlet";
+            response.sendRedirect(path);
         }
     }//doPost()
 
