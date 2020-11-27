@@ -19,9 +19,9 @@ public class MutterLogic {
         mutterListAll.add(0, mutter);
 
         //---- DBに登録 ----
-        //MutterDAO dao = new MutterDAO();
-        //dao.insertDB(mutter)
-
+        MutterRegister regist = new MutterRegister();
+        regist.insertMutter(data);
+        
         return mutterListAll;
     }//addMutter()
 
@@ -31,10 +31,22 @@ public class MutterLogic {
 
         LocalDateTime now = LocalDateTime.now();
         dateTime = now.format(DateTimeFormatter.ofPattern(
-            "〔Y-MM-dd(E) kk:mm:ss〕"));
+            "Y-MM-dd(E) kk:mm:ss"));
 
         return dateTime;
     }//nowDateTime()
+
+
+    //====== mutterの文字数チェック=======
+    public String checkMutter(String mutter) {
+        final int MUTTER_LIMIT = 150;
+
+        if (0 < mutter.length() && mutter.length() <= MUTTER_LIMIT) {
+            return "overText";
+        }
+
+        return "postMutter";
+    }//checkMutter()
 
 }//class
 

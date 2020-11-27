@@ -38,15 +38,15 @@ public class MutterServlet extends HttpServlet {
         data = (MutterData)session.getAttribute("data");
 
         //---- get Query "?action" ----
-        String action = request.getParameter("action");
+        String msgFlag = request.getParameter("action");
 
-        if (action == null) {
+        if (msgFlag == null) {
             //---- forward to Login <again> ----
             String path = "/MutterLoginServlet";
             doForward(request, response, path);
 
         } else {
-            switch(action) {
+            switch(msgFlag) {
             case "admit":
                 inLogic.setMsgList("ログインしました。");
                 inLogic.setMsgList("つぶやきを投稿してください。");
@@ -60,7 +60,7 @@ public class MutterServlet extends HttpServlet {
         }//if-else
 
         //---- set to necessary scorp ----
-        preNecessarySetting(request, session);
+        preNecessarySetting(request, session, msgFlag);
 
         //---- forward to mutter ----
         String path ="/WEB-INF/mutter/mutter.jsp";
@@ -79,51 +79,46 @@ public class MutterServlet extends HttpServlet {
         @SuppressWarnings("unchecked")
         List<String> mutterListAll = (List<String>) application.getAttribute("mutterList");
 
-        //---- except web-Reload ----
-        boolean reloadFlag = false;
-//        int preIndex = 0;
-//        int lastIndex = 0;
-//
-//        if(mutterListAll.isEmpty()) {
-//            ;
-//        } else {
-//            preIndex = lastIndex;
-//            lastIndex = (mutterListAll.size() - 1);
-//
-//            //indexが更新されていなければリロード
-//            if(preIndex == lastIndex) {
-//                reloadFlag = true;
-//
-//                //---- set to necessary scorp ----
-//                necessarySetting(request, mutterListAll, reloadFlag);
-//
-//                //---- forward to mutter without addMutter() ----
-//                String path = "/WEB-INF/mutter/mutter.jsp";
-//                doForward(request, response, path);
-//                return;
-//            }//if reload
-//        }//if-else
+        //---- リロード対策に最新のmutterを準備 ----
+        String lastMutter = "";
+        int lastIndex = (mutterListAll.size() - 1);
 
-        //---- logic -> this.field ----
-        logic = new MutterLogic();
+        if (mutterListAll.isEmpty()) {
+            ;
+        } else {
+            lastMutter = mutterListAll.get(lastIndex);
+        }
+
+        //---- [mutter.jsp]に表示するメッセージを分岐----
+        String msgFlag = "postMutter";
+
+        if(mutter.equals(lastMutter)) {
+            msgFlag = "reload";
+        }
+
+        //---- mutterの文字数チェック----
+        msgFlag = logic.checkMutter(mutter);
 
         //---- mutter -> List ----
-        mutterListAll = logic.addMutter(mutter, mutterListAll, data);
+        if (msgFlag.equals("postMutter")) {
+            mutterListAll = logic.addMutter(mutter, mutterListAll, data);
+        }
 
         //---- set to necessary scorp ----
-        necessarySetting(request, mutterListAll, reloadFlag);
+        necessarySetting(request, mutterListAll, msgFlag);
 
         //---- forward to mutter ----
         String path = "/WEB-INF/mutter/mutter.jsp";
         doForward(request, response, path);
 
-
     }//doPost()
 
 
     //====== set to necessary scorp for doGet() -> [mutter.jsp] ======
-    private void preNecessarySetting(HttpServletRequest request, HttpSession session) {
+    private void preNecessarySetting(HttpServletRequest request, HttpSession session, String msgFlag) {
         //---- set message List to request scorp ----
+        request.setAttribute("msgFlag", msgFlag);
+
         List<String> msgList = inLogic.getMsgList();
         request.setAttribute("msgList", msgList);
 
@@ -141,18 +136,29 @@ public class MutterServlet extends HttpServlet {
 
     //====== set to necessary scorp for doPost() -> [mutter.jsp] ======
     private void necessarySetting(
-            HttpServletRequest request, List<String> mutterListAll, boolean reloadFlag) {
+            HttpServletRequest request, List<String> mutterListAll, String msgFlag) {
 
         //---- set message List to request scorp ----
         List<String> msgList = inLogic.getMsgList();
         msgList.clear();
 
-        if(reloadFlag) {
+        switch(msgFlag) {
+        case "postMutter":
+            msgList.add(String.format("%sさんが投稿しました。", data.getName()));
+            break;
+
+        case "overText":
+            msgList.add("つぶやきは 150文字以内で入力してください。");
+            break;
+
+        case "reload":
             msgList.add("同じ内容は投稿できません。");
             msgList.add("Ｗｅｂページのリロードは使わないでください。");
-        } else {
-            msgList.add(String.format("%sさんが投稿しました。", data.getName()));
-        }
+            break;
+
+        }//switch
+
+        request.setAttribute("msgFlag", msgFlag);
 
         inLogic.setMsgList(msgList);
         request.setAttribute("msgList", msgList);

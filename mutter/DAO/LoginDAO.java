@@ -10,7 +10,7 @@ import webPractice.mutter.model.MutterData;
 
 public class LoginDAO {
 
-    public boolean select(MutterData data, String JDBC_URL, String DB_USER, String DB_PASS) {
+    public boolean selectUser(MutterData data, String JDBC_URL, String DB_USER, String DB_PASS) {
         boolean isRegister = false;
 
         try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);){

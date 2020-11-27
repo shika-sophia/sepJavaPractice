@@ -5,6 +5,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="webPractice.mutter.model.MutterData" %>
 
+<% String msgFlag = (String) request.getAttribute("msgFlag"); %>
 <% List<String> msgList = (List<String>) request.getAttribute("msgList"); %>
 <% List<String> mutterList = (List<String>) application.getAttribute("mutterList"); %>
 <% MutterData data = (MutterData) session.getAttribute("data"); %>
@@ -14,14 +15,6 @@
 <% String mutterFlag = ""; %>
 <% int lastIndex = mutterList.size() - 1; %>
 
-<% if (mutterList.isEmpty()){
-    ;
-   } else {
-     mutterFlag = mutterList.get(lastIndex);
-   }
-%>
-
-<% boolean reloadFlag = false; %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,17 +34,23 @@
 <tr>
   <th>
   <i>＊ Mutter ＊</i><br>
+  <% switch(msgFlag){
+     case "admit":
+     case "doneRegister":
+     case "postMutter":  %>
+        <p class="message">
+  <%     break;
+
+     case "overText":
+     case "reload":      %>
+          <p class="errMsg">
+  <%      break;
+     }//switch %>
 
       <% for(String msg : msgList){ %>
-      <%   if(msg.contains("できません") || msg.contains("リロード")){ %>
-              <p class="errMsg">
-      <%      reloadFlag = true;%>
-      <%    } else { %>
-              <p class="message">
-      <%    } %>
           <%= msg %><br>
       <% }//for msgList%>
-  </p>
+      </p>
   </th>
 </tr>
 <tr>
@@ -64,7 +63,7 @@
 </tr>
 <tr>
   <td>
-   <% if (mutterFlag == null || mutterFlag.equals("")){
+   <% if (mutterList.isEmpty()){
         ;
       } else {
           for(int i = 0; i < mutterList.size(); i++){ %>
@@ -80,7 +79,7 @@
                     </span>
               <% } //if length %>
 
-              <span style="font-size: medium;"><%= dateTimeList.get(i) %></span></p>
+              <span style="font-size: medium;">〔 <%= dateTimeList.get(i) %> 〕</span></p>
 
    <%     }//for i %>
    <% }//if-else null%>

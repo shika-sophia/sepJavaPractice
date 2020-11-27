@@ -1,6 +1,7 @@
 package webPractice.mutter.model;
 
 import webPractice.mutter.DAO.LoginDAO;
+import webPractice.mutter.DAO.MutterDAO;
 import webPractice.mutter.DAO.RegisterDAO;
 
 public class MutterRegister {
@@ -12,7 +13,7 @@ public class MutterRegister {
     //====== DBとの照合 ======
     public boolean existRegiter(MutterData data) {
         LoginDAO inDAO = new LoginDAO();
-        boolean isRegister = inDAO.select(data, JDBC_URL, DB_USER, DB_PASS);
+        boolean isRegister = inDAO.selectUser(data, JDBC_URL, DB_USER, DB_PASS);
 
         return isRegister;
     }//existRegiter()
@@ -20,10 +21,17 @@ public class MutterRegister {
     //====== DBへ登録 ======
     public boolean register(MutterData data) {
         RegisterDAO regDAO = new RegisterDAO();
-        boolean doneRegister = regDAO.insert(data, JDBC_URL, DB_USER, DB_PASS);
+        boolean doneRegister = regDAO.insertUser(data, JDBC_URL, DB_USER, DB_PASS);
 
         return doneRegister;
     }//register()
+
+
+    //====== mutterListをDBに登録 ======
+    public void insertMutter(MutterData data) {
+        MutterDAO mutDAO = new MutterDAO();
+        mutDAO.insertMutter(data, JDBC_URL, DB_USER, DB_PASS);
+    }//insertMutter()
 
 
     //====== getter ======
@@ -38,6 +46,5 @@ public class MutterRegister {
     public String getDB_PASS() {
         return DB_PASS;
     }
-
 
 }//class

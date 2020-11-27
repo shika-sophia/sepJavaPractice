@@ -10,7 +10,7 @@ import webPractice.mutter.model.MutterData;
 
 public class RegisterDAO {
 
-    public boolean insert(MutterData data, String JDBC_URL, String DB_USER, String DB_PASS) {
+    public boolean insertUser(MutterData data, String JDBC_URL, String DB_USER, String DB_PASS) {
         boolean doneRegister = false;
 
         try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);){
