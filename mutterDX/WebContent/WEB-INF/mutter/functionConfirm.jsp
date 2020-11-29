@@ -20,7 +20,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="css/mutterStyle.css">
-<title>mutter.jsp</title>
+<title>functionConfirm.jsp</title>
 </head>
 <body>
 <body>
@@ -35,14 +35,13 @@
   <th>
   <i>＊ Mutter ＊</i><br>
   <% switch(msgFlag){
-     case "admit":
-     case "doneRegister":
-     case "postMutter":  %>
+     case "save":
+     case "logout":
+  %>
         <p class="message">
   <%     break;
 
-     case "overText":
-     case "reload":      %>
+     case "load":      %>
           <p class="errMsg">
   <%      break;
      }//switch %>
@@ -51,6 +50,11 @@
           <%= msg %><br>
       <% }//for msgList%>
       </p>
+        <form action="/mutterDX/MutterFunctionServlet" method="post">
+          <input type="hidden" name="msgFlag" value=<%= msgFlag %> />
+          <p><button type="submit" name="comfirm" value="yes"> YES </button>&emsp;
+          <button type="submit" name="comfirm" value="no"> N O </button></p>
+        </form>
   </th>
 </tr>
 <tr>

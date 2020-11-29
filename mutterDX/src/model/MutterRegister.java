@@ -1,5 +1,6 @@
 package model;
 
+import dao.LoadDAO;
 import dao.LoginDAO;
 import dao.MutterDAO;
 import dao.RegisterDAO;
@@ -27,12 +28,17 @@ public class MutterRegister {
     }//register()
 
 
-    //====== mutterListをDBに登録 ======
+    //====== mutterListをDBにsave ======
     public void insertMutter(MutterData data) {
         MutterDAO mutDAO = new MutterDAO();
         mutDAO.insertMutter(data, JDBC_URL, DB_USER, DB_PASS);
     }//insertMutter()
 
+    //====== saveデータをload ======
+    public void loadMutter(MutterData data) {
+        LoadDAO loadDAO = new LoadDAO();
+        loadDAO.selectMutter(data, JDBC_URL, DB_USER, DB_PASS);
+    }//loadMutter()
 
     //====== getter ======
     public String getJDBC_URL() {

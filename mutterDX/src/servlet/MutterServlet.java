@@ -45,20 +45,19 @@ public class MutterServlet extends HttpServlet {
             String path = "/MutterLoginServlet";
             doForward(request, response, path);
             return;
+        }
 
-        } else {
-            switch(msgFlag) {
-            case "admit":
-                inLogic.setMsgList("ログインしました。");
-                inLogic.setMsgList("つぶやきを投稿してください。");
-                break;
+        switch(msgFlag) {
+        case "admit":
+            inLogic.setMsgList("ログインしました。");
+            inLogic.setMsgList("つぶやきを投稿してください。");
+            break;
 
-            case "doneRegister":
-                inLogic.setMsgList("登録完了。ログインしました。");
-                inLogic.setMsgList("つぶやきを投稿してください。");
-                break;
-            }//switch
-        }//if-else
+        case "doneRegister":
+            inLogic.setMsgList("登録完了。ログインしました。");
+            inLogic.setMsgList("つぶやきを投稿してください。");
+            break;
+        }//switch
 
         //---- set to necessary scorp ----
         preNecessarySetting(request, session, msgFlag);
@@ -117,6 +116,7 @@ public class MutterServlet extends HttpServlet {
         }
 
         //---- mutterの文字数チェック----
+        logic = new MutterLogic();
         msgFlag = logic.checkMutter(mutter);
 
         //---- mutter -> List ----
@@ -173,7 +173,7 @@ public class MutterServlet extends HttpServlet {
     }//necessarySetting() for doPost()
 
 
-    //====== forward to path ======
+  //====== forward to path ======
     public void doForward(HttpServletRequest request, HttpServletResponse response, String path)
             throws ServletException, IOException{
         RequestDispatcher dis = request.getRequestDispatcher(path);

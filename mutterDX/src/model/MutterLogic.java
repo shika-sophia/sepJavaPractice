@@ -18,10 +18,6 @@ public class MutterLogic {
         //---- アプリ全体Listの先頭に追加 ----
         mutterListAll.add(0, mutter);
 
-        //---- DBに登録 ----
-        //MutterRegister regist = new MutterRegister();
-        //regist.insertMutter(data);
-
         return mutterListAll;
     }//addMutter()
 
