@@ -77,7 +77,7 @@ public class MutterFunctionServlet extends HttpServlet {
         session.setAttribute("data", data);
         application.setAttribute("mutterList", mutterListAll);
 
-        String path = "functionConfirm.jsp";
+        String path = "/WEB-INF/mutter/functionConfirm.jsp";
         doForward(request, response, path);
     }//doGet()
 

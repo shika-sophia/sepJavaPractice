@@ -7,10 +7,11 @@
 
 <% String msgFlag = (String) request.getAttribute("msgFlag"); %>
 <% List<String> msgList = (List<String>) request.getAttribute("msgList"); %>
-<% List<String> mutterList = (List<String>) application.getAttribute("mutterList"); %>
+<% List<String> mutterList = (List<String>) application.getAttribute("mutterList");%>
+<% List<String> dateTimeList = (List<String>) application.getAttribute("dateTimeList"); %>
+
 <% MutterData data = (MutterData) session.getAttribute("data"); %>
 <% String name = data.getName(); %>
-<% List<String> dateTimeList = data.getDateTimeList(); %>
 
 <% String mutterFlag = ""; %>
 <% int lastIndex = mutterList.size() - 1; %>

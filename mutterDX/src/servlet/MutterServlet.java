@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -24,6 +23,7 @@ public class MutterServlet extends HttpServlet {
     private MutterLoginLogic inLogic;
     private MutterLogic logic;
     private MutterData data;
+    private HttpSession session;
     private ServletContext application;
 
     //----<a href="?action=admit"> from [mutterConfirm.jsp] ----
@@ -31,11 +31,14 @@ public class MutterServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        //---- inLogic, data -> this.field ----
+        //---- data -> this.field ----
         inLogic = new MutterLoginLogic();
+        logic = new MutterLogic();
 
-        HttpSession session = request.getSession();
+        session = request.getSession();
         data = (MutterData)session.getAttribute("data");
+
+        application = this.getServletContext();
 
         //---- get Query "?action" ----
         String msgFlag = request.getParameter("action");
@@ -60,7 +63,7 @@ public class MutterServlet extends HttpServlet {
         }//switch
 
         //---- set to necessary scorp ----
-        preNecessarySetting(request, session, msgFlag);
+        preNecessarySetting(request, msgFlag);
 
         //---- forward to mutter ----
         String path ="/WEB-INF/mutter/mutter.jsp";
@@ -69,7 +72,7 @@ public class MutterServlet extends HttpServlet {
 
 
     //====== set to necessary scorp for doGet() -> [mutter.jsp] ======
-    private void preNecessarySetting(HttpServletRequest request, HttpSession session, String msgFlag) {
+    private void preNecessarySetting(HttpServletRequest request, String msgFlag) {
         //---- set message List to request scorp ----
         request.setAttribute("msgFlag", msgFlag);
 
@@ -79,11 +82,12 @@ public class MutterServlet extends HttpServlet {
         //---- set  data  to session scorp ----
         session.setAttribute("data", data);
 
-        //---- set mutterList as empty to application scorp ----
-        List<String> mutterListAll = new ArrayList<>();
+        //---- set List as empty to application scorp ----
+        List<String> mutterListAll = logic.getMutterListAll();
+        List<String> dateTimeListAll = logic.getDateTimeListAll();
 
-        application = this.getServletContext();
         application.setAttribute("mutterList", mutterListAll);
+        application.setAttribute("dateTimeList", dateTimeListAll);
     }//preNecessarySetting() for doGet()
 
 
@@ -95,8 +99,9 @@ public class MutterServlet extends HttpServlet {
         //---- get mutter, mutterListAll ----
         String mutter = request.getParameter("mutter");
 
-        @SuppressWarnings("unchecked")
-        List<String> mutterListAll = (List<String>) application.getAttribute("mutterList");
+        //---- application scorpの内容を logic.fieldより取得 ----
+        List<String> mutterListAll = logic.getMutterListAll();
+        List<String> dateTimeListAll =  logic.getDateTimeListAll();
 
         //---- リロード対策に最新のmutterを準備 ----
         String lastMutter = "";
@@ -116,16 +121,17 @@ public class MutterServlet extends HttpServlet {
         }
 
         //---- mutterの文字数チェック----
-        logic = new MutterLogic();
         msgFlag = logic.checkMutter(mutter);
 
         //---- mutter -> List ----
         if (msgFlag.equals("postMutter")) {
-            mutterListAll = logic.addMutter(mutter, mutterListAll, data);
+            logic.addMutter(mutter, data);
+            mutterListAll = logic.getMutterListAll();
+            dateTimeListAll =  logic.getDateTimeListAll();
         }
 
         //---- set to necessary scorp ----
-        necessarySetting(request, mutterListAll, msgFlag);
+        necessarySetting(request, mutterListAll,dateTimeListAll, msgFlag);
 
         //---- forward to mutter ----
         String path = "/WEB-INF/mutter/mutter.jsp";
@@ -136,7 +142,10 @@ public class MutterServlet extends HttpServlet {
 
     //====== set to necessary scorp for doPost() -> [mutter.jsp] ======
     private void necessarySetting(
-            HttpServletRequest request, List<String> mutterListAll, String msgFlag) {
+            HttpServletRequest request,
+            List<String> mutterListAll,
+            List<String> dateTimeListAll,
+            String msgFlag) {
 
         //---- set message List to request scorp ----
         List<String> msgList = inLogic.getMsgList();
@@ -164,12 +173,11 @@ public class MutterServlet extends HttpServlet {
         request.setAttribute("msgList", msgList);
 
         //---- set data to session scorp ----
-        HttpSession session = request.getSession();
         session.setAttribute("data", data);
 
         //---- set mutterListAll to application scorp ----
         application.setAttribute("mutterList", mutterListAll);
-
+        application.setAttribute("dateTimeList", dateTimeListAll);
     }//necessarySetting() for doPost()
 
 

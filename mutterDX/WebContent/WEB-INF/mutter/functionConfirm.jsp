@@ -52,8 +52,10 @@
       </p>
         <form action="/mutterDX/MutterFunctionServlet" method="post">
           <input type="hidden" name="msgFlag" value=<%= msgFlag %> />
-          <p><button type="submit" name="comfirm" value="yes"> YES </button>&emsp;
-          <button type="submit" name="comfirm" value="no"> N O </button></p>
+          <input type="hidden" name="comfirm" value="yes" />
+          <p><button type="submit"> YES </button>&emsp;
+          <input type="hidden" name="comfirm" value="no" />
+          <button type="submit"> NO </button></p>
         </form>
   </th>
 </tr>
