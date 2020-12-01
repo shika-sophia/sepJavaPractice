@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -14,14 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.LoadLogic;
+import model.LoginLogic;
 import model.MutterData;
-import model.MutterLoginLogic;
+import model.MutterLogic;
 import model.SaveLogic;
 
 @WebServlet("/MutterFunctionServlet")
 public class MutterFunctionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private MutterLoginLogic inLogic;
+    private LoginLogic inLogic;
+    private MutterLogic logic;
     private MutterData data;
     private HttpSession session;
     private ServletContext application;
@@ -30,14 +31,13 @@ public class MutterFunctionServlet extends HttpServlet {
         //---- initiaize ----
         request.setCharacterEncoding("UTF-8");
 
-        inLogic = new MutterLoginLogic();
+        inLogic = new LoginLogic();
+        logic = new MutterLogic();
 
         session = request.getSession();
         data = (MutterData) session.getAttribute("data");
 
         application = this.getServletContext();
-        @SuppressWarnings("unchecked")
-        List<String> mutterListAll = (List<String>) application.getAttribute("mutterList");
 
         //---- get Query "?action" ----
         String msgFlag = request.getParameter("action");
@@ -75,7 +75,11 @@ public class MutterFunctionServlet extends HttpServlet {
         request.setAttribute("msgFlag", msgFlag);
         request.setAttribute("msgList", msgList);
         session.setAttribute("data", data);
+
+        List<String> mutterListAll = logic.getMutterListAll();
+        List<String> dateTimeListAll = logic.getDateTimeListAll();
         application.setAttribute("mutterList", mutterListAll);
+        application.setAttribute("dataTimeList", dateTimeListAll);
 
         String path = "/WEB-INF/mutter/functionConfirm.jsp";
         doForward(request, response, path);
@@ -94,7 +98,7 @@ public class MutterFunctionServlet extends HttpServlet {
             if (confirm.equals("yes")) {
                 LoadLogic load = new LoadLogic();
                 load.loadDB(data);
-                List<String> mutterListAll = new ArrayList<>(data.getMutterList());
+
             } else {
                 path = "/mutterDX/MutterServlet";
             }

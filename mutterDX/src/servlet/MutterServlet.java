@@ -12,15 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.LoginLogic;
 import model.MutterData;
 import model.MutterLogic;
-import model.MutterLoginLogic;
 
 
 @WebServlet("/MutterServlet")
 public class MutterServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private MutterLoginLogic inLogic;
+    private LoginLogic inLogic;
     private MutterLogic logic;
     private MutterData data;
     private HttpSession session;
@@ -29,10 +29,8 @@ public class MutterServlet extends HttpServlet {
     //----<a href="?action=admit"> from [mutterConfirm.jsp] ----
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-
-        //---- data -> this.field ----
-        inLogic = new MutterLoginLogic();
+        //---- initialize -> this.field ----
+        inLogic = new LoginLogic();
         logic = new MutterLogic();
 
         session = request.getSession();
@@ -74,8 +72,6 @@ public class MutterServlet extends HttpServlet {
     //====== set to necessary scorp for doGet() -> [mutter.jsp] ======
     private void preNecessarySetting(HttpServletRequest request, String msgFlag) {
         //---- set message List to request scorp ----
-        request.setAttribute("msgFlag", msgFlag);
-
         List<String> msgList = inLogic.getMsgList();
         request.setAttribute("msgList", msgList);
 
@@ -94,7 +90,6 @@ public class MutterServlet extends HttpServlet {
     //====== <form action> from [mutter.jsp] ======
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
 
         //---- get mutter, mutterListAll ----
         String mutter = request.getParameter("mutter");

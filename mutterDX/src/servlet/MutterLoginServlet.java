@@ -34,30 +34,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.DataAccess;
+import model.LoginLogic;
 import model.MutterData;
-import model.MutterLoginLogic;
-import model.MutterRegister;
 
 
 @WebServlet("/MutterLoginServlet")
 public class MutterLoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private MutterLoginLogic inLogic;
-    private MutterRegister regist;
+    private LoginLogic inLogic;
+    private DataAccess dataAcs;
     private MutterData data;
 
     //======◆Start Point ======
     //---- initalize ----
     public void init(ServletConfig config) throws ServletException {
-        inLogic = new MutterLoginLogic();
-        regist = new MutterRegister();
+        super.init(config);
+        inLogic = new LoginLogic();
+        dataAcs = new DataAccess();
         data = new MutterData();
     }//init()
 
     //====== get Query and swich ======
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //---- get Query "?action" ----
-        request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
 
         //---- judge action to separate way ----
@@ -84,7 +84,6 @@ public class MutterLoginServlet extends HttpServlet {
     //====== <form action> from [mutterLogin.jsp] ======
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //---- get name, pass as required -> not null ----
-        request.setCharacterEncoding("UTF-8");
         String name = request.getParameter("name");
         String pass = request.getParameter("pass");
 
@@ -117,7 +116,7 @@ public class MutterLoginServlet extends HttpServlet {
 
         //---- DBと照合して登録が存在すればLogin ----
         //登録が存在しなければ 登録のため RegisterServletへ
-        boolean isRegister = regist.existRegiter(data);
+        boolean isRegister = dataAcs.existRegiter(data);
 
         if(isRegister) {
             //---- forward to confirm ----

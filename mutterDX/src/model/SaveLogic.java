@@ -4,7 +4,7 @@ public class SaveLogic {
 
     public void saveDB(MutterData data) {
         //---- DBに登録 ----
-        MutterRegister regist = new MutterRegister();
+        DataAccess regist = new DataAccess();
         regist.insertMutter(data);
     }//saveDB()
 

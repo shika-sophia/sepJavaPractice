@@ -79,13 +79,3 @@ public class MutterLogic {
         dateTimeListAll.add(0, dateTime);
     }
 }//class
-
-/*
-【考察】ユーザー用List に追加すると application scorpに反映されてしまう。(２つ登録される)
-        一度、追加したインスタンスを参照先として事後的な変更も反映するのかも
-        このクラスの呼び出し前に application.removeAttribute()をしてみたが効果なし
-
-        あっ、mutterListAll用の newをしていなかったので、
-        各メソッドで変数名にAllを付けて呼ぼうと List自体は同じものだったわ。
-        新たに別物のnewを定義して解決す。
-*/

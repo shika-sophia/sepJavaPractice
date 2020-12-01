@@ -12,8 +12,6 @@ import model.MutterData;
 
 public class LoadDAO {
 
-
-
     public void selectMutter(MutterData data, String JDBC_URL, String DB_USER, String DB_PASS) {
         boolean isLoad = false;
         List<String> mutterList = new ArrayList<>();

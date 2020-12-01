@@ -11,25 +11,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.DataAccess;
+import model.LoginLogic;
 import model.MutterData;
-import model.MutterLoginLogic;
-import model.MutterRegister;
 
 
 @WebServlet("/MutterRegisterServlet")
 public class MutterRegisterServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private MutterLoginLogic inLogic;
-    private MutterRegister regist;
+    private LoginLogic inLogic;
+    private DataAccess dataAcs;
     private MutterData data;
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //---- initialize ----
-        request.setCharacterEncoding("UTF-8");
-
-        inLogic = new MutterLoginLogic();
-        regist = new MutterRegister();
+        inLogic = new LoginLogic();
+        dataAcs = new DataAccess();
 
         HttpSession session = request.getSession();
         data = (MutterData) session.getAttribute("data");
@@ -60,9 +58,8 @@ public class MutterRegisterServlet extends HttpServlet {
 
 
     //====== <form action> from [mutterRegister.jsp] ======
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String name = request.getParameter("name");
         String pass = request.getParameter("pass");
         String mail = request.getParameter("mail");
@@ -107,7 +104,7 @@ public class MutterRegisterServlet extends HttpServlet {
         session.setAttribute("data", data);
 
         //---- DBへ登録----
-        boolean doneRegister = regist.register(data);
+        boolean doneRegister = dataAcs.register(data);
 
         //----登録できたら MutterServletへ ----
         if (doneRegister) {

@@ -8,9 +8,10 @@
 <% String msgFlag = (String) request.getAttribute("msgFlag"); %>
 <% List<String> msgList = (List<String>) request.getAttribute("msgList"); %>
 <% List<String> mutterList = (List<String>) application.getAttribute("mutterList"); %>
+<% List<String> dateTimeList = (List<String>) application.getAttribute("dateTimeList"); %>
+
 <% MutterData data = (MutterData) session.getAttribute("data"); %>
 <% String name = data.getName(); %>
-<% List<String> dateTimeList = data.getDateTimeList(); %>
 
 <% String mutterFlag = ""; %>
 <% int lastIndex = mutterList.size() - 1; %>
@@ -24,11 +25,9 @@
 </head>
 <body>
 <body>
-<div id="upper">
-<hr color="white" size="5">
-<h1><i>・*＊ Mutter ＊*・</i></h1>
-<hr color="white" size="5">
-</div>
+<header>
+    <jsp:include page="mutterHeader.jsp" />
+</header>
 <div id="content" align="center">
 <table id="mutter">
 <tr>
@@ -52,10 +51,9 @@
       </p>
         <form action="/mutterDX/MutterFunctionServlet" method="post">
           <input type="hidden" name="msgFlag" value=<%= msgFlag %> />
-          <input type="hidden" name="comfirm" value="yes" />
-          <p><button type="submit"> YES </button>&emsp;
-          <input type="hidden" name="comfirm" value="no" />
-          <button type="submit"> NO </button></p>
+          <p><input type="submit" name="comfirm" value="YES" />&emsp;
+             <input type="submit" name="comfirm" value="NO" />
+          </p>
         </form>
   </th>
 </tr>
@@ -106,5 +104,8 @@
 </tr>
 </table>
 </div>
+<footer>
+    <jsp:include page="mutterFooter.jsp" />
+</footer>
 </body>
 </html>

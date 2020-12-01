@@ -25,11 +25,9 @@
 </head>
 <body>
 <body>
-<div id="upper">
-<hr color="white" size="5">
-<h1><i>・*＊ Mutter ＊*・</i></h1>
-<hr color="white" size="5">
-</div>
+<header>
+    <jsp:include page="mutterHeader.jsp" />
+</header>
 <div id="content" align="center">
 <table id="mutter">
 <tr>
@@ -101,5 +99,8 @@
 </tr>
 </table>
 </div>
+<footer>
+    <jsp:include page="mutterFooter.jsp" />
+</footer>
 </body>
 </html>
