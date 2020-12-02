@@ -1,11 +1,13 @@
 package model;
 
+import dao.DataAccess;
+
 public class SaveLogic {
 
     public void saveDB(MutterData data) {
         //---- DBに登録 ----
-        DataAccess regist = new DataAccess();
-        regist.insertMutter(data);
+        DataAccess dataAcs = new DataAccess();
+        dataAcs.insertMutter(data);
     }//saveDB()
 
 }//class

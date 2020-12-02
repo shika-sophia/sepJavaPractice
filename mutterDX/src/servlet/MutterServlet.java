@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.LoginLogic;
 import model.Message;
 import model.MutterData;
 import model.MutterLogic;
@@ -21,7 +20,6 @@ import model.MutterLogic;
 @WebServlet("/MutterServlet")
 public class MutterServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private LoginLogic inLogic;
     private MutterLogic logic;
     private MutterData data;
     private Message mess;
@@ -31,8 +29,6 @@ public class MutterServlet extends HttpServlet {
     //----<a href="?action=admit"> from [mutterConfirm.jsp] ----
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //---- initialize -> this.field ----
-        inLogic = new LoginLogic();
         logic = new MutterLogic();
         mess = new Message();
 
@@ -51,7 +47,7 @@ public class MutterServlet extends HttpServlet {
             return;
         }
 
-        //---- switch each to message List ----
+        //---- msgListの分岐 ----
         mess.msgMutterDoGet(msgFlag);
 
         //---- set to necessary scorp ----
@@ -76,16 +72,8 @@ public class MutterServlet extends HttpServlet {
 
         //---- set List as empty to application scorp ----
         //---- set List as Load to application scorp ----
-        List<String> mutterListAll = data.getMutterList();
-        List<String> dateTimeListAll = data.getDateTimeList();
-
-        if(msgFlag.equals("noLoad")) {
-            mutterListAll = logic.getMutterListAll();
-            dateTimeListAll = logic.getDateTimeListAll();
-        }
-
-        logic.setMutterListAll(mutterListAll);
-        logic.setDateTimeListAll(dateTimeListAll);
+        List<String> mutterListAll = logic.getMutterListAll();
+        List<String> dateTimeListAll = logic.getDateTimeListAll();
 
         application.setAttribute("mutterList", mutterListAll);
         application.setAttribute("dateTimeList", dateTimeListAll);

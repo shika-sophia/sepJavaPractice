@@ -4,15 +4,20 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import dao.DataAccess;
+
 public class LoadLogic {
 
-    public void loadDB(MutterData data) {
+    public void loadDB(MutterData data, MutterLogic logic) {
         //DBからロード
         DataAccess dataAcs = new DataAccess();
         dataAcs.loadMutter(data);
 
         //曜日を追加
         addDayOfWeek(data);
+
+        //data.List -> logic.ListAll
+        transList(data, logic);
     }//loadDB()
 
 
@@ -33,6 +38,22 @@ public class LoadLogic {
 
         data.setDateTimeList(dateTimeList);
     }//addDayOfWeek()
+
+    //====== data.List -> logic.ListAll ======
+    private void transList(MutterData data, MutterLogic logic) {
+        List<String> mutterListAll = logic.getMutterListAll();
+        List<String> dateTimeListAll = logic.getDateTimeListAll();
+
+        mutterListAll.clear();
+        dateTimeListAll.clear();
+
+        //---- ディープコピー(要素ごとコピー) ----
+        mutterListAll.addAll(data.getMutterList());
+        dateTimeListAll.addAll(data.getDateTimeList());
+
+        logic.setMutterListAll(mutterListAll);
+        logic.setDateTimeListAll(dateTimeListAll);
+    }//transList
 
 
 //    //====== Test of [addDayOfWeek()] ======

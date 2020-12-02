@@ -58,9 +58,31 @@ public class Message {
             break;
 
         }//switch
-
-
     }//msgMutterDoPost()
+
+
+    public void msgFunction(String msgFlag) {
+        msgList.clear();
+
+        switch (msgFlag) {
+        case "load":
+            msgList.add("現在のつぶやきは消えます。");
+            msgList.add("ロードしますか？");
+            break;
+
+        case "save":
+        case "logout":
+            msgList.add("ご自分の「つぶやき」のみ保存できます。");
+            msgList.add("セーブしますか？");
+            break;
+
+        case "edit":
+            //MutterEditServletへ
+            break;
+        }//switch
+
+    }//msgFunction()
+
 
     //====== getter, setter ======
     public List<String> getMsgList() {
@@ -74,7 +96,5 @@ public class Message {
     public void setMsgList(String message) {
         msgList.add(message);
     }
-
-
 
 }//class

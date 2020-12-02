@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.LoadLogic;
-import model.LoginLogic;
+import model.Message;
 import model.MutterData;
 import model.MutterLogic;
 import model.SaveLogic;
@@ -21,9 +21,9 @@ import model.SaveLogic;
 @WebServlet("/MutterFunctionServlet")
 public class MutterFunctionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private LoginLogic inLogic;
     private MutterLogic logic;
     private MutterData data;
+    private Message mess;
     private HttpSession session;
     private ServletContext application;
 
@@ -31,8 +31,8 @@ public class MutterFunctionServlet extends HttpServlet {
         //---- initiaize ----
         request.setCharacterEncoding("UTF-8");
 
-        inLogic = new LoginLogic();
         logic = new MutterLogic();
+        mess = new Message();
 
         session = request.getSession();
         data = (MutterData) session.getAttribute("data");
@@ -45,31 +45,14 @@ public class MutterFunctionServlet extends HttpServlet {
         if (msgFlag == null) {
             //---- forward to Login <again> ----
             String path = "/MutterLoginServlet";
-            doForward(request, response, path);
+            RequestDispatcher dis = request.getRequestDispatcher(path);
+            dis.forward(request, response);
             return;
         }
 
         //---- msgListの分岐 ----
-        List<String> msgList = inLogic.getMsgList();
-
-        switch (msgFlag) {
-        case "load":
-            msgList.add("現在のつぶやきは消えます。");
-            msgList.add("ロードしますか？");
-            break;
-
-        case "save":
-        case "logout":
-            msgList.add("ご自分の「つぶやき」のみ保存できます。");
-            msgList.add("セーブしますか？");
-            break;
-
-        case "edit":
-            //MutterEditServletへ
-            break;
-        }//switch
-
-        inLogic.setMsgList(msgList);
+        mess.msgFunction(msgFlag);
+        List<String> msgList = mess.getMsgList();
 
         //---- neccesary setting to doFoward [functionConfirm.jsp] ----
         request.setAttribute("msgFlag", msgFlag);
@@ -82,7 +65,8 @@ public class MutterFunctionServlet extends HttpServlet {
         application.setAttribute("dataTimeList", dateTimeListAll);
 
         String path = "/WEB-INF/mutter/functionConfirm.jsp";
-        doForward(request, response, path);
+        RequestDispatcher dis = request.getRequestDispatcher(path);
+        dis.forward(request, response);
     }//doGet()
 
 
@@ -97,41 +81,36 @@ public class MutterFunctionServlet extends HttpServlet {
         case "load":
             if (confirm.equals("yes")) {
                 LoadLogic load = new LoadLogic();
-                load.loadDB(data);
+                load.loadDB(data, logic);
                 path = "/mutterDX/MutterServlet?action=load";
 
             } else {
                 path = "/mutterDX/MutterServlet?action=noLoad";
             }
-
-            response.sendRedirect(path);
-            return;
+            break;
 
         case "save":
             if (confirm.equals("yes")) {
                 SaveLogic save = new SaveLogic();
+                save.saveDB(data);
+                path = "/mutterDX/MutterServlet?action=save";
             } else {
-                path = "/mutterDX/MutterServlet";
+                path = "/mutterDX/MutterServlet?action=noSave";
             }
             break;
 
         case "logout":
             if (confirm.equals("yes")) {
                 SaveLogic save = new SaveLogic();
+                save.saveDB(data);
+                path = "/mutterDX/MutterLogoutServlet?action=saveOut";
             } else {
-                path = "/mutterDX/MutterLogoutServlet";
+                path = "/mutterDX/MutterLogoutServlet?action=noSaveOut";
             }
             break;
         }//switch
 
-
+        response.sendRedirect(path);
     }//doPost()
-
-    //====== forward to path ======
-    public void doForward(HttpServletRequest request, HttpServletResponse response, String path)
-            throws ServletException, IOException{
-        RequestDispatcher dis = request.getRequestDispatcher(path);
-        dis.forward(request, response);
-    }//doForward()
 
 }//class
