@@ -22,6 +22,8 @@ public class MutterData implements Serializable{
         passCode = "";
         mail = "";
         mailCode = "";
+        setMutterList(new ArrayList<String>());
+        setDateTimeList(new ArrayList<String>());
     }
 
     //Constractor for Login

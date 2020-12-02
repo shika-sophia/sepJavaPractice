@@ -55,8 +55,8 @@ public class MutterDAO {
 //            Arrays.asList("2020-11-27(金) 16:00:00","2020-11-27(金) 16:27:15"));
 //        data.setDateTimeList(dateTimeList);
 //
-//        MutterRegister regist = new MutterRegister();
-//        regist.insertMutter(data);
+//        DataAccess dataAcs = new DataAccess();
+//        dataAcs.insertMutter(data);
 //        System.out.println("mutterDAO実行完了");
 //    }//main()
 

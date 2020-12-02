@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.LoginLogic;
+import model.Message;
 import model.MutterData;
 import model.MutterLogic;
 
@@ -23,6 +24,7 @@ public class MutterServlet extends HttpServlet {
     private LoginLogic inLogic;
     private MutterLogic logic;
     private MutterData data;
+    private Message mess;
     private HttpSession session;
     private ServletContext application;
 
@@ -32,6 +34,7 @@ public class MutterServlet extends HttpServlet {
         //---- initialize -> this.field ----
         inLogic = new LoginLogic();
         logic = new MutterLogic();
+        mess = new Message();
 
         session = request.getSession();
         data = (MutterData)session.getAttribute("data");
@@ -48,17 +51,8 @@ public class MutterServlet extends HttpServlet {
             return;
         }
 
-        switch(msgFlag) {
-        case "admit":
-            inLogic.setMsgList("ログインしました。");
-            inLogic.setMsgList("つぶやきを投稿してください。");
-            break;
-
-        case "doneRegister":
-            inLogic.setMsgList("登録完了。ログインしました。");
-            inLogic.setMsgList("つぶやきを投稿してください。");
-            break;
-        }//switch
+        //---- switch each to message List ----
+        mess.msgMutterDoGet(msgFlag);
 
         //---- set to necessary scorp ----
         preNecessarySetting(request, msgFlag);
@@ -72,15 +66,26 @@ public class MutterServlet extends HttpServlet {
     //====== set to necessary scorp for doGet() -> [mutter.jsp] ======
     private void preNecessarySetting(HttpServletRequest request, String msgFlag) {
         //---- set message List to request scorp ----
-        List<String> msgList = inLogic.getMsgList();
+        request.setAttribute("msgFlag", msgFlag);
+
+        List<String> msgList = mess.getMsgList();
         request.setAttribute("msgList", msgList);
 
         //---- set  data  to session scorp ----
         session.setAttribute("data", data);
 
         //---- set List as empty to application scorp ----
-        List<String> mutterListAll = logic.getMutterListAll();
-        List<String> dateTimeListAll = logic.getDateTimeListAll();
+        //---- set List as Load to application scorp ----
+        List<String> mutterListAll = data.getMutterList();
+        List<String> dateTimeListAll = data.getDateTimeList();
+
+        if(msgFlag.equals("noLoad")) {
+            mutterListAll = logic.getMutterListAll();
+            dateTimeListAll = logic.getDateTimeListAll();
+        }
+
+        logic.setMutterListAll(mutterListAll);
+        logic.setDateTimeListAll(dateTimeListAll);
 
         application.setAttribute("mutterList", mutterListAll);
         application.setAttribute("dateTimeList", dateTimeListAll);
@@ -98,22 +103,23 @@ public class MutterServlet extends HttpServlet {
         List<String> mutterListAll = logic.getMutterListAll();
         List<String> dateTimeListAll =  logic.getDateTimeListAll();
 
-        //---- リロード対策に最新のmutterを準備 ----
-        String lastMutter = "";
-        int lastIndex = (mutterListAll.size() - 1);
 
-        if (mutterListAll.isEmpty()) {
-            ;
-        } else {
-            lastMutter = mutterListAll.get(lastIndex);
-        }
-
-        //---- [mutter.jsp]に表示するメッセージを分岐----
-        String msgFlag = "postMutter";
-
-        if(mutter.equals(lastMutter)) {
-            msgFlag = "reload";
-        }
+//        //---- リロード対策に最新のmutterを準備 ----
+//        String lastMutter = "";
+//        int lastIndex = (mutterListAll.size() - 1);
+//
+//        if (mutterListAll.isEmpty()) {
+//            ;
+//        } else {
+//            lastMutter = mutterListAll.get(lastIndex);
+//        }
+//
+//        //---- [mutter.jsp]に表示するメッセージを分岐----
+          String msgFlag = "postMutter";
+//
+//        if(mutter.equals(lastMutter)) {
+//            msgFlag = "reload";
+//        }
 
         //---- mutterの文字数チェック----
         msgFlag = logic.checkMutter(mutter);
@@ -143,28 +149,10 @@ public class MutterServlet extends HttpServlet {
             String msgFlag) {
 
         //---- set message List to request scorp ----
-        List<String> msgList = inLogic.getMsgList();
-        msgList.clear();
-
-        switch(msgFlag) {
-        case "postMutter":
-            msgList.add(String.format("%sさんが投稿しました。", data.getName()));
-            break;
-
-        case "overText":
-            msgList.add("つぶやきは 150文字以内で入力してください。");
-            break;
-
-        case "reload":
-            msgList.add("同じ内容は投稿できません。");
-            msgList.add("Ｗｅｂページのリロードは使わないでください。");
-            break;
-
-        }//switch
+        mess.msgMutterDoPost(msgFlag, data);
+        List<String> msgList = mess.getMsgList();
 
         request.setAttribute("msgFlag", msgFlag);
-
-        inLogic.setMsgList(msgList);
         request.setAttribute("msgList", msgList);
 
         //---- set data to session scorp ----

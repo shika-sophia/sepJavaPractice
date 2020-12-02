@@ -34,7 +34,7 @@ public class DataAccess {
         mutDAO.insertMutter(data, JDBC_URL, DB_USER, DB_PASS);
     }//insertMutter()
 
-    //====== saveデータをload ======
+    //====== データをload ======
     public void loadMutter(MutterData data) {
         LoadDAO loadDAO = new LoadDAO();
         loadDAO.selectMutter(data, JDBC_URL, DB_USER, DB_PASS);

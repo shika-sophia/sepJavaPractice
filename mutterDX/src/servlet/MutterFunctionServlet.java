@@ -98,11 +98,14 @@ public class MutterFunctionServlet extends HttpServlet {
             if (confirm.equals("yes")) {
                 LoadLogic load = new LoadLogic();
                 load.loadDB(data);
+                path = "/mutterDX/MutterServlet?action=load";
 
             } else {
-                path = "/mutterDX/MutterServlet";
+                path = "/mutterDX/MutterServlet?action=noLoad";
             }
-            break;
+
+            response.sendRedirect(path);
+            return;
 
         case "save":
             if (confirm.equals("yes")) {

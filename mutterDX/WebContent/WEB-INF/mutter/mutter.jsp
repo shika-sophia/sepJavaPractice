@@ -36,7 +36,9 @@
   <% switch(msgFlag){
      case "admit":
      case "doneRegister":
-     case "postMutter":  %>
+     case "postMutter":
+     case "load":
+     case "noLoad":      %>
         <p class="message">
   <%     break;
 
