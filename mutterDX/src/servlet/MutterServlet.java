@@ -60,6 +60,7 @@ public class MutterServlet extends HttpServlet {
 
 
     //====== set to necessary scorp for doGet() -> [mutter.jsp] ======
+    @SuppressWarnings("unchecked")
     private void preNecessarySetting(HttpServletRequest request, String msgFlag) {
         //---- set message List to request scorp ----
         request.setAttribute("msgFlag", msgFlag);
@@ -71,7 +72,6 @@ public class MutterServlet extends HttpServlet {
         session.setAttribute("data", data);
 
         //---- set List as empty to application scorp ----
-        //---- set List as Load to application scorp ----
         List<String> mutterListAll = logic.getMutterListAll();
         List<String> dateTimeListAll = logic.getDateTimeListAll();
 
