@@ -43,7 +43,8 @@
   <%     break;
 
      case "overText":
-     case "reload":      %>
+     case "reload":
+     case "cannotSave":  %>
           <p class="errMsg">
   <%      break;
      }//switch %>

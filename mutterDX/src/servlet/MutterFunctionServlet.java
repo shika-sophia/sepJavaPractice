@@ -27,10 +27,9 @@ public class MutterFunctionServlet extends HttpServlet {
     private HttpSession session;
     private ServletContext application;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         //---- initiaize ----
-        request.setCharacterEncoding("UTF-8");
-
         logic = new MutterLogic();
         mess = new Message();
 
@@ -50,8 +49,24 @@ public class MutterFunctionServlet extends HttpServlet {
             return;
         }
 
+        //---- cannotSave ----
+        if(msgFlag.equals("save")) {
+            if(data.getMutterList().isEmpty()) {
+                String path = "/mutterDX/MutterServlet?action=cannotSave";
+                response.sendRedirect(path);
+                return;
+            }
+
+        } else if(msgFlag.equals("logout")){
+            if(data.getMutterList().isEmpty()) {
+                String path = "/mutterDX/MutterLogoutServlet?action=cannotSaveOut";
+                response.sendRedirect(path);
+                return;
+            }
+        }
+
         //---- msgListの分岐 ----
-        mess.msgFunction(msgFlag);
+        mess.msgFunction(msgFlag, data);
         List<String> msgList = mess.getMsgList();
 
         //---- neccesary setting to doFoward [functionConfirm.jsp] ----
@@ -70,9 +85,8 @@ public class MutterFunctionServlet extends HttpServlet {
     }//doGet()
 
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String msgFlag = request.getParameter("msgFlag");
         String confirm = request.getParameter("confirm");
 

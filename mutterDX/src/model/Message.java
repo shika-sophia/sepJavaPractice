@@ -32,6 +32,10 @@ public class Message {
             setMsgList("ロードを中止しました。");
             break;
 
+        case "cannotSave":
+            setMsgList("セーブできる「つぶやき」がありません。");
+            break;
+
         default:
             ;
             break;
@@ -61,7 +65,7 @@ public class Message {
     }//msgMutterDoPost()
 
 
-    public void msgFunction(String msgFlag) {
+    public void msgFunction(String msgFlag, MutterData data) {
         msgList.clear();
 
         switch (msgFlag) {
@@ -82,6 +86,26 @@ public class Message {
         }//switch
 
     }//msgFunction()
+
+
+    public void msgLogout(String msgFlag) {
+        msgList.clear();
+
+        switch(msgFlag) {
+        case "saveOut":
+            msgList.add("セーブしました。ログアウトしました。");
+            break;
+
+        case "noSaveOut":
+            msgList.add("セーブせずに、ログアウトしました。");
+            break;
+
+        case "cannotSaveOut":
+            msgList.add("ログアウトしました。");
+            break;
+        }//switch
+
+    }//msgLogout()
 
 
     //====== getter, setter ======
