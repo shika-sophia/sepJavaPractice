@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,21 +23,24 @@ import model.SaveLogic;
 public class MutterFunctionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private MutterLogic logic;
-    private MutterData data;
     private Message mess;
+    private MutterData data;
     private HttpSession session;
     private ServletContext application;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //---- initiaize ----
+    //---- initalize ----
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
         logic = new MutterLogic();
         mess = new Message();
+        application = this.getServletContext();
+    }//init()
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //----continued data -> this.field ----
         session = request.getSession();
         data = (MutterData) session.getAttribute("data");
-
-        application = this.getServletContext();
 
         //---- get Query "?action" ----
         String msgFlag = request.getParameter("action");
@@ -74,8 +78,8 @@ public class MutterFunctionServlet extends HttpServlet {
         request.setAttribute("msgList", msgList);
         session.setAttribute("data", data);
 
-        List<String> mutterListAll = logic.getMutterListAll();
-        List<String> dateTimeListAll = logic.getDateTimeListAll();
+        List<String> mutterListAll = (List<String>) application.getAttribute("mutterList");
+        List<String> dateTimeListAll = (List<String>) application.getAttribute("dateTimeList");
         application.setAttribute("mutterList", mutterListAll);
         application.setAttribute("dataTimeList", dateTimeListAll);
 
@@ -94,8 +98,16 @@ public class MutterFunctionServlet extends HttpServlet {
         switch (msgFlag) {
         case "load":
             if (confirm.equals("yes")) {
+                //DBから保存されている「つぶやき」を取得
                 LoadLogic load = new LoadLogic();
                 load.loadDB(data, logic);
+
+                //Servlet遷移前に application scropへ
+                List<String> mutterListAll = logic.getMutterListAll();
+                List<String> dateTimeListAll = logic.getDateTimeListAll();
+                application.setAttribute("mutterList",mutterListAll);
+                application.setAttribute("dateTimeList",dateTimeListAll);
+
                 path = "/mutterDX/MutterServlet?action=load";
 
             } else {
@@ -106,7 +118,7 @@ public class MutterFunctionServlet extends HttpServlet {
         case "save":
             if (confirm.equals("yes")) {
                 SaveLogic save = new SaveLogic();
-                save.saveDB(data);
+                save.saveDB(data, logic);
                 path = "/mutterDX/MutterServlet?action=save";
             } else {
                 path = "/mutterDX/MutterServlet?action=noSave";
@@ -116,7 +128,7 @@ public class MutterFunctionServlet extends HttpServlet {
         case "logout":
             if (confirm.equals("yes")) {
                 SaveLogic save = new SaveLogic();
-                save.saveDB(data);
+                save.saveDB(data, logic);
                 path = "/mutterDX/MutterLogoutServlet?action=saveOut";
             } else {
                 path = "/mutterDX/MutterLogoutServlet?action=noSaveOut";

@@ -11,11 +11,16 @@ import java.util.List;
 import model.MutterData;
 
 public class LoadDAO {
+    private List<String> mutterListLocal;
+    private List<String> dateTimeListLocal;
+
+    public LoadDAO() {
+        mutterListLocal = new ArrayList<String>();
+        dateTimeListLocal = new ArrayList<String>();
+    }
 
     public boolean selectMutter(MutterData data, String JDBC_URL, String DB_USER, String DB_PASS) {
         boolean isLoad = false;
-        List<String> mutterList = new ArrayList<>();
-        List<String> dateTimeList = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);){
             //Loginで入力したname, passはＤＢに登録されているか
@@ -36,8 +41,8 @@ public class LoadDAO {
                     String mutter = rs.getString("MUTTER");
                     String dateTime = rs.getString("DATETIME");
 
-                    mutterList.add(mutter);
-                    dateTimeList.add(dateTime);
+                    mutterListLocal.add(mutter);
+                    dateTimeListLocal.add(dateTime);
                 }//while
             }//if-else
         } catch (SQLException e) {
@@ -45,10 +50,27 @@ public class LoadDAO {
             isLoad = false;
         }
 
-        data.setMutterList(mutterList);
-        data.setDateTimeList(dateTimeList);
+        data.setMutterList(mutterListLocal);
+        data.setDateTimeList(dateTimeListLocal);
         return isLoad;
     }//selectMutter()
+
+    //====== getter, setter ======
+    public List<String> getMutterListLocal() {
+        return mutterListLocal;
+    }
+
+    public void setMutterListLocal(List<String> mutterListLocal) {
+        this.mutterListLocal = mutterListLocal;
+    }
+
+    public List<String> getDateTimeListLocal() {
+        return dateTimeListLocal;
+    }
+
+    public void setDateTimeListLocal(List<String> dateTimeListLocal) {
+        this.dateTimeListLocal = dateTimeListLocal;
+    }
 
 //    //====== 単体Test用 main() ======
 //    public static void main(String[] args) {

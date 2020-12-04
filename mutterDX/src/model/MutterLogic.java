@@ -14,7 +14,14 @@ public class MutterLogic {
         dateTimeListAll = new ArrayList<>();
     }
 
-    public void addMutter(String mutter, MutterData data) {
+    public void addMutter(String mutter,
+            MutterData data,
+            List<String> mutterListAll,
+            List<String> dateTimeListAll) {
+
+        this.setMutterListAll(mutterListAll);
+        this.setDateTimeListAll(dateTimeListAll);
+
         //---- 現在の日時を取得 ----
         String dateTime = nowDateTime();
 

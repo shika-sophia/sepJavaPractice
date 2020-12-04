@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,21 +22,28 @@ import model.MutterLogic;
 public class MutterServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private MutterLogic logic;
-    private MutterData data;
     private Message mess;
+    private MutterData data;
     private HttpSession session;
     private ServletContext application;
+    private int count;
+
+    //---- initalize ----
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        logic = new MutterLogic();
+        mess = new Message();
+        application = this.getServletContext();
+
+        count = 0;
+    }//init()
 
     //----<a href="?action=admit"> from [mutterConfirm.jsp] ----
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        logic = new MutterLogic();
-        mess = new Message();
-
+        //---- continued data -> this.field ----
         session = request.getSession();
         data = (MutterData)session.getAttribute("data");
-
-        application = this.getServletContext();
 
         //---- get Query "?action" ----
         String msgFlag = request.getParameter("action");
@@ -72,8 +80,16 @@ public class MutterServlet extends HttpServlet {
         session.setAttribute("data", data);
 
         //---- set List as empty to application scorp ----
+        //初回
         List<String> mutterListAll = logic.getMutterListAll();
         List<String> dateTimeListAll = logic.getDateTimeListAll();
+
+        //２回目以降
+        if (count > 0) {
+            mutterListAll = (List<String>) application.getAttribute("mutterList");
+            dateTimeListAll = (List<String>) application.getAttribute("dateTimeList");
+        }
+        count++;
 
         application.setAttribute("mutterList", mutterListAll);
         application.setAttribute("dateTimeList", dateTimeListAll);
@@ -81,16 +97,16 @@ public class MutterServlet extends HttpServlet {
 
 
     //====== <form action> from [mutter.jsp] ======
+    @SuppressWarnings("unchecked")
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         //---- get mutter, mutterListAll ----
         String mutter = request.getParameter("mutter");
 
-        //---- application scorpの内容を logic.fieldより取得 ----
-        List<String> mutterListAll = logic.getMutterListAll();
-        List<String> dateTimeListAll =  logic.getDateTimeListAll();
-
+        //---- application scorpの内容を取得 ----
+        List<String> mutterListAll = (List<String>) application.getAttribute("mutterList");
+        List<String> dateTimeListAll = (List<String>) application.getAttribute("dateTimeList");
 
 //        //---- リロード対策に最新のmutterを準備 ----
 //        String lastMutter = "";
@@ -112,9 +128,9 @@ public class MutterServlet extends HttpServlet {
         //---- mutterの文字数チェック----
         msgFlag = logic.checkMutter(mutter);
 
-        //---- mutter -> List ----
+        //---- mutter -> List -> 更新したListを取得 ----
         if (msgFlag.equals("postMutter")) {
-            logic.addMutter(mutter, data);
+            logic.addMutter(mutter, data, mutterListAll, dateTimeListAll);
             mutterListAll = logic.getMutterListAll();
             dateTimeListAll =  logic.getDateTimeListAll();
         }
@@ -152,7 +168,7 @@ public class MutterServlet extends HttpServlet {
     }//necessarySetting() for doPost()
 
 
-  //====== forward to path ======
+    //====== forward to path ======
     public void doForward(HttpServletRequest request, HttpServletResponse response, String path)
             throws ServletException, IOException{
         RequestDispatcher dis = request.getRequestDispatcher(path);
