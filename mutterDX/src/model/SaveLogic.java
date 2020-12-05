@@ -1,9 +1,12 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import dao.DataAccess;
-import dao.LoadDAO;
 
 public class SaveLogic {
     private DataAccess dataAcs;
@@ -13,19 +16,31 @@ public class SaveLogic {
     }
 
     public void saveDB(MutterData data, MutterLogic logic) {
-        //---- すでにDBに収録されている「つぶやき」を取得 -----
-        //dataAcs.loadMutterは data.Listに登録されてしまうため、loadDAO.Listにアクセスする
-        String JDBC_URL = dataAcs.getJDBC_URL();
-        String DB_USER = dataAcs.getDB_USER();
-        String DB_PASS = dataAcs.getDB_PASS();
-
-        LoadDAO loadDAO = new LoadDAO();
-        loadDAO.selectMutter(data, JDBC_URL, DB_USER, DB_PASS);
-        List<String> mutterListLocal = loadDAO.getMutterListLocal();
-        List<String> dateTimeListLocal = loadDAO.getDateTimeListLocal();
-
         //---- DBに登録 ----
         dataAcs.insertMutter(data);
+
+      //----重複「つぶやき」を修正 -----
+        exceptDistinct(data);
     }//saveDB()
+
+    //====== 重複した「つぶやき」を除去 ======
+    private void exceptDistinct(MutterData data) {
+        List<String> dateTimeList = data.getDateTimeList();
+
+        if (dateTimeList.isEmpty()) {
+            return;
+        }
+
+        Set<String> distinctSet = new HashSet<>(dateTimeList);
+
+        List<String> distinctList = new ArrayList<>(distinctSet);
+        Collections.sort(distinctList);
+        Collections.reverse(distinctList);
+
+        List<String> mutterListDistinct= dataAcs.selectDistinct(distinctList);
+
+        data.setMutterList(mutterListDistinct);
+        data.setDateTimeList(distinctList);
+    }//exceptDistinct()
 
 }//class

@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import model.MutterData;
 
 public class DataAccess {
@@ -37,6 +39,14 @@ public class DataAccess {
         LoadDAO loadDAO = new LoadDAO();
         loadDAO.selectMutter(data, JDBC_URL, DB_USER, DB_PASS);
     }//loadMutter()
+
+    //====== 重複していない mutterを検索 ======
+    public List<String> selectDistinct(List<String> distinctList) {
+        DistinctDAO disDAO = new DistinctDAO();
+        List<String> mutterListDistinct = disDAO.selectDistinct(distinctList, JDBC_URL, DB_USER, DB_PASS);
+        return null;
+    }//selectDistinct()
+
 
     //====== getter ======
     public String getJDBC_URL() {
