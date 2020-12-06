@@ -18,7 +18,7 @@ import model.Message;
 @WebServlet("/MutterLogoutServlet")
 public class MutterLogoutServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    private Message mess;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String msgFlag = request.getParameter("action");
@@ -31,21 +31,18 @@ public class MutterLogoutServlet extends HttpServlet {
             return;
         }
 
-        Message mess = new Message();
+        mess = new Message();
         mess.msgLogout(msgFlag);
-
-        //---- Logout処理 ----
-        HttpSession session = request.getSession();
-        session.invalidate();
-
-        ServletContext application = this.getServletContext();
-        application.removeAttribute("mutterList");
-        application.removeAttribute("dateTimeList");
 
         request.setAttribute("msgFlag", msgFlag);
 
         List<String> msgList = mess.getMsgList();
         request.setAttribute("msgList", msgList);
+
+        if (msgFlag.equals("finish")) {
+            doPost(request, response);
+            return;
+        }
 
         //---- forward to logout ----
         String path = "/WEB-INF/mutter/logout.jsp";
@@ -55,7 +52,18 @@ public class MutterLogoutServlet extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //---- Logout処理 ----
+        HttpSession session = request.getSession();
+        session.invalidate();
 
+        ServletContext application = this.getServletContext();
+        application.removeAttribute("mutterList");
+        application.removeAttribute("dateTimeList");
+
+        //---- forward to logout ----
+        String path = "/WEB-INF/mutter/logout.jsp";
+        RequestDispatcher dis = request.getRequestDispatcher(path);
+        dis.forward(request, response);
     }//doPost()
 
 }//class

@@ -13,8 +13,12 @@
 <% MutterData data = (MutterData) session.getAttribute("data"); %>
 <% String name = data.getName(); %>
 
-<% String mutterFlag = ""; %>
-<% int lastIndex = mutterList.size() - 1; %>
+<% int lastIndex = 0; %>
+<% if (mutterList == null || mutterList.isEmpty()){
+       ;
+   } else {
+       lastIndex = mutterList.size() - 1;
+   } %>
 
 <!DOCTYPE html>
 <html>
@@ -34,19 +38,15 @@
   <th>
   <i>＊ Mutter ＊</i><br>
   <% switch(msgFlag){
-     case "admit":
-     case "doneRegister":
-     case "postMutter":
-     case "load":
-     case "noLoad":      %>
-        <p class="message">
-  <%     break;
-
      case "overText":
      case "reload":
      case "cannotSave":  %>
-          <p class="errMsg">
-  <%      break;
+         <p class="errMsg">
+  <%     break;
+     default:
+      %>
+         <p class="message">
+  <%     break;
      }//switch %>
 
       <% for(String msg : msgList){ %>
@@ -70,7 +70,7 @@
 </tr>
 <tr>
   <td>
-   <% if (mutterList.isEmpty()){
+   <% if (mutterList == null || mutterList.isEmpty()){
         ;
       } else {
           for(int i = 0; i < mutterList.size(); i++){ %>

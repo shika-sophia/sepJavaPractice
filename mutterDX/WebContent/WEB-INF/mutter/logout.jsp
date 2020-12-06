@@ -32,7 +32,12 @@
 </tr>
 <tr>
   <td>
-       <a href="/mutterDX/MutterLoginServlet"><button><i> Login </i></button></a>
+  <% if (msgFlag.equals("finish")){
+    ;
+     } else {%>
+       <a href="/mutterDX/MutterLoginServlet"><button><i> Login </i></button></a>&emsp;
+       <a href="/mutterDX/MutterLogoutServlet?action=finish"><button><i> Fin &thinsp;</i></button></a>
+  <% } %>
   </td>
 </tr>
 </table>

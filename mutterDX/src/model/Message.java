@@ -32,6 +32,14 @@ public class Message {
             setMsgList("ロードを中止しました。");
             break;
 
+        case "save":
+            setMsgList("セーブ完了。");
+            break;
+
+        case "noSave":
+            setMsgList("セーブを中止しました。");
+            break;
+
         case "cannotSave":
             setMsgList("セーブできる「つぶやき」がありません。");
             break;
@@ -102,6 +110,10 @@ public class Message {
 
         case "cannotSaveOut":
             msgList.add("ログアウトしました。");
+            break;
+
+        case "finish":
+            msgList.add("終了しました。");
             break;
         }//switch
 
