@@ -7,7 +7,7 @@
  * @class MutterRegisterServlet //本登録のControl
  * @class MutterServlet         //Mutter機能のControl
  * @class MutterFunctionServlet //Load,Save,Edit,Logout機能
- * @class MutterLogourServlet   //Logoutの最終処理
+ * @class MutterLogoutServlet   //Logoutの最終処理
  * @class MutterFilter          //各Servlet, jspに共通する内容を記述
  *
  *        ---- model ----
@@ -23,8 +23,8 @@
  * @class LoginDAO    //MUTTER_USER_tbに登録があるか SELECT
  * @class RegisterDAO //MUTTER_USER_tbに本登録 INSERT
  * @class LoadDAO     //MUTTER_tbからデータ取得 SELECT
+ * @class SaveDAO     //MUTTER_tbにデータ記録 SELECT,INSERT
  * @class DistinctDAO //MUTTER_tbから日付に対応するmutterを取得 SELECT
- * @class SaveDAO     //MUTTER_tbにデータ記録 INSERT
  *
  *        ---- WebContent ----
  * @page /WEB-INF/mutter/mutterLogin.jsp //Login View
@@ -38,7 +38,7 @@
  * @page /css/mutterStyle.css            //mutterDX用のStyleSheet
  *
  * @author shika
- * @date 2020-11-22 ～ 2020-12-06
+ * @date 2020-11-22 ～ 2020-12-07
  */
 package servlet;
 

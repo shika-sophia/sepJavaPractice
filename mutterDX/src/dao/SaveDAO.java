@@ -19,7 +19,7 @@ public class SaveDAO {
             String sql =
                 "INSERT INTO MUTTER (NAME, USER_ID, MUTTER, DATETIME) VALUES (?, ?, ?, ?)";
 
-            for(int i = 0; i < mutterList.size(); i++) {
+            for(int i = 0; i < dateTimeList.size(); i++) {
 
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, data.getName());
@@ -76,7 +76,7 @@ select * from mutter;
 +-----------+-------+---------+-----------------+---------------------+
 
 ◇mutterDX.Save機能の実行結果
-◆要対応
+◆対応済 -> SaveLogic
 新規のmutterだけでなく、Loadしたmutterも再登録される問題
 +-----------+-------+---------+-----------------+---------------------+
 | MUTTER_ID | NAME  | USER_ID | MUTTER          | DATETIME            |

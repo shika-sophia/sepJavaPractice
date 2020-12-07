@@ -40,11 +40,11 @@ public class DataAccess {
         loadDAO.selectMutter(data, JDBC_URL, DB_USER, DB_PASS);
     }//loadMutter()
 
-    //====== 重複していない mutterを検索 ======
-    public List<String> selectDistinct(List<String> distinctList) {
-        DistinctDAO disDAO = new DistinctDAO();
-        List<String> mutterListDistinct = disDAO.selectDistinct(distinctList, JDBC_URL, DB_USER, DB_PASS);
-        return null;
+    //====== 日付に対応する mutterを検索 ======
+    public List<String> selectCorrespond(List<String> list) {
+        CorrespondDAO crsDAO = new CorrespondDAO();
+        List<String> mutterListCrs = crsDAO.selectCorrespond(list, JDBC_URL, DB_USER, DB_PASS);
+        return mutterListCrs;
     }//selectDistinct()
 
 
