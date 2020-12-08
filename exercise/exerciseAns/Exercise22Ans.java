@@ -1,9 +1,9 @@
 /**
- * @title javaPractice / exercise / Exercise21Ans
+ * @title javaPractice / exercise / Exercise22Ans
  * @content Exercise21～25 カレンダー作成
  * @content
  * @author shika
- * @date 2020-12-04
+ * @date 2020-12-04, 12-08
  */
 /*
  * ◆Exercise22
