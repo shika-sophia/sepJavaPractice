@@ -34,9 +34,10 @@ public class StartServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        session = request.getSession();
 
         mess.msgForInput();
-        session = request.getSession();
+        calen.dateNow();
 
         doForward(request, response);
     }//doGet()
@@ -55,7 +56,7 @@ public class StartServlet extends HttpServlet {
         int month = inLogic.getMonth();
 
         if(isMatch) {
-            calen.buildCalendar(year, month);
+            calen.dateInput(year, month);
         }
 
         doForward(request, response);
@@ -64,9 +65,9 @@ public class StartServlet extends HttpServlet {
 
     private void doForward(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //---- necessary ----
+        //---- necessary setting ----
         request.setAttribute("msgList", mess.getMsgList());
-        session.setAttribute("dayList", calen.getDayList());
+        session.setAttribute("calen", calen);
 
         //---- forward ----
         String path = "/WEB-INF/webCalendar/input.jsp";

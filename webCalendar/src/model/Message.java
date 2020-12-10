@@ -14,6 +14,18 @@ public class Message {
         msgList.add("年, 月を入力してください。");
     }//msgForInput()
 
+    public void msgNgInput(String msgFlag) {
+        msgList.clear();
+
+        switch(msgFlag) {
+        case "decimal":
+            setMsgList("< ! > 整数で入力してください。");
+            break;
+
+        //case "bound": //see InputLogic.matcherRande()
+
+        }//switch
+    }
 
     //====== getter, setter ======
     public List<String> getMsgList() {
@@ -27,4 +39,5 @@ public class Message {
     public void setMsgList(String message) {
         msgList.add(message);
     }
+
 }//class

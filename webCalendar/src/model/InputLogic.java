@@ -14,7 +14,7 @@ public class InputLogic {
 
         } catch (NumberFormatException e) {
             System.out.println("NumberFormatException in StartServlet.doGet()");
-            mess.setMsgList("< ! > 整数で入力してください。");
+            mess.msgNgInput("decimal");
         }
     }//transInt()
 
@@ -46,9 +46,10 @@ public class InputLogic {
         if(1 <= num && num <= BOUND) {
             ;
         } else {
+            mess.msgNgInput("bound");
             mess.setMsgList(
-                String.format("< ! > %sは 1～%d の範囲で入力してください。",
-                    subject, BOUND));
+                    String.format("< ! > %sは 1～%d の範囲で入力してください。",
+                        subject, BOUND));
         }
     }//matcherInt()
 

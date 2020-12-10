@@ -15,16 +15,29 @@
 </head>
 
 <body>
-<div id="input" align="center">
-<table>
-<tr><td>
-<form action="/webCalendar/StartServlet" method="post">
+<div id="inputDiv" align="center">
+<table id="inputTb">
+<tr>
+  <td>
+  <% if (msgList.isEmpty()){
+        ;
+     } else {
+        for(String message : msgList){ %>
+            <p class="errMsg"><%= message %></p>
+    <%   }//for
+     } //if-else %>
+  </td>
+</tr>
+<tr>
+  <td>
+  <form action="/webCalendar/StartServlet" method="post">
     <p><input type="text" name="year" size="8" required="required">年&thinsp;
     <input type="text" name="month" size="4" required="required">月&emsp;
     <button type="submit">送信</button>
     </p>
-</form>
-</td></tr>
+  </form>
+  </td>
+</tr>
 </table>
 </div>
 </body>

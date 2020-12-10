@@ -1,0 +1,26 @@
+/**
+ * @title webCalendar / WebContent / css / webCalendarStyle.css
+*/
+
+@charset "UTF-8";
+body {
+    font-family: "MS明朝",serif;
+}
+
+div#inputDiv{
+    width: 80%;
+}
+
+table {
+    table-layout: fixed;
+    width: 400px;
+    height: 80px;
+
+    border-color: mistyrose;
+    border-collapse: collapse;
+}
+
+.errMsg {
+    color: hotpink;
+
+}
