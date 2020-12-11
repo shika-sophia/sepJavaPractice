@@ -6,7 +6,8 @@ public class InputLogic {
     private final int YEAR_BOUND = 3000;
     private final int MONTH_BOUND = 12;
 
-    public void transInt(Message mess, String yearStr, String monthStr) {
+    public boolean transInt(Message mess, String yearStr, String monthStr) {
+        boolean isMatch = true;
 
         try {
             year = Integer.parseInt(yearStr);
@@ -15,7 +16,10 @@ public class InputLogic {
         } catch (NumberFormatException e) {
             System.out.println("NumberFormatException in StartServlet.doGet()");
             mess.msgNgInput("decimal");
+            isMatch = false;
         }
+
+        return isMatch;
     }//transInt()
 
     public boolean inputMatch(Message mess) {
@@ -46,7 +50,7 @@ public class InputLogic {
         if(1 <= num && num <= BOUND) {
             ;
         } else {
-            mess.msgNgInput("bound");
+            mess.msgNgInput("bound"); //msgList.clear();の代わり
             mess.setMsgList(
                     String.format("< ! > %sは 1～%d の範囲で入力してください。",
                         subject, BOUND));

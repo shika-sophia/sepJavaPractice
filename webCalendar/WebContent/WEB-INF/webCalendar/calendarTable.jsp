@@ -4,11 +4,11 @@
 <%@ page import="java.util.List"  %>
 <%@ page import="java.util.ArrayList"  %>
 <%@ page import="java.util.Arrays" %>
-<%@ page import="model.MyCalendar"  %>
+<%@ page import="model.CalendarLogic"  %>
 
-<% String listFlag = request.getParameter("action"); %>
+<% String listFlag = (String)request.getAttribute("listFlag"); %>
 
-<% MyCalendar calen = (MyCalendar)session.getAttribute("calen"); %>
+<% CalendarLogic calen = (CalendarLogic)session.getAttribute("calen"); %>
 <% int year = calen.getYear(); %>
 <% int month = calen.getMonth(); %>
 <% List<String> dayList = calen.getDayList(); %>
@@ -21,18 +21,20 @@
 <% List<List<String>> triList = new ArrayList<>(
        Arrays.asList(dayList, prevList, nextList));%>
 
-<% List<String> list = null;
+<% List<String> list = new ArrayList<>(42);
    switch(listFlag){
    case "day":
-    list = dayList;
+   default:
+       list.addAll(dayList);
     break;
 
    case "prev":
-    list = prevList;
+       list.addAll(prevList);
     break;
 
    case "next":
-    list = nextList;
+       list.addAll(nextList);
+    break;
 } //switch %>
 <%
 boolean shortFlag = false;

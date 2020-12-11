@@ -16,11 +16,26 @@ table {
     width: 400px;
     height: 80px;
 
-    border-color: mistyrose;
-    border-collapse: collapse;
+    margin: 2em;
+    padding: 2em;
+    text-align: center;
+    background-color: lavenderblush;
+
+    border-width: 2px;
+    border-spacing: 2px;
+    border-color: pink;
+    border-radius: 10px;
+    border-style: ridge;
+}
+
+button {
+    font-size: medium;
+    font-weight: bold;
+    font-family: "MS明朝",serif;
+    color: hotpink;
 }
 
 .errMsg {
-    color: hotpink;
-
+    color: deeppink;
 }
+
