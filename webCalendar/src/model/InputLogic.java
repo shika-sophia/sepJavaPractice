@@ -1,11 +1,13 @@
 package model;
 
 public class InputLogic {
-    private int year;
-    private int month;
-    private final int YEAR_BOUND = 3000;
-    private final int MONTH_BOUND = 12;
+    private int year;//int化 year
+    private int month;//int化 month
+    private final int YEAR_BOUND = 3000;//年数の最大値
+    private final int MONTH_BOUND = 12; //月の最大値
 
+    //====== String -> int ======
+    //====== 不正値チェック(非整数) ======
     public boolean transInt(Message mess, String yearStr, String monthStr) {
         boolean isMatch = true;
 
@@ -22,6 +24,7 @@ public class InputLogic {
         return isMatch;
     }//transInt()
 
+    //====== 不正値チェック(範囲外)======
     public boolean inputMatch(Message mess) {
         boolean isMatch = false;
 
@@ -35,8 +38,9 @@ public class InputLogic {
         }
 
         return isMatch;
-    }//inpuMatch()
+    }//inputMatch()
 
+    //====== エラーメッセージの作成 ======
     private void matcherRange(Message mess, int num, int BOUND){
         //---- decide subject ----
         String subject = "";
@@ -55,7 +59,7 @@ public class InputLogic {
                     String.format("< ! > %sは 1～%d の範囲で入力してください。",
                         subject, BOUND));
         }
-    }//matcherInt()
+    }//matcherRange()
 
     //====== getter ======
     public int getYear() {

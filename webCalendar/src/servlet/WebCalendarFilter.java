@@ -9,11 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import model.CalendarLogic;
 
 
 @WebFilter("/*")
@@ -31,29 +26,29 @@ public class WebCalendarFilter implements Filter {
             throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
 
-        doFilter((HttpServletRequest) request, (HttpServletResponse) response);
+        //doFilter((HttpServletRequest) request, (HttpServletResponse) response);
 
         chain.doFilter(request, response);
     }//doFilter()
 
-    public void doFilter(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-        CalendarServlet cs = new CalendarServlet();
-
-        HttpSession session = request.getSession();
-
-        try {
-            CalendarLogic calen = (CalendarLogic) session.getAttribute("calen");
-
-        } catch (IllegalStateException e) {
-            System.out.println("< ! > Session Time Out");
-            cs.doGet(request, response);
-
-        } catch (NullPointerException e) {
-            System.out.println("< ! > NullPointerException in doFilter()");
-            cs.doGet(request, response);
-        }//try-catch
-    }//doFilter()
+//    public void doFilter(HttpServletRequest request, HttpServletResponse response)
+//            throws IOException, ServletException {
+//        CalendarServlet cs = new CalendarServlet();//毎回newするとdata消えるしNullPの原因
+//
+//        HttpSession session = request.getSession();
+//
+//        try {
+//            CalendarLogic calen = (CalendarLogic) session.getAttribute("calen");
+//
+//        } catch (IllegalStateException e) {
+//            System.out.println("< ! > Session Time Out");
+//            cs.doGet(request, response);
+//
+//        } catch (NullPointerException e) {
+//            System.out.println("< ! > NullPointerException of session 'calen' in doFilter()");
+//            cs.doGet(request, response);
+//        }//try-catch
+//    }//doFilter()
 
     public void destroy() {
 

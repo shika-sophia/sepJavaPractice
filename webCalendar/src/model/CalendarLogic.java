@@ -1,16 +1,19 @@
 package model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CalendarLogic {
-    private int year;
-    private int month;
-    private List<String> dayList;
-    private List<String> prevList;
-    private List<String> nextList;
+public class CalendarLogic implements Serializable{
+    private int year; //input year
+    private int month;//input month
+    private int lastDay;//その月の最終日
+    private int dayWeek;//初日の曜日
+    private List<String> dayList; //year,monthに対応したカレンダーList
+    private List<String> prevList;//前月のカレンダーList
+    private List<String> nextList;//翌月のカレンダーList
 
     public CalendarLogic() {
         setDayList(new ArrayList<String>(42));
@@ -33,7 +36,9 @@ public class CalendarLogic {
         buildList();
     }//dateInput()
 
+
     public void buildList() {
+        //---- year, month -> List ----
         dayList = buildCalendar(year, month, dayList);
 
         //---- prev adapter ----
@@ -52,18 +57,22 @@ public class CalendarLogic {
 
     }//buildList()
 
+
     public List<String> buildCalendar(int year, int month ,List<String> list) {
+        //---- 日付データを生成 ----
         LocalDate dateFirst = LocalDate.of(year, month, 1);
         //その月の最終日
-        int lastDay = dateFirst.lengthOfMonth();
+        lastDay = dateFirst.lengthOfMonth();
         //初日の曜日(月1,火2,水3,木4,金5,土6,日7)
-        int dayWeek = dateFirst.get(ChronoField.DAY_OF_WEEK);
+        dayWeek = dateFirst.get(ChronoField.DAY_OF_WEEK);
 
         //日曜日7を 0に変換(最初の曜日を日曜にする)
         if (dayWeek == 7) {
             dayWeek = 0;
         }
 
+        //---- 各listを生成 ----
+        list.clear();
         //最初の空白を挿入
         for (int space = 1; space <= dayWeek; space++) {
             list.add("　"); //&emsp;
@@ -98,6 +107,22 @@ public class CalendarLogic {
 
     public void setMonth(int month) {
         this.month = month;
+    }
+
+    public int getLastDay() {
+        return lastDay;
+    }
+
+    public void setLastDay(int lastDay) {
+        this.lastDay = lastDay;
+    }
+
+    public int getDayWeek() {
+        return dayWeek;
+    }
+
+    public void setDayWeek(int dayWeek) {
+        this.dayWeek = dayWeek;
     }
 
     public List<String> getDayList() {

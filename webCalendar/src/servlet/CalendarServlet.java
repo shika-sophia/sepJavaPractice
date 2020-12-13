@@ -28,7 +28,6 @@ public class CalendarServlet extends HttpServlet {
         mess = new Message();
         inLogic = new InputLogic();
         calen = new CalendarLogic();
-
     }//init()
 
 
@@ -48,6 +47,7 @@ public class CalendarServlet extends HttpServlet {
 
         String yearStr = request.getParameter("year");
         String monthStr = request.getParameter("month");
+        String move = request.getParameter("move");
 
         boolean isMatch = inLogic.transInt(mess, yearStr, monthStr);
 
