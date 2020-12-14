@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 package servlet;
 
 import java.io.IOException;
@@ -47,8 +51,8 @@ public class CalendarServlet extends HttpServlet {
 
         String yearStr = request.getParameter("year");
         String monthStr = request.getParameter("month");
-        String move = request.getParameter("move");
 
+        mess.msgClear();
         boolean isMatch = inLogic.transInt(mess, yearStr, monthStr);
 
         if(isMatch == false) {

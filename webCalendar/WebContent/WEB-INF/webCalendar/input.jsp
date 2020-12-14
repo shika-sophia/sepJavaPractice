@@ -16,17 +16,18 @@
 
 <body>
 <div id="inputDiv" align="center">
-<table id="inputTb">
+<table id="input">
 <tr>
   <td>
   <form action="/webCalendar/CalendarServlet" method="post">
-    <p><input type="text" name="year" size="4" required="required">年&thinsp;
+    <p>
+    <input type="text" name="year" size="4" required="required">年&thinsp;
     <input type="text" name="month" size="2" required="required">月&emsp;
     <button type="submit">送信</button>
     </p>
     <p>
-    <button type="submit" name="move" value="prev">≪PREV</button>&emsp;|&emsp;
-    <button type="submit" name="move" value="next">NEXT≫</button>
+    <button formaction="/webCalendar/MoveServlet" type="submit" name="move" value="prev"> ≪PREV　</button>&thinsp;|&thinsp;
+    <button formaction="/webCalendar/MoveServlet" type="submit" name="move" value="next">　NEXT≫ </button>
     </p>
   </form>
   </td>

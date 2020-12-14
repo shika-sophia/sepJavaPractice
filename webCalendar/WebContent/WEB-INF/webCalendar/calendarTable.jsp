@@ -13,9 +13,6 @@
 <% int month = calen.getMonth(); %>
 <% int lastDay = calen.getLastDay(); %>
 <% int dayWeek = calen.getDayWeek(); %>
-<% List<String> dayList = calen.getDayList(); %>
-<% List<String> prevList = calen.getPrevList(); %>
-<% List<String> nextList = calen.getDayList(); %>
 
 <% String[] dayWeekArr = new String[]{
         "日","月","火","水","木","金","土"
@@ -23,17 +20,21 @@
 
 <% List<String> list = new ArrayList<>(42);
    switch(listFlag){
-   case "day":
+   case "base":
    default:
-       list.addAll(dayList);
+       list = calen.getBaseList();
        break;
 
    case "prev":
-       list.addAll(prevList);
+       list = calen.getPrevList();
+       year = calen.getPrevYear();
+       month = calen.getMonth();
        break;
 
    case "next":
-       list.addAll(nextList);
+       list = calen.getNextList();
+       year = calen.getNextYear();
+       month = calen.getNextMonth();
        break;
 } //switch %>
 <%
@@ -54,7 +55,7 @@ if (dayWeek == 5 && lastDay == 31){
 </head>
 <body>
 <!-- 汎用カレンダー Table -->
-<table>
+<table id="<%= listFlag %>">
 <tr><!-- 年月 -->
   <th colspan="7">
   <p><%= year %>年 <%= month %>月</p>

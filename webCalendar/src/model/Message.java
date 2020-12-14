@@ -10,6 +10,10 @@ public class Message {
         setMsgList(new ArrayList<String>());
     }
 
+    public void msgClear() {
+        msgList.clear();
+    }//msgClear()
+
     public void msgForInput() {
         msgList.add("年, 月を入力してください。");
     }//msgForInput()
@@ -25,7 +29,7 @@ public class Message {
         //case "bound": //see InputLogic.matcherRande()
 
         }//switch
-    }
+    }//msgNgInput()
 
     //====== getter, setter ======
     public List<String> getMsgList() {

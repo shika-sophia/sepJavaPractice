@@ -11,10 +11,12 @@ div#inputDiv{
     width: 80%;
 }
 
+div#calendar{
+
+}
+
 table {
     table-layout: fixed;
-    width: 400px;
-    height: 80px;
 
     margin: 2em;
     padding: 2em;
@@ -26,6 +28,24 @@ table {
     border-color: pink;
     border-radius: 10px;
     border-style: ridge;
+}
+
+table#base{
+    float: ;
+    width: 400px;
+    height:400px;
+    border-collapse: separate;
+}
+
+table#prev,#next{
+    width: 300px;
+    height:200px;
+    border-collapse: separate;
+}
+
+table#input{
+    width: 400px;
+    height:100px;
 }
 
 button {
