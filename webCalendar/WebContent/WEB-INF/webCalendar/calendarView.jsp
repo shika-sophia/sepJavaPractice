@@ -4,23 +4,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="">
 <link rel="stylesheet" type="text/css" href="css/webCalendarStyle.css">
 <title>calendarView.jsp</title>
 </head>
 <body>
+<header>
+    <jsp:include page="calendarHeader.jsp" />
+</header>
 <div id="calendar" align="center">
-prev
-<% request.setAttribute("listFlag", "prev"); %>
-<jsp:include page="calendarTable.jsp" />
-<br>
-day
-<% request.setAttribute("listFlag", "base"); %>
-<jsp:include page="calendarTable.jsp" />
-<br>
-next
-<% request.setAttribute("listFlag", "next"); %>
-<jsp:include page="calendarTable.jsp" />
+    <% request.setAttribute("listFlag", "prev"); %>
+    <jsp:include page="calendarTable.jsp" />
+
+    <% request.setAttribute("listFlag", "base"); %>
+    <jsp:include page="calendarTable.jsp" />
+
+    <% request.setAttribute("listFlag", "next"); %>
+    <jsp:include page="calendarTable.jsp" />
 </div>
+<div id="inputDiv" align="center">
 <jsp:include page="input.jsp" />
+</div>
 </body>
 </html>

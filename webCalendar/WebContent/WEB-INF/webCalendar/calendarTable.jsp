@@ -28,7 +28,7 @@
    case "prev":
        list = calen.getPrevList();
        year = calen.getPrevYear();
-       month = calen.getMonth();
+       month = calen.getPrevMonth();
        break;
 
    case "next":
@@ -57,10 +57,13 @@ if (dayWeek == 5 && lastDay == 31){
 <!-- 汎用カレンダー Table -->
 <table id="<%= listFlag %>">
 <tr><!-- 年月 -->
-  <th colspan="7">
-  <p><%= year %>年 <%= month %>月</p>
+  <th colspan="7" id="<%= listFlag %>">
+  <i><%= year %>年 <%= month %>月</i>
   </th>
 </tr>
+  <colgroup span="1" class="sunday"></colgroup>
+  <colgroup span="5" class="weekday"></colgroup>
+  <colgroup span="1" class="saturnday"></colgroup>
 <tr><!-- 固定値の表示(日月火水木金土) -->
     <% for (String dayWeekStr : dayWeekArr) { %>
         <td><%= dayWeekStr %></td>
@@ -69,14 +72,14 @@ if (dayWeek == 5 && lastDay == 31){
 <!-- 日付の表示 -->
 <tr>
     <% for(int i = 0; i < list.size(); i++){ %>
-        <td><%= list.get(i) %></td>
+        <td><i><%= list.get(i) %></i></td>
 
         <!-- 7つごとに改行 -->
         <% if((i + 1) % 7 == 0 && i != 0){ %>
         </tr><tr>
         <% } %>
 
-        <% if(i > 36 && shortFlag == true){
+        <% if(i >= 35 && shortFlag == true){
               break;
            } %>
     <% } //for list.size()%>

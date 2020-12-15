@@ -1,46 +1,78 @@
 /**
  * @title webCalendar / WebContent / css / webCalendarStyle.css
+ * @browser google-Chrome
+ * @environment window.width:1000px, height:600px
 */
 
 @charset "UTF-8";
+
+@media all and (width: 1000px) and (height: 600px);
+
 body {
+    background: radial-gradient(ellipse farthest-side at center, white ,mistyrose 85% ,pink);
     font-family: "MS明朝",serif;
 }
 
-div#inputDiv{
-    width: 80%;
+div#header{
+    text-align: center;
 }
 
 div#calendar{
+    text-align: center;
+    vertical-align: top;
+}
 
+div#inputDiv{
+
+}
+
+h1{
+    text-align: center;
+    text-shadow: thistle 2px 2px;
+    color: hotpink;
+    background-color: pink;
+    font-family: "MS P明朝",serif;
+    font-size: 32px
 }
 
 table {
     table-layout: fixed;
-
-    margin: 2em;
     padding: 2em;
     text-align: center;
+    font-family: "MS P明朝",serif;
     background-color: lavenderblush;
 
+    border-collapse: separate;
     border-width: 2px;
     border-spacing: 2px;
     border-color: pink;
     border-radius: 10px;
     border-style: ridge;
+
+    font-weight: bold;
+}
+
+table#prev{
+    float: left;
+    width: 250px;
+    height:250px;
+
+    font-size: small;
 }
 
 table#base{
-    float: ;
+    float: left;
     width: 400px;
     height:400px;
-    border-collapse: separate;
+
+    font-size: x-large;
 }
 
-table#prev,#next{
-    width: 300px;
-    height:200px;
-    border-collapse: separate;
+table#next{
+    width: 250px;
+    height:250px;
+
+    font-size: small;
 }
 
 table#input{
@@ -48,11 +80,32 @@ table#input{
     height:100px;
 }
 
+th{
+    color: royalblue;
+    background-color: lavenderblush;
+}
+
+th#base{
+    font-size: xx-large;
+}
+
+th#prev,#next{
+    font-size: x-large;
+}
+
+.sunday{
+    background-color: pink;
+}
+
+.saturnday{
+    background-color: lightsteelblue;
+}
+
 button {
     font-size: medium;
     font-weight: bold;
     font-family: "MS明朝",serif;
-    color: hotpink;
+    color: mediumblue;
 }
 
 .errMsg {

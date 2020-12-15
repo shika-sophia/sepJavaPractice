@@ -15,6 +15,7 @@ public class Message {
     }//msgClear()
 
     public void msgForInput() {
+    	msgList.clear();
         msgList.add("年, 月を入力してください。");
     }//msgForInput()
 
