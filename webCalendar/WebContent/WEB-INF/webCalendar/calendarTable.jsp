@@ -61,12 +61,15 @@ if (dayWeek == 5 && lastDay == 31){
   <i><%= year %>年 <%= month %>月</i>
   </th>
 </tr>
+
+  <!-- 列グループの定義 -->
   <colgroup span="1" class="sunday"></colgroup>
   <colgroup span="5" class="weekday"></colgroup>
   <colgroup span="1" class="saturnday"></colgroup>
+
 <tr><!-- 固定値の表示(日月火水木金土) -->
     <% for (String dayWeekStr : dayWeekArr) { %>
-        <td><%= dayWeekStr %></td>
+        <td id="dayWeek"><%= dayWeekStr %></td>
     <% } //for dayWeekArr %>
 </tr>
 <!-- 日付の表示 -->

@@ -1,12 +1,10 @@
 /**
  * @title webCalendar / WebContent / css / webCalendarStyle.css
  * @browser google-Chrome
- * @environment window.width:1000px, height:600px
+ * @environment window.width:1000px, height:800px
 */
 
 @charset "UTF-8";
-
-@media all and (width: 1000px) and (height: 600px);
 
 body {
     background: radial-gradient(ellipse farthest-side at center, white ,mistyrose 85% ,pink);
@@ -15,15 +13,21 @@ body {
 
 div#header{
     text-align: center;
+    width: 1000px;
+    height: 120px;
 }
 
 div#calendar{
     text-align: center;
     vertical-align: top;
+    width: 1000px;
+    height: 480px;
 }
 
 div#inputDiv{
-
+    text-align: center;
+    width: 1000px;
+    height: 300px;
 }
 
 h1{
@@ -37,6 +41,7 @@ h1{
 
 table {
     table-layout: fixed;
+    margin: 10px;
     padding: 2em;
     text-align: center;
     font-family: "MS P明朝",serif;
@@ -49,6 +54,7 @@ table {
     border-radius: 10px;
     border-style: ridge;
 
+    color: dimgray;
     font-weight: bold;
 }
 
@@ -69,6 +75,7 @@ table#base{
 }
 
 table#next{
+    float: left;
     width: 250px;
     height:250px;
 
@@ -76,8 +83,10 @@ table#next{
 }
 
 table#input{
+    float: none;
+    position: static;
     width: 400px;
-    height:100px;
+    height:200px;
 }
 
 th{
