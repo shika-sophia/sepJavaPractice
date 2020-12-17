@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="css/mutterStyle.css">
+<link rel="stylesheet" type="text/css" href="css/webCalendarStyle.css">
 <title>calendarHeader.jsp</title>
 </head>
 <body>

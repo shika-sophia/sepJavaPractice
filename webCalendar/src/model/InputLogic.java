@@ -54,9 +54,8 @@ public class InputLogic {
         if(1 <= num && num <= BOUND) {
             ;
         } else {
-            mess.msgNgInput("bound"); //msgList.clear();の代わり
             mess.setMsgList(
-                    String.format("< ! > %sは 1～%d の範囲で入力してください。",
+                    String.format("< ! > %sは 1～%d で入力してください",
                         subject, BOUND));
         }
     }//matcherRange()

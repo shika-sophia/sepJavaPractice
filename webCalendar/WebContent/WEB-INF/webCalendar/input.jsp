@@ -40,11 +40,12 @@
     <input type="text" name="month" size="2" required="required">月&emsp;
     <button type="submit">送信</button>
     </p>
+    </form>
     <p>
-    <button formaction="/webCalendar/MoveServlet" type="submit" name="move" value="prev"> ≪PREV </button>&emsp;
-    <button formaction="/webCalendar/MoveServlet" type="submit" name="move" value="next"> NEXT≫ </button>
+    <a href="/webCalendar/MoveServlet?move=prev"><button> ≪PREV </button></a>&emsp;
+    <a href="/webCalendar/MoveServlet?move=memo"><button> MEMO </button></a>&emsp;
+    <a href="/webCalendar/MoveServlet?move=next"><button> NEXT≫ </button></a>
     </p>
-  </form>
   </td>
 </tr>
 </table>

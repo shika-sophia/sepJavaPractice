@@ -95,6 +95,28 @@ public class CalendarLogic implements Serializable{
     }//buildCalendar()
 
 
+    public void moveSwitch(String move) {
+
+        switch(move) {
+        case "prev":
+            year = prevYear;
+            month = prevMonth;
+            buildList();
+            break;
+
+        case "memo":
+            dateNow();
+            break;
+
+        case "next":
+            year = nextYear;
+            month = nextMonth;
+            buildList();
+            break;
+        }//switch
+
+    }//moveSwitch()
+
     //====== getter, setter ======
     public int getYear() {
         return year;
@@ -151,6 +173,7 @@ public class CalendarLogic implements Serializable{
     public void setNextList(List<String> nextList) {
         this.nextList = nextList;
     }
+
 
 //    //====== Test main() ======
 //    public static void main(String[] args) {

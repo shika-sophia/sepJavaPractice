@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 
 package servlet;
@@ -66,6 +66,8 @@ public class CalendarServlet extends HttpServlet {
 
         if(isMatch) {
             calen.dateInput(year, month);
+        } else {
+            calen.dateNow();
         }
 
         doForward(request, response);
