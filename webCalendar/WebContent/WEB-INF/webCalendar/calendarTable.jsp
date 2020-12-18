@@ -75,7 +75,10 @@ if (dayWeek == 5 && lastDay == 31){
 <!-- 日付の表示 -->
 <tr>
     <% for(int i = 0; i < list.size(); i++){ %>
-        <td><i><%= list.get(i) %></i></td>
+        <td>
+        <a href="/webCalendar/MemoServlet?year=<%= year %>&month=<%= month %>&day=<%= list.get(i) %>"
+        style="text-decoration: none; color: dimgray;">
+        <i><%= list.get(i) %></i></a></td>
 
         <!-- 7つごとに改行 -->
         <% if((i + 1) % 7 == 0 && i != 0){ %>

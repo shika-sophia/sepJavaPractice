@@ -42,9 +42,9 @@
     </p>
     </form>
     <p>
-    <a href="/webCalendar/MoveServlet?move=prev"><button> ≪PREV </button></a>&emsp;
-    <a href="/webCalendar/MoveServlet?move=memo"><button> MEMO </button></a>&emsp;
-    <a href="/webCalendar/MoveServlet?move=next"><button> NEXT≫ </button></a>
+    <a href="/webCalendar/FunctionServlet?move=prev"><button> ≪PREV </button></a>&emsp;
+    <a href="/webCalendar/FunctionServlet?move=memo"><button> MEMO </button></a>&emsp;
+    <a href="/webCalendar/FunctionServlet?move=next"><button> NEXT≫ </button></a>
     </p>
   </td>
 </tr>
