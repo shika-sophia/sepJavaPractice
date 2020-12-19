@@ -9,6 +9,7 @@ import java.util.List;
 public class CalendarLogic implements Serializable{
     private int year; //dayListのyear
     private int month;//dayListのmonth
+    private int day;  //memo用のday
     private int prevYear;//prevListの年
     private int prevMonth;//prevListの月
     private int nextYear; //nextListの年
@@ -32,6 +33,7 @@ public class CalendarLogic implements Serializable{
         LocalDate now = LocalDate.now();
         year = now.getYear();
         month = now.getMonthValue();
+        day = now.getDayOfMonth();
 
         buildList();
     }//dateNow()
@@ -122,8 +124,24 @@ public class CalendarLogic implements Serializable{
         return year;
     }
 
+    public void setYear(int year) {
+        this.year = year;
+    }
+
     public int getMonth() {
         return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
     }
 
     public int getPrevYear() {

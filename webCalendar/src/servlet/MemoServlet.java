@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,34 +10,31 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.CalendarLogic;
-import model.Message;
+import model.MemoLogic;
 
 
 @WebServlet("/MemoServlet")
 public class MemoServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private Message mess;
     private CalendarLogic calen;
+    private MemoLogic memoLogic;
     private HttpSession session;
 
-    public void init(ServletConfig config) throws ServletException {
-        mess = new Message();
-
-    }//init()
+    public MemoServlet() {
+        memoLogic = new MemoLogic();
+    }//constractor
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         session = request.getSession();
         calen = (CalendarLogic) session.getAttribute("calen");
 
-        int year = Integer.parseInt(request.getParameter("year"));
-        int month = Integer.parseInt(request.getParameter("month"));
+        String yearStr = request.getParameter("year");
+        String monthStr = request.getParameter("month");
+        String dayStr = request.getParameter("day");
 
-        try {
-            int day = Integer.parseInt(request.getParameter("day"));
-        } catch (NumberFormatException e) {
-            System.out.println("NumberFormatException of \'day\' in Memo");
+        memoLogic.treatDate(yearStr, monthStr, dayStr, calen);
 
-        }
+
 
     }//doGet()
 

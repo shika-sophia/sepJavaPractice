@@ -23,7 +23,7 @@
     <jsp:include page="calendarTable.jsp" />
 </div>
 <div id="inputDiv" align="center">
-    <jsp:include page="input.jsp" />
+    <jsp:include page="calendarInput.jsp" />
 </div>
 </body>
 </html>
