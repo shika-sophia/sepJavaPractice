@@ -26,21 +26,20 @@ public class CalendarServlet extends HttpServlet {
     private Message mess;
     private InputLogic inLogic;
     private CalendarLogic calen;
-    private MemoServlet memo;
+    private MemoServlet memoServlet;
     private HttpSession session;
 
     public void init(ServletConfig config) throws ServletException {
         mess = new Message();
         inLogic = new InputLogic();
         calen = new CalendarLogic();
-        memo = new MemoServlet();
+        memoServlet = new MemoServlet();
     }//init()
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         session = request.getSession();
-
         mess.msgForInput();
         calen.dateNow();
 
@@ -83,7 +82,7 @@ public class CalendarServlet extends HttpServlet {
         session.setAttribute("calen", calen);
 
         //---- MemoServlet ----
-        memo.doGet(request, response);
+        memoServlet.doGet(request, response);
 
         //---- forward ----
         String path = "/WEB-INF/webCalendar/calendarView.jsp";

@@ -2,8 +2,15 @@ package model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemoLogic {
+    private List<String> memoList;
+
+    public MemoLogic() {
+        setMemoList(new ArrayList<String>());
+    }
 
     public void treatDate(String yearStr, String monthStr, String dayStr, CalendarLogic calen) {
         int year = 0;
@@ -36,5 +43,25 @@ public class MemoLogic {
         String memoDayWeek = memoDate.format(DateTimeFormatter.ofPattern("(E)"));
         calen.setMemoDayWeek(memoDayWeek);
     }//treatDate
+
+    public void buildMemoList(String memoStr) {
+        //---- load memoList ----
+
+        //---- add momo ----
+        memoList.add(memoStr);
+
+        //---- save memoList ----
+
+    }//buildMemoList()
+
+
+    //====== getter, setter ======
+    public List<String> getMemoList() {
+        return memoList;
+    }
+
+    public void setMemoList(List<String> memoList) {
+        this.memoList = memoList;
+    }
 
 }//class

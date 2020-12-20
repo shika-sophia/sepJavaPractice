@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="model.CalendarLogic"  %>
+<%@ page import="java.util.List" %>
 
+<% List<String> memoList = (List<String>) request.getAttribute("memoList"); %>
 <% CalendarLogic calen = (CalendarLogic)session.getAttribute("calen"); %>
 <% int year = calen.getYear(); %>
 <% int month = calen.getMonth(); %>
@@ -27,6 +29,15 @@
     <button type="submit">送信</button>
     </p>
   </form>
+  </td>
+</tr>
+<tr>
+  <td>
+    <% if (memoList.isEmpty()){
+      ;
+    } else {
+
+    } %>
   </td>
 </tr>
 </table>
