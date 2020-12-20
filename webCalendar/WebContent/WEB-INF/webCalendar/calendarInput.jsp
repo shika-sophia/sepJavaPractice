@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="css/webCalendarStyle.css">
-<title>input.jsp</title>
+<title>calendarInput.jsp</title>
 </head>
 
 <body>
@@ -43,7 +43,6 @@
     </form>
     <p>
     <a href="/webCalendar/FunctionServlet?move=prev"><button> ≪PREV </button></a>&emsp;
-    <a href="/webCalendar/FunctionServlet?move=memo"><button> MEMO </button></a>&emsp;
     <a href="/webCalendar/FunctionServlet?move=next"><button> NEXT≫ </button></a>
     </p>
   </td>

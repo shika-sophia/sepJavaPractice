@@ -26,16 +26,15 @@ public class MemoServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         session = request.getSession();
-        calen = (CalendarLogic) session.getAttribute("calen");
+        calen = (CalendarLogic) session.getAttribute("calen");//session"calen": year,monthのみ
 
         String yearStr = request.getParameter("year");
         String monthStr = request.getParameter("month");
         String dayStr = request.getParameter("day");
 
         memoLogic.treatDate(yearStr, monthStr, dayStr, calen);
-
-
-
+        session.setAttribute("calen", calen);//session"calen": year,month,day
+        return;
     }//doGet()
 
 

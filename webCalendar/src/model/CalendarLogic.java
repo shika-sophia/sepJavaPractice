@@ -10,6 +10,7 @@ public class CalendarLogic implements Serializable{
     private int year; //dayListのyear
     private int month;//dayListのmonth
     private int day;  //memo用のday
+    private String memoDayWeek;//memo用の曜日
     private int prevYear;//prevListの年
     private int prevMonth;//prevListの月
     private int nextYear; //nextListの年
@@ -106,9 +107,7 @@ public class CalendarLogic implements Serializable{
             buildList();
             break;
 
-        case "memo":
-            dateNow();
-            break;
+        //case "memo":
 
         case "next":
             year = nextYear;
@@ -142,6 +141,14 @@ public class CalendarLogic implements Serializable{
 
     public void setDay(int day) {
         this.day = day;
+    }
+
+    public String getMemoDayWeek() {
+        return memoDayWeek;
+    }
+
+    public void setMemoDayWeek(String memoDayWeek) {
+        this.memoDayWeek = memoDayWeek;
     }
 
     public int getPrevYear() {

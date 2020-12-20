@@ -25,8 +25,8 @@ div#calendar{
 }
 
 div#inputDiv{
-    clear: both;
     text-align: center;
+    vertical-align: top;
     width: 100%;
     height: 300px;
 }
@@ -86,11 +86,18 @@ table#next{
 }
 
 table#input{
-    float: none;
-    margin-left: 30%;
-    margin-right: 30%;
+    float: left;
+    margin-left: 10%;
     width: 400px;
-    height:200px;
+    height:250px;
+}
+
+table#memo{
+    float: left;
+    margin-left: 20px;
+    margin-right: 10%;
+    width: 400px;
+    height:250px;
 }
 
 th{

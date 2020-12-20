@@ -1,5 +1,8 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class MemoLogic {
 
     public void treatDate(String yearStr, String monthStr, String dayStr, CalendarLogic calen) {
@@ -29,6 +32,9 @@ public class MemoLogic {
 
         }//if-else
 
+        LocalDate memoDate = LocalDate.of(year, month, day);
+        String memoDayWeek = memoDate.format(DateTimeFormatter.ofPattern("(E)"));
+        calen.setMemoDayWeek(memoDayWeek);
     }//treatDate
 
 }//class

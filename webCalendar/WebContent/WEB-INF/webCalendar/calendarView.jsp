@@ -24,6 +24,7 @@
 </div>
 <div id="inputDiv" align="center">
     <jsp:include page="calendarInput.jsp" />
+    <jsp:include page="calendarMemo.jsp" />
 </div>
 </body>
 </html>
