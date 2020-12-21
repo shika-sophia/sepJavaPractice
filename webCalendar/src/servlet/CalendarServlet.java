@@ -1,12 +1,12 @@
 /**
- *
+ * @title webCalendar / servlet / CalendarServlet
+ * @
  */
 
 package servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -83,11 +83,6 @@ public class CalendarServlet extends HttpServlet {
 
         //---- MemoServlet ----
         memoServlet.doGet(request, response);
-
-        //---- forward ----
-        String path = "/WEB-INF/webCalendar/calendarView.jsp";
-        RequestDispatcher dis = request.getRequestDispatcher(path);
-        dis.forward(request, response);
     }//doForward()
 
 }//class

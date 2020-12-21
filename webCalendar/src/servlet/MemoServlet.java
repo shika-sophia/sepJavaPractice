@@ -14,7 +14,6 @@ import model.CalendarLogic;
 import model.MemoLogic;
 import model.Message;
 
-
 @WebServlet("/MemoServlet")
 public class MemoServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -40,12 +39,7 @@ public class MemoServlet extends HttpServlet {
         memoLogic.treatDate(yearStr, monthStr, dayStr, calen);
         session.setAttribute("calen", calen);//session"calen": year,month,day
 
-        if(yearStr == null) {
-            return;
-
-        } else {
-            doForward(request, response);
-        }
+        doForward(request, response);
     }//doGet()
 
 
@@ -60,6 +54,9 @@ public class MemoServlet extends HttpServlet {
     protected void doForward(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //---- neccesary setting ----
+        if(mess.getMsgList().isEmpty()) {
+            mess.msgForInput();
+        }
         request.setAttribute("msgList", mess.getMsgList());
         request.setAttribute("memoList", memoLogic.getMemoList());
         calen.dateInput(calen.getYear(), calen.getMonth());

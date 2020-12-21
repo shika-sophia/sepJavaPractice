@@ -44,11 +44,25 @@ public class MemoLogic {
         calen.setMemoDayWeek(memoDayWeek);
     }//treatDate
 
+    //====== from FunctionServlet ======
+    public void memoFirstDay(CalendarLogic calen) {
+        int year = calen.getYear();
+        int month = calen.getMonth();
+        calen.dateInput(year, month);
+        calen.setDay( 1 );
+
+        buildMemoList("");
+    }//memoFirstDay
+
     public void buildMemoList(String memoStr) {
         //---- load memoList ----
 
         //---- add momo ----
-        memoList.add(memoStr);
+        if(memoStr.equals("")) {
+            ;
+        } else {
+            memoList.add(memoStr);
+        }
 
         //---- save memoList ----
 

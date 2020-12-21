@@ -43,6 +43,10 @@ public class CalendarLogic implements Serializable{
         this.year = year;
         this.month = month;
 
+        if(day == 0) {
+            day = 1;
+        }
+
         buildList();
     }//dateInput()
 
