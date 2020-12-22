@@ -23,13 +23,16 @@ public class MemoServlet extends HttpServlet {
     private HttpSession session;
 
     public MemoServlet() {
-        mess = new Message();
         memoLogic = new MemoLogic();
     }//constractor
 
+    //====== from CalendarServlet ======
+    //====== from FunctionServlet ======
+    //====== from calendarMemo.jsp <form> action ======
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         session = request.getSession();
+        mess = (Message) session.getAttribute("mess");
         calen = (CalendarLogic) session.getAttribute("calen");//session"calen": year,monthのみ
 
         String yearStr = request.getParameter("year");

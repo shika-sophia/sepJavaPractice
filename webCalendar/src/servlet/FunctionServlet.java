@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,19 +19,20 @@ public class FunctionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Message mess;
     private CalendarLogic calen;
+    private MemoServlet memoServlet;
     private MemoLogic memoLogic;
     private HttpSession session;
 
 
     public void init(ServletConfig config) throws ServletException {
-        mess = new Message();
+        memoServlet = new MemoServlet();
         memoLogic = new MemoLogic();
-
     }//init()
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         session = request.getSession();
+        mess = (Message) session.getAttribute("mess");
         calen = (CalendarLogic) session.getAttribute("calen");
 
         String move = request.getParameter("move");
@@ -54,18 +54,12 @@ public class FunctionServlet extends HttpServlet {
     private void doForward(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //---- neccesary setting ----
-        mess.msgForInput();
-        request.setAttribute("msgList", mess.getMsgList());
+        session.setAttribute("mess", mess);
         session.setAttribute("calen", calen);
 
         //---- memoServlet ----
         memoLogic.memoFirstDay(calen);
-        request.setAttribute("memoList", memoLogic.getMemoList());
-
-        String path = "/WEB-INF/webCalendar/calendarView.jsp";
-        RequestDispatcher dis = request.getRequestDispatcher(path);
-        dis.forward(request, response);
-
+        memoServlet.doGet(request, response);
     }//doForward()
 
 }//class

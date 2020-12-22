@@ -78,7 +78,7 @@ public class CalendarServlet extends HttpServlet {
     private void doForward(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //---- necessary setting ----
-        request.setAttribute("msgList", mess.getMsgList());
+        session.setAttribute("mess", mess);
         session.setAttribute("calen", calen);
 
         //---- MemoServlet ----
