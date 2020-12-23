@@ -1,6 +1,9 @@
 /**
  * @title webCalendar / servlet / CalendarServlet
- * @
+ * @content
+ * @class
+ * @author shika
+ * @date 2020-12-08 ～
  */
 
 package servlet;
@@ -36,14 +39,14 @@ public class CalendarServlet extends HttpServlet {
         memoServlet = new MemoServlet();
     }//init()
 
-
+    //====== initial calendar ======
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         session = request.getSession();
         mess.msgForInput();
         calen.dateNow();
 
-        doForward(request, response);
+        withMemo(request, response);
     }//doGet()
 
 
@@ -53,13 +56,16 @@ public class CalendarServlet extends HttpServlet {
         String yearStr = request.getParameter("year");
         String monthStr = request.getParameter("month");
 
+        //---- 不正値チェック(非整数)----
         mess.msgClear();
         boolean isMatch = inLogic.transInt(mess, yearStr, monthStr);
 
         if(isMatch == false) {
-            doForward(request, response);
-            return;
+            calen.dateNow();
+            withMemo(request, response);
         }
+
+        //---- 不正値チェック(範囲外) ----
         isMatch = inLogic.inputMatch(mess);
 
         int year = inLogic.getYear();
@@ -71,11 +77,11 @@ public class CalendarServlet extends HttpServlet {
             calen.dateNow();
         }
 
-        doForward(request, response);
+        withMemo(request, response);
     }//doPost()
 
 
-    private void doForward(HttpServletRequest request, HttpServletResponse response)
+    private void withMemo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //---- necessary setting ----
         session.setAttribute("mess", mess);
@@ -83,6 +89,6 @@ public class CalendarServlet extends HttpServlet {
 
         //---- MemoServlet ----
         memoServlet.doGet(request, response);
-    }//doForward()
+    }//withMemo()
 
 }//class

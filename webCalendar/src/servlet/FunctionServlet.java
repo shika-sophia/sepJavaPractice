@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.CalendarLogic;
-import model.MemoLogic;
 import model.Message;
 
 @WebServlet("/FunctionServlet")
@@ -20,13 +19,12 @@ public class FunctionServlet extends HttpServlet {
     private Message mess;
     private CalendarLogic calen;
     private MemoServlet memoServlet;
-    private MemoLogic memoLogic;
     private HttpSession session;
 
 
     public void init(ServletConfig config) throws ServletException {
         memoServlet = new MemoServlet();
-        memoLogic = new MemoLogic();
+
     }//init()
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,7 +38,7 @@ public class FunctionServlet extends HttpServlet {
         calen.moveSwitch(move);
 
         if (move.equals("prev") || move.equals("next")) {
-            doForward(request, response);
+            withMemo(request, response);
         }
     }//doGet()
 
@@ -51,14 +49,13 @@ public class FunctionServlet extends HttpServlet {
     }//doPost()
 
 
-    private void doForward(HttpServletRequest request, HttpServletResponse response)
+    private void withMemo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //---- neccesary setting ----
         session.setAttribute("mess", mess);
         session.setAttribute("calen", calen);
 
         //---- memoServlet ----
-        memoLogic.memoFirstDay(calen);
         memoServlet.doGet(request, response);
     }//doForward()
 

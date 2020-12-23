@@ -12,16 +12,19 @@ public class MemoLogic {
         setMemoList(new ArrayList<String>());
     }
 
+
     public void treatDate(String yearStr, String monthStr, String dayStr, CalendarLogic calen) {
         int year = 0;
         int month = 0;
         int day = 0;
 
+        //---- from CalendarServlet, FunctionServlet => calen -> year,month,day ----
         if (yearStr == null) {
             year = calen.getYear();
             month = calen.getMonth();
             day = calen.getDay();
 
+        //---- from onclick date => String -> int  ----
         } else {
              try {
                  year = Integer.parseInt(yearStr);
@@ -44,15 +47,6 @@ public class MemoLogic {
         calen.setMemoDayWeek(memoDayWeek);
     }//treatDate
 
-    //====== from FunctionServlet ======
-    public void memoFirstDay(CalendarLogic calen) {
-        int year = calen.getYear();
-        int month = calen.getMonth();
-        calen.dateInput(year, month);
-        calen.setDay( 1 );
-
-        buildMemoList("");
-    }//memoFirstDay
 
     public void buildMemoList(String memoStr) {
         //---- load memoList ----

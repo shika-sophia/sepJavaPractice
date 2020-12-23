@@ -33,8 +33,9 @@ public class MemoServlet extends HttpServlet {
             throws ServletException, IOException {
         session = request.getSession();
         mess = (Message) session.getAttribute("mess");
-        calen = (CalendarLogic) session.getAttribute("calen");//session"calen": year,monthのみ
+        calen = (CalendarLogic) session.getAttribute("calen");
 
+        //---- from calendarMemo <form>action ----
         String yearStr = request.getParameter("year");
         String monthStr = request.getParameter("month");
         String dayStr = request.getParameter("day");
@@ -60,9 +61,18 @@ public class MemoServlet extends HttpServlet {
         if(mess.getMsgList().isEmpty()) {
             mess.msgForInput();
         }
+
+        if (calen.getBaseList().isEmpty()) {
+            calen.dateInput(calen.getYear(), calen.getMonth());
+        }
+
         request.setAttribute("msgList", mess.getMsgList());
         request.setAttribute("memoList", memoLogic.getMemoList());
-        calen.dateInput(calen.getYear(), calen.getMonth());
+        session.setAttribute("mess", mess);
+        session.setAttribute("calen", calen);
+
+        mess.getMsgList().clear();
+        memoLogic.getMemoList().clear();
 
         //---- forward ----
         String path = "/WEB-INF/webCalendar/calendarView.jsp";

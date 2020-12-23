@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CalendarLogic implements Serializable{
-    private int year; //dayListのyear
-    private int month;//dayListのmonth
+    private int year; //baseListのyear
+    private int month;//baseListのmonth
     private int day;  //memo用のday
     private String memoDayWeek;//memo用の曜日
-    private int prevYear;//prevListの年
+
+    private int prevYear; //prevListの年
     private int prevMonth;//prevListの月
     private int nextYear; //nextListの年
     private int nextMonth;//nextListの月
@@ -25,6 +26,7 @@ public class CalendarLogic implements Serializable{
 
 
     public CalendarLogic() {
+        day = 1;
         setBaseList(new ArrayList<String>(42));
         setPrevList(new ArrayList<String>(42));
         setNextList(new ArrayList<String>(42));
@@ -42,10 +44,7 @@ public class CalendarLogic implements Serializable{
     public void dateInput(int year, int month) {
         this.year = year;
         this.month = month;
-
-        if(day == 0) {
-            day = 1;
-        }
+        //day = 1; (default)
 
         buildList();
     }//dateInput()
@@ -101,7 +100,7 @@ public class CalendarLogic implements Serializable{
         return list;
     }//buildCalendar()
 
-
+    //====== from FunctionServlet ======
     public void moveSwitch(String move) {
 
         switch(move) {
@@ -110,8 +109,6 @@ public class CalendarLogic implements Serializable{
             month = prevMonth;
             buildList();
             break;
-
-        //case "memo":
 
         case "next":
             year = nextYear;

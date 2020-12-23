@@ -98,11 +98,13 @@ table#memo{
     margin-right: 10%;
     width: 400px;
     height:250px;
+
+    vertical-align: top;
 }
 
 th{
     color: royalblue;
-    text-shadow: thistle 2px 2px;
+    text-shadow: thistle 2px 2px 1px;
     background-color: lavenderblush;
 }
 
@@ -136,4 +138,3 @@ a {
 .errMsg {
     color: deeppink;
 }
-

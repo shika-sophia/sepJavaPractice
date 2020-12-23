@@ -17,12 +17,16 @@
 <link rel="stylesheet" type="text/css" href="css/webCalendarStyle.css">
 <title>calendarMemo.jsp</title>
 </head>
-<body>
-<table id="memo">
+<body><!-- memoTable -->
+<table id="memo" style="vertical-align: top; text-align: left;">
 <tr>
   <td>
-  <span id="memoTitle">*ＭＥＭＯ*</span>
-  <span id="menoDate"><%= year %>年<%= month %>月<%= day %>日<%= memoDayWeek %></span><br>
+  <!-- span styleはここに入れないと反映されない -->
+  <span style="color: royalblue; font-weight: bold;">*ＭＥＭＯ*</span>&emsp;
+  <span style="color: cornflowerblue;
+    text-shadow: thistle 1.5px 1.5px 1.5px;
+    font-weight: bold;">
+    <%= year %>年<%= month %>月<%= day %>日 <%= memoDayWeek %></span><br>
   <form action="/webCalendar/MemoServlet" method="post">
     <p>
     <input type="text" name="memoStr" size="20" required="required">
