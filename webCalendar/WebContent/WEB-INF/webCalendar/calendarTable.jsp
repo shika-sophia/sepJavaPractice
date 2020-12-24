@@ -11,6 +11,7 @@
 <% CalendarLogic calen = (CalendarLogic)session.getAttribute("calen"); %>
 <% int year = calen.getYear(); %>
 <% int month = calen.getMonth(); %>
+<% int day = calen.getDay(); %>
 <% int lastDay = calen.getLastDay(); %>
 <% int dayWeek = calen.getDayWeek(); %>
 

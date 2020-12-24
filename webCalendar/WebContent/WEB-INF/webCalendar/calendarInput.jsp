@@ -26,18 +26,19 @@
                 <p class="errMsg">
   <%        } else { %>
                 <p>
-   <%       } %>
+  <%        } %>
             <%= message %></p>
-    <%   }//for
+  <%     }//for
      } //if-else %>
+  <% msgList.clear(); %>
   </td>
 </tr>
 <tr>
   <td>
   <form action="/webCalendar/CalendarServlet" method="post">
     <p>
-    <input type="text" name="year" size="4" required="required">年&thinsp;
-    <input type="text" name="month" size="2" required="required">月&emsp;
+    <input type="text" name="inputYear" size="4" required="required">年&thinsp;
+    <input type="text" name="inputMonth" size="2" required="required">月&emsp;
     <button type="submit">送信</button>
     </p>
     </form>

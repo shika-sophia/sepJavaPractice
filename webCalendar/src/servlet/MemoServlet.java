@@ -55,8 +55,11 @@ public class MemoServlet extends HttpServlet {
 
     }//doPost()
 
+
+    //====== from this.doGet(), doPost() ======
     protected void doForward(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         //---- neccesary setting ----
         if(mess.getMsgList().isEmpty()) {
             mess.msgForInput();
@@ -70,9 +73,6 @@ public class MemoServlet extends HttpServlet {
         request.setAttribute("memoList", memoLogic.getMemoList());
         session.setAttribute("mess", mess);
         session.setAttribute("calen", calen);
-
-        mess.getMsgList().clear();
-        memoLogic.getMemoList().clear();
 
         //---- forward ----
         String path = "/WEB-INF/webCalendar/calendarView.jsp";

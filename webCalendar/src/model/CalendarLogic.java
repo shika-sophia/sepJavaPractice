@@ -107,12 +107,14 @@ public class CalendarLogic implements Serializable{
         case "prev":
             year = prevYear;
             month = prevMonth;
+            day = 1;
             buildList();
             break;
 
         case "next":
             year = nextYear;
             month = nextMonth;
+            day = 1;
             buildList();
             break;
         }//switch

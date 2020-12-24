@@ -53,8 +53,8 @@ public class CalendarServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String yearStr = request.getParameter("year");
-        String monthStr = request.getParameter("month");
+        String yearStr = request.getParameter("inputYear");
+        String monthStr = request.getParameter("inputMonth");
 
         //---- 不正値チェック(非整数)----
         mess.msgClear();
