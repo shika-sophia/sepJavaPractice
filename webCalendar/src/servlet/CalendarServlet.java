@@ -32,6 +32,8 @@ public class CalendarServlet extends HttpServlet {
     private MemoServlet memoServlet;
     private HttpSession session;
 
+    //====== ◆Start Point ======
+    //------ initialize ------
     public void init(ServletConfig config) throws ServletException {
         mess = new Message();
         inLogic = new InputLogic();

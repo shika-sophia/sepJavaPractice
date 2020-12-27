@@ -66,8 +66,8 @@ public class MemoServlet extends HttpServlet {
         }
 
         if (calen.getBaseList().isEmpty()) {
-            calen.dateInput(calen.getYear(), calen.getMonth());
-        }
+                calen.dateInput(calen.getYear(), calen.getMonth());
+        }//if
 
         request.setAttribute("msgList", mess.getMsgList());
         request.setAttribute("memoList", memoLogic.getMemoList());
