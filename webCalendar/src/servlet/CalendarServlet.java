@@ -59,19 +59,18 @@ public class CalendarServlet extends HttpServlet {
         String monthStr = request.getParameter("inputMonth");
 
         //---- 不正値チェック(非整数)----
-        mess.msgClear();
         boolean isMatch = inLogic.transInt(mess, yearStr, monthStr);
 
-        if(isMatch == false) {
-            calen.dateNow();
-            withMemo(request, response);
+        int year = 0;
+        int month = 0;
+
+        if(isMatch) {
+            //---- 不正値チェック(範囲外) ----
+            isMatch = inLogic.inputMatch(mess);
+
+            year = inLogic.getYear();
+            month = inLogic.getMonth();
         }
-
-        //---- 不正値チェック(範囲外) ----
-        isMatch = inLogic.inputMatch(mess);
-
-        int year = inLogic.getYear();
-        int month = inLogic.getMonth();
 
         if(isMatch) {
             calen.dateInput(year, month);

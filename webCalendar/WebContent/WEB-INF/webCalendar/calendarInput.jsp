@@ -4,7 +4,6 @@
 <%@ page import="java.util.ArrayList" %>
 
 <% List<String> msgList = (List<String>) request.getAttribute("msgList"); %>
-<% List<String> dayList = (List<String>) session.getAttribute("dayList"); %>
 
 <!DOCTYPE html>
 <html>

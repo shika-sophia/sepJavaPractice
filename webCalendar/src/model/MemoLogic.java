@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.DataAccess;
+
 public class MemoLogic {
     private List<String> memoList;
 
@@ -48,8 +50,11 @@ public class MemoLogic {
     }//treatDate
 
 
-    public void buildMemoList(String memoStr) {
+    public void buildMemoList(String memoStr, CalendarLogic calen) {
         //---- load memoList ----
+        DataAccess dao = new DataAccess();
+        boolean isLoad= dao.loadMemo(memoList, calen);
+        List<String> memoList = dao.getMemoList();
 
         //---- add momo ----
         if(memoStr.equals("")) {
