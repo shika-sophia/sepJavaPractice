@@ -31,7 +31,10 @@ public class DataAccess {
 
     public boolean loadMemo(List<String> memoList, CalendarLogic calen){
         boolean isLoad = false;
-        String sql = "SELECT MEMO,DATE FROM CALENDAR_MEMO WHERE DATE = ?";
+        this.memoList = memoList;
+
+        String sql =
+            "SELECT MEMO,DATE FROM CALENDAR_MEMO WHERE DATE = ?";
 
         //---- 日付の整形 ----
         String dateFormat = buildDate(calen);
@@ -66,6 +69,38 @@ public class DataAccess {
     }//loadMemo()
 
 
+    public int saveMemo(List<String> memoList, CalendarLogic calen) {
+        int isSave = 1;
+        this.memoList = memoList;
+
+        String sql =
+            "INSERT INTO CALENDAR_MEMO(MEMO, DATE) VALUES( ?, ?)";
+
+        //---- 日付の整形 ----
+        String dateFormat = buildDate(calen);
+
+      //---- SQL文への挿入 / SQL文の実行 ----
+        for(int i = 0; i < memoList.size(); i++) {
+            try {
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, memoList.get(i));
+                ps.setString(2, dateFormat);
+
+                //INSERT成功で1が入る。どこかに0があると積は0。
+                //Thanks Doman-Logic (sepJava2020).
+                isSave *= ps.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.exit(0);
+            }//try-catch
+
+        }//for memoList
+
+        return isSave;
+    }//saveMemo()
+
+
     //====== year, month, day -> format as '2020-12-28' ======
     private String buildDate(CalendarLogic calen) {
         int year = calen.getYear();
@@ -75,7 +110,8 @@ public class DataAccess {
         String dateFormat = year + "-" + month + "-" + day;
 
         return dateFormat;
-    }
+    }//buildDate()
+
 
     //====== getter, setter ======
     public List<String> getMemoList() {
@@ -86,7 +122,8 @@ public class DataAccess {
         this.memoList = memoList;
     }
 
-//    //====== Test main() ======
+
+//    //====== Test main() for loadMemo() ======
 //    public static void main(String[] args) {
 //        DataAccess dao = new DataAccess();
 //
@@ -109,11 +146,45 @@ public class DataAccess {
 //        System.out.println("memoList: " + dao.memoList);
 //    }//main()
 
+//    //===== Test main() for saveMemo() ======
+//    public static void main(String[] args) {
+//        DataAccess dao = new DataAccess();
+//
+//        //---- setting 'calen' ----
+//        CalendarLogic calen = new CalendarLogic();
+//        calen.setYear(2020);
+//        calen.setMonth(12);
+//        calen.setDay(28);
+//
+//        //---- setting 'memoList' ----
+//        List<String> memoList = new ArrayList<>(
+//            Arrays.asList(
+//                "15:00 おやつ",
+//                "24:00 年越そば"
+//            ));
+//
+//        int isSave = dao.saveMemo(memoList, calen);
+//
+//        System.out.println("isSave: " + isSave);
+//    }//main()
+
 }//class
 
 /*
-//====== Test Result of main() ======
+//====== Result main() for loadMemo() ======
 isLoad: true
 dateFormat: 2020-12-28
 memoList: [Test memo]
+
+//====== Result main() for saveMemo() ======
+isSave: 1
+
+select * from calendar_memo;
++----+--------------------+------------+
+| ID | MEMO               | DATE       |
++----+--------------------+------------+
+|  1 | Test memo          | 2020-12-28 |
+|  2 | 15:00 おやつ       | 2020-12-28 |
+|  3 | 24:00 年越そば     | 2020-12-28 |
++----+--------------------+------------+
  */

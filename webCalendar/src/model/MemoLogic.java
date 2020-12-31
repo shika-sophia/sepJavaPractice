@@ -54,16 +54,22 @@ public class MemoLogic {
         //---- load memoList ----
         DataAccess dao = new DataAccess();
         boolean isLoad= dao.loadMemo(memoList, calen);
-        List<String> memoList = dao.getMemoList();
+        memoList = dao.getMemoList();
+
+        //=> if(isLoad == false)の処理
 
         //---- add momo ----
-        if(memoStr.equals("")) {
+        if(memoStr == null || memoStr.equals("")) {
             ;
         } else {
             memoList.add(memoStr);
         }
 
+        //=> memoは３つまでのロジック
+
+
         //---- save memoList ----
+        int isSave = dao.saveMemo(memoList, calen);
 
     }//buildMemoList()
 
