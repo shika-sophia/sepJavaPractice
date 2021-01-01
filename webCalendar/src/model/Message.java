@@ -15,12 +15,12 @@ public class Message {
     }//msgClear()
 
     public void msgForInput() {
-    	msgList.clear();
+        msgClear();
         msgList.add("年, 月を入力してください。");
     }//msgForInput()
 
     public void msgNgInput(String msgFlag) {
-        msgList.clear();
+        msgClear();
 
         switch(msgFlag) {
         case "decimal":
@@ -31,6 +31,24 @@ public class Message {
 
         }//switch
     }//msgNgInput()
+
+
+    public void ngMemo(String msgFlag) {
+        msgClear();
+
+        switch(msgFlag) {
+        case "overlap":
+            msgList.add("< ! > 同一内容のメモは登録できません。");
+            break;
+
+        case "overSize":
+            msgList.add("< ! > メモは３つまでです。/n"
+                + "追加するなら どれかを削除してください。");
+            break;
+
+        }//switch
+    }//ngMemo()
+
 
     //====== getter, setter ======
     public List<String> getMsgList() {
@@ -44,5 +62,6 @@ public class Message {
     public void setMsgList(String message) {
         msgList.add(message);
     }
+
 
 }//class

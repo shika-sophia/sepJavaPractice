@@ -51,7 +51,7 @@ public class MemoServlet extends HttpServlet {
             throws ServletException, IOException {
         String memoStr = request.getParameter("memoStr");
 
-        memoLogic.buildMemoList(memoStr, calen);
+        memoLogic.buildMemoList(memoStr, calen, mess);
 
     }//doPost()
 

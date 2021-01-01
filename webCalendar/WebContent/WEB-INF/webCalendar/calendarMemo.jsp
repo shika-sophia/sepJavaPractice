@@ -39,9 +39,18 @@
   <td>
     <% if (memoList.isEmpty()){
       ;
-    } else {
+    } else { %>
+      <form action="/webCalendar/FunctionServlet" method="post">
 
-    } %>
+    <%  for (int i = 0; i < memoList.size(); i++){ %>
+        <p id="memoStr">
+        <input type="checkbox" name="deleteMemo" value="<%= i %>">&thinsp;
+        <%= memoList.get(i) %>
+ <%     } //for %>
+
+        <button id="deleteBtn" type="submit">削除</button>
+        </form>
+ <%  } //if-else %>
   </td>
 </tr>
 </table>

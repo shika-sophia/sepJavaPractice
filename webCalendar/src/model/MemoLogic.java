@@ -8,14 +8,17 @@ import java.util.List;
 import dao.DataAccess;
 
 public class MemoLogic {
+    private DataAccess dao;
+    private final int MEMO_BOUND = 3; //memoSizeの最大値
     private List<String> memoList;
 
     public MemoLogic() {
+        dao = new DataAccess();
         setMemoList(new ArrayList<String>());
-    }
+    }//constractor
 
-
-    public void treatDate(String yearStr, String monthStr, String dayStr, CalendarLogic calen) {
+    public void treatDate(
+            String yearStr, String monthStr, String dayStr, CalendarLogic calen) {
         int year = 0;
         int month = 0;
         int day = 0;
@@ -50,13 +53,24 @@ public class MemoLogic {
     }//treatDate
 
 
-    public void buildMemoList(String memoStr, CalendarLogic calen) {
+    public void buildMemoList(String memoStr, CalendarLogic calen, Message mess) {
         //---- load memoList ----
-        DataAccess dao = new DataAccess();
-        boolean isLoad= dao.loadMemo(memoList, calen);
+        dao.loadMemo(memoList, calen);
         memoList = dao.getMemoList();
 
-        //=> if(isLoad == false)の処理
+        //重複memoの除外
+        for(String memo : memoList) {
+            if (memo.equals(memoStr)) {
+                mess.ngMemo("overlap");
+                return;
+            }
+        }//for
+
+        //memoは３つまで
+        if(memoList.size() >= MEMO_BOUND) {
+            mess.ngMemo("overSize");
+            return;
+        }
 
         //---- add momo ----
         if(memoStr == null || memoStr.equals("")) {
@@ -65,13 +79,29 @@ public class MemoLogic {
             memoList.add(memoStr);
         }
 
-        //=> memoは３つまでのロジック
-
-
         //---- save memoList ----
-        int isSave = dao.saveMemo(memoList, calen);
-
+        dao.saveMemo(memoList, calen);
     }//buildMemoList()
+
+    //====== from FunctionServlet doPost() ======
+    public void deleteMemo(int[] deleteId, CalendarLogic calen) {
+        //---- load memoList ----
+        dao.loadMemo(memoList, calen);
+        memoList = dao.getMemoList();
+
+        //---- int[] deleteId -> String[] deleteMemoStr ----
+        String[] deleteMemoStr = new String[deleteId.length];
+
+        for(int i = 0; i < memoList.size(); i++) {
+            for(int deleteIdBit : deleteId) {
+                if(i == deleteIdBit) {
+                  deleteMemoStr[i] = memoList.get(i);
+                }
+            }
+        }
+
+        dao.deleteMemo(deleteMemoStr, calen);
+    }//deleteMemo()
 
 
     //====== getter, setter ======

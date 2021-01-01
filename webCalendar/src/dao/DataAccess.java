@@ -101,6 +101,31 @@ public class DataAccess {
     }//saveMemo()
 
 
+    public int deleteMemo(String[] deleteMemoStr, CalendarLogic calen) {
+        int isDelete = 1; //全て成功で1、いずれか失敗で0
+
+        //---- 日付の整形 ----
+        String dateFormat = buildDate(calen);
+
+        String sql = "DELETE FROM CALENDAR_MEMO WHERE MEMO = ? AND DATE = ?";
+
+        for(int i = 0; i < deleteMemoStr.length; i++) {
+            try {
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, deleteMemoStr[i]);
+                ps.setString(2, dateFormat);
+
+                isDelete *= ps.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }//for
+
+        return isDelete;
+    }//deleteMemo()
+
+
     //====== year, month, day -> format as '2020-12-28' ======
     private String buildDate(CalendarLogic calen) {
         int year = calen.getYear();
@@ -154,7 +179,7 @@ public class DataAccess {
 //        CalendarLogic calen = new CalendarLogic();
 //        calen.setYear(2020);
 //        calen.setMonth(12);
-//        calen.setDay(28);
+//        calen.setDay(31);
 //
 //        //---- setting 'memoList' ----
 //        List<String> memoList = new ArrayList<>(
@@ -166,6 +191,27 @@ public class DataAccess {
 //        int isSave = dao.saveMemo(memoList, calen);
 //
 //        System.out.println("isSave: " + isSave);
+//    }//main()
+
+//    //===== Test main() for deleteMemo() ======
+//    public static void main(String[] args) {
+//        DataAccess dao = new DataAccess();
+//
+//        //---- setting 'calen' ----
+//        CalendarLogic calen = new CalendarLogic();
+//        calen.setYear(2020);
+//        calen.setMonth(12);
+//        calen.setDay(28);
+//
+//        //---- setting 'deleteMemoStr[]' ----
+//        String[] deleteMemoStr = new String[] {
+//                "15:00 おやつ",
+//                "24:00 年越そば"
+//        };
+//
+//        int isDelete = dao.deleteMemo(deleteMemoStr, calen);
+//
+//        System.out.println("isDelete: " + isDelete);
 //    }//main()
 
 }//class
@@ -186,5 +232,29 @@ select * from calendar_memo;
 |  1 | Test memo          | 2020-12-28 |
 |  2 | 15:00 おやつ       | 2020-12-28 |
 |  3 | 24:00 年越そば     | 2020-12-28 |
++----+--------------------+------------+
+
+
+//====== Result main() for deleteMemo() ======
+(preview)
++----+--------------------+------------+
+| ID | MEMO               | DATE       |
++----+--------------------+------------+
+|  1 | Test memo          | 2020-12-28 |
+|  2 | 15:00 おやつ       | 2020-12-28 |
+|  3 | 24:00 年越そば     | 2020-12-28 |
+|  4 | 15:00 おやつ       | 2020-12-31 |
+|  5 | 24:00 年越そば     | 2020-12-31 |
++----+--------------------+------------+
+
+isDelete: 1
+
+ select * from calendar_memo;
++----+--------------------+------------+
+| ID | MEMO               | DATE       |
++----+--------------------+------------+
+|  1 | Test memo          | 2020-12-28 |
+|  4 | 15:00 おやつ       | 2020-12-31 |
+|  5 | 24:00 年越そば     | 2020-12-31 |
 +----+--------------------+------------+
  */

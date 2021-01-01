@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.CalendarLogic;
+import model.MemoLogic;
 import model.Message;
 
 @WebServlet("/FunctionServlet")
@@ -42,10 +43,22 @@ public class FunctionServlet extends HttpServlet {
         }
     }//doGet()
 
-
+    //====== <form>action from [calendarMemo.jsp] with 'deleteMemo' ======
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String[] deleteIdStr = request.getParameterValues("deleteMemo");
+        int[] deleteId = new int[deleteIdStr.length];
 
+        if (deleteIdStr == null) {
+            ;
+        } else {
+            for (int i = 0; i < deleteIdStr.length; i++) {
+                deleteId[i] = Integer.parseInt(deleteIdStr[i]);
+            }
+        }//if-else
+
+        MemoLogic memoLogic = new MemoLogic();
+        memoLogic.deleteMemo(deleteId, calen);
     }//doPost()
 
 
