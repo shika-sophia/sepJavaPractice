@@ -46,6 +46,7 @@
         <p id="memoStr">
         <input type="checkbox" name="deleteMemo" value="<%= i %>">&thinsp;
         <%= memoList.get(i) %>
+        </p>
  <%     } //for %>
 
         <button id="deleteBtn" type="submit">削除</button>

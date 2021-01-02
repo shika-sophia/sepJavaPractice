@@ -38,14 +38,16 @@ public class FunctionServlet extends HttpServlet {
 
         calen.moveSwitch(move);
 
-        if (move.equals("prev") || move.equals("next")) {
-            withMemo(request, response);
-        }
+        withMemo(request, response);
     }//doGet()
 
     //====== <form>action from [calendarMemo.jsp] with 'deleteMemo' ======
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        session = request.getSession();
+        mess = (Message) session.getAttribute("mess");
+        calen = (CalendarLogic) session.getAttribute("calen");
+
         String[] deleteIdStr = request.getParameterValues("deleteMemo");
         int[] deleteId = new int[deleteIdStr.length];
 
@@ -59,6 +61,8 @@ public class FunctionServlet extends HttpServlet {
 
         MemoLogic memoLogic = new MemoLogic();
         memoLogic.deleteMemo(deleteId, calen);
+
+        withMemo(request, response);
     }//doPost()
 
 

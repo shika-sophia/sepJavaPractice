@@ -41,7 +41,7 @@ public class MemoServlet extends HttpServlet {
         String dayStr = request.getParameter("day");
 
         memoLogic.treatDate(yearStr, monthStr, dayStr, calen);
-        session.setAttribute("calen", calen);//session"calen": year,month,day
+        memoLogic.readMemoList(calen, mess);
 
         doForward(request, response);
     }//doGet()
@@ -53,6 +53,7 @@ public class MemoServlet extends HttpServlet {
 
         memoLogic.buildMemoList(memoStr, calen, mess);
 
+        doForward(request, response);
     }//doPost()
 
 

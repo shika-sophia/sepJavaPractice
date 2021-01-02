@@ -52,9 +52,19 @@ public class MemoLogic {
         calen.setMemoDayWeek(memoDayWeek);
     }//treatDate
 
-
-    public void buildMemoList(String memoStr, CalendarLogic calen, Message mess) {
+    //====== from MemoServlet doGet() ======
+    public void readMemoList(CalendarLogic calen, Message mess) {
         //---- load memoList ----
+        memoList.clear();
+        dao.loadMemo(memoList, calen);
+        memoList = dao.getMemoList();
+    }//readMemoList
+
+    //====== from MemoServlet doPost() ======
+    public void buildMemoList(
+            String memoStr, CalendarLogic calen, Message mess) {
+        //---- load memoList ----
+        memoList.clear();
         dao.loadMemo(memoList, calen);
         memoList = dao.getMemoList();
 
@@ -77,10 +87,11 @@ public class MemoLogic {
             ;
         } else {
             memoList.add(memoStr);
+
+            //---- save memoList ----
+            dao.saveMemo(memoStr, calen);
         }
 
-        //---- save memoList ----
-        dao.saveMemo(memoList, calen);
     }//buildMemoList()
 
     //====== from FunctionServlet doPost() ======

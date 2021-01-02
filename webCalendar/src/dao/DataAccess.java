@@ -69,9 +69,8 @@ public class DataAccess {
     }//loadMemo()
 
 
-    public int saveMemo(List<String> memoList, CalendarLogic calen) {
-        int isSave = 1;
-        this.memoList = memoList;
+    public int saveMemo(String memoStr, CalendarLogic calen) {
+        int isSave = 0;
 
         String sql =
             "INSERT INTO CALENDAR_MEMO(MEMO, DATE) VALUES( ?, ?)";
@@ -79,23 +78,18 @@ public class DataAccess {
         //---- 日付の整形 ----
         String dateFormat = buildDate(calen);
 
-      //---- SQL文への挿入 / SQL文の実行 ----
-        for(int i = 0; i < memoList.size(); i++) {
+            //---- SQL文への挿入 / SQL文の実行 ----
             try {
                 ps = conn.prepareStatement(sql);
-                ps.setString(1, memoList.get(i));
+                ps.setString(1, memoStr);
                 ps.setString(2, dateFormat);
 
-                //INSERT成功で1が入る。どこかに0があると積は0。
-                //Thanks Doman-Logic (sepJava2020).
-                isSave *= ps.executeUpdate();
+                isSave = ps.executeUpdate();
 
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.exit(0);
             }//try-catch
-
-        }//for memoList
 
         return isSave;
     }//saveMemo()
@@ -115,6 +109,8 @@ public class DataAccess {
                 ps.setString(1, deleteMemoStr[i]);
                 ps.setString(2, dateFormat);
 
+                //全て成功で1、いずれか失敗で0
+                //Thanks Doman Logic (sepJava2020)
                 isDelete *= ps.executeUpdate();
 
             } catch (SQLException e) {

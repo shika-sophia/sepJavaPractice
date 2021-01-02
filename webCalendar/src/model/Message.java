@@ -42,7 +42,7 @@ public class Message {
             break;
 
         case "overSize":
-            msgList.add("< ! > メモは３つまでです。/n"
+            msgList.add("< ! > メモは３つまでです。<br>"
                 + "追加するなら どれかを削除してください。");
             break;
 
