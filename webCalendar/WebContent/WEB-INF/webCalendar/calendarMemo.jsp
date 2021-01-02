@@ -45,11 +45,10 @@
     <%  for (int i = 0; i < memoList.size(); i++){ %>
         <p id="memoStr">
         <input type="checkbox" name="deleteMemo" value="<%= i %>">&thinsp;
-        <%= memoList.get(i) %>
-        </p>
+        <%= memoList.get(i) %>&emsp;&emsp;
  <%     } //for %>
-
         <button id="deleteBtn" type="submit">削除</button>
+        </p>
         </form>
  <%  } //if-else %>
   </td>

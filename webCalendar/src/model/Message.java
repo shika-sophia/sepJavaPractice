@@ -37,6 +37,10 @@ public class Message {
         msgClear();
 
         switch(msgFlag) {
+        case "overLiteral":
+            msgList.add("< ! > メモは50文字以内で入力してください。");
+            break;
+
         case "overlap":
             msgList.add("< ! > 同一内容のメモは登録できません。");
             break;

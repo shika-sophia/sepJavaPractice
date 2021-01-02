@@ -68,6 +68,13 @@ public class MemoLogic {
         dao.loadMemo(memoList, calen);
         memoList = dao.getMemoList();
 
+        //---- memoStrの不正値チェック ----
+        //50文字以上
+        if(memoStr.length() > 50) {
+            mess.ngMemo("overLiteral");
+            return;
+        }
+
         //重複memoの除外
         for(String memo : memoList) {
             if (memo.equals(memoStr)) {
