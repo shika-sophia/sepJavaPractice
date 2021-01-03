@@ -3,7 +3,7 @@
  * @content カレンダーの表示 / 年月入力 / 日付クリック / 日別メモの入力・表示
  *
  * @package ---- servlet ----
- * @class CalendarServlet //◆Srart Point / カレンダーの表示 / 年月の入力処理
+ * @class CalendarServlet //◆Start Point / カレンダーの表示 / 年月の入力処理
  * @class FunctionServlet //Prev,Nextボタンの処理 / 日付のクリック処理
  * @class MemoServlet     //両Servletからの最終処理 / memoの表示 / calendarViewへforward
  * @class WebCalendarFilter //request.setCharacterEncoding("UTF-8")のみ。全Servlet/jspに適用
