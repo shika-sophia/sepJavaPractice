@@ -67,5 +67,4 @@ public class Message {
         msgList.add(message);
     }
 
-
 }//class

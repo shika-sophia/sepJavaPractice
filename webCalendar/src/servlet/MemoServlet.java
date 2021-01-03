@@ -24,7 +24,7 @@ public class MemoServlet extends HttpServlet {
 
     public MemoServlet() {
         memoLogic = new MemoLogic();
-    }//constractor
+    }//constructor
 
     //====== from CalendarServlet ======
     //====== from FunctionServlet ======
@@ -80,4 +80,5 @@ public class MemoServlet extends HttpServlet {
         RequestDispatcher dis = request.getRequestDispatcher(path);
         dis.forward(request, response);
     }//doForward()
+
 }//class

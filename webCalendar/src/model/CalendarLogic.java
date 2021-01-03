@@ -30,7 +30,7 @@ public class CalendarLogic implements Serializable{
         setBaseList(new ArrayList<String>(42));
         setPrevList(new ArrayList<String>(42));
         setNextList(new ArrayList<String>(42));
-    }//constractor
+    }//constructor
 
     public void dateNow() {
         LocalDate now = LocalDate.now();

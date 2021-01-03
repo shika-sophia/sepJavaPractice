@@ -15,7 +15,7 @@ public class MemoLogic {
     public MemoLogic() {
         dao = new DataAccess();
         setMemoList(new ArrayList<String>());
-    }//constractor
+    }//constructor
 
     public void treatDate(
             String yearStr, String monthStr, String dayStr, CalendarLogic calen) {

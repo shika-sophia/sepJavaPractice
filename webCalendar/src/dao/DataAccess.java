@@ -26,7 +26,7 @@ public class DataAccess {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }//constractor
+    }//constructor
 
 
     public boolean loadMemo(List<String> memoList, CalendarLogic calen){
