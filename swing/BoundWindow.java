@@ -50,3 +50,10 @@ public class BoundWindow extends JFrame{
     }//main()
 
 }//class
+
+/*
+javac BoundWindow.java -encoding UTF-8
+
+C:\Users\6A16\Desktop>java BoundWindow
+
+*/
