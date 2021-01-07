@@ -110,7 +110,7 @@
  * 〇22. A 1
  *
  *  */
-package javaSilver;
+package javaSilver.SE11Black;
 
 public class Chapter02 {
     public static void main(String[] args) {

@@ -43,7 +43,7 @@
  *
  * ×17. A 6 =>〇B => 二重ループは表を作成して整理
  */
-package javaSilver;
+package javaSilver.SE11Black;
 
 public class Chapter04 {
 

@@ -117,7 +117,7 @@
  *         値としては異なるが、参照先にあるインスタンスは同じ。
  */
 
-package javaSilver;
+package javaSilver.SE11Black;
 
 public class Chapter06 {
 

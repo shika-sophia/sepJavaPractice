@@ -73,7 +73,7 @@
  *
  * ｘ21. B 「A, B」=> 〇C breakなしのダウンフォールはdefaultも対象に含む。
  */
-package javaSilver;
+package javaSilver.SE11Black;
 
 public class Chapter03 {
     public static void main(String[] args) {

@@ -53,7 +53,7 @@
  *
  * 〇10.B 12
  */
-package javaSilver;
+package javaSilver.SE11Black;
 
 public class Chapter05 {
     public static void main(String[] args) {

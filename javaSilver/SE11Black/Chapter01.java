@@ -29,7 +29,7 @@
  * 	・「"」自体はエスケープ「\"」されない限り無視される
  *
  * */
-package javaSilver;
+package javaSilver.SE11Black;
 
 public class Chapter01 {
 
