@@ -1,6 +1,6 @@
 /**
- * @title javaSilver / SE11Violet / {@link VioletChapter01.java
- * @reference 山本道子『JavaSilver SE11 [1ZO-815]』翔泳社, 2019 (紫本)
+ * @title javaSilver / SE11Violet / VioletChapter01.java
+ * @reference 山本道子『JavaSilver SE11 [1ZO-815]』翔泳社,2019 (紫本)
  * @content Java基礎、コマンドプロンプト
  * @author shika
  * @date 2021-01-07
