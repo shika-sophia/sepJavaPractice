@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class AnswerMaker {
     private Scanner scn;
-    private Scanner scn2;
+    private Scanner scnSub;
     private List<String> resList;
     private List<String> correctList;
     private int questNum;
@@ -40,7 +40,7 @@ public class AnswerMaker {
         printResult(result);
 
         scn.close();
-        scn2.close();
+        scnSub.close();
     }//run()
 
     //====== input 'resInput' ======
@@ -48,7 +48,7 @@ public class AnswerMaker {
         scn = new Scanner(System.in);
 
         System.out.println("*** 回答入力 ***");
-        System.out.println("[0: 終了]");
+        System.out.println("[0: 終了][9: 戻る]");
         System.out.println();
 
         resLoop:
@@ -68,11 +68,22 @@ public class AnswerMaker {
                 if(isEnd) {
                     break resLoop;
                 } else {
-                    i--;
+                    i--; //for( ; ;i++)で +1されるので実質 ±0
                     continue resLoop;
                 }
 
             }//if resInput
+
+            //---- [9: 戻る]の判定 ----
+            if(resInput.equals("9") || resInput.equals("９")) {
+                boolean isReverse = reverseNine(i);
+                if(isReverse) {
+                    resList.remove(i - 2); //iは1からなので indexは i-1
+                    i -= 2; //for( ; ;i++)で +1されるので実質 -1
+                    continue resLoop;
+                }
+
+            }
 
             //---- リストに登録 ----
             resList.add(i + ": " + resInput);
@@ -81,16 +92,71 @@ public class AnswerMaker {
         questNum = resList.size();
     }//resLoop()
 
+    //====== [9: 戻る]の処理 ====
+    //分岐: from resLoop() / correctLoop()
+    private boolean reverseNine(int i) {
+        boolean isReverse = false;
+
+        String preRes = "";
+        String preCorrect = "";
+
+        //---- 戻り先のデータ取得 ----
+        if(correctList.isEmpty()) {
+            //---- resListが 空か size==1 なら最初から ----
+            if(resList.isEmpty() || resList.size() == 1) {
+                new AnswerMaker();
+                System.exit(0);
+
+            //---- 前のresを取得 ----
+            } else {
+                preRes = resList.get(i - 2); //iは1からなのでindexは i-1
+            }//if-else resList
+
+        } else if(correctList.size() == 1){
+            preCorrect = correctList.get(0);
+        } else {
+            preCorrect = correctList.get(i - 2);//iは1からなのでindexは i-1
+        }
+
+        //---- 前のデータを表示 ----
+        if(preCorrect.equals("")) {
+            System.out.println("< ! >戻り先⇒ " + preRes);
+        } else {
+            System.out.println("< ! >戻り先⇒ｎ " + preCorrect);
+        }
+
+        //---- confirm [ Y / N ] of reverse ----
+        scnSub = new Scanner(System.in);
+        System.out.print("< ? > １つ戻り、前のデータは消えます。よろしいですか？ [ Y / N ] ");
+        String confirmReverse = scnSub.next();
+
+        switch(confirmReverse) {
+        case "Y":
+        case "y":
+        case "Ｙ":
+        case "ｙ":
+        case "0":
+        case "０":
+            isReverse = true;
+            break;
+
+        default:
+            isReverse = false;
+        }//switch
+
+        return isReverse;
+    }//reverseNine()
+
     //====== confirm [ Y / N ] of resLoop end ======
     private boolean confirmEnd(int i) {
         boolean isEnd = false;
 
-        scn2 = new Scanner(System.in);
+        scnSub = new Scanner(System.in);
         System.out.printf(
             "< ? > 回答入力を終了してもいいですか？(%d問完了) [ Y / N ] ", (i - 1));
-        String confirm = scn2.next();
+        String confirmEnd = scnSub.next();
 
-        switch(confirm) {
+        switch(confirmEnd) {
         case "Y":
         case "y":
         case "Ｙ":
@@ -165,8 +231,8 @@ public class AnswerMaker {
         bld.append(resList.get(i)).append(" => 〇: ");
         System.out.print("< ? >正解入力 ×" + bld);
 
-        scn2 = new Scanner(System.in);
-        String addInput = scn2.nextLine();
+        scnSub = new Scanner(System.in);
+        String addInput = scnSub.nextLine();
         System.out.println();
 
         bld.append(addInput);
