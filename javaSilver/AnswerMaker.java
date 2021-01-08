@@ -23,7 +23,6 @@ public class AnswerMaker {
 
     public AnswerMaker() {
         //---- initialize field ----
-        scn = new Scanner(System.in);
         resList = new ArrayList<>();
         correctList = new ArrayList<>();
         questNum = 0;
@@ -52,21 +51,63 @@ public class AnswerMaker {
 
         resLoop:
         for(int i = 1; ; i++) {
+            scn = new Scanner(System.in);
+
             System.out.printf("%d : ", i);
             String resInput = scn.nextLine();
 
+            //---- 終了フラグの判定 ----
             if(resInput.equals("")
                 || resInput.equals("0")
                 || resInput.equals("０")
                 || resInput.equals("o") ) {
-                break resLoop;
-            }
 
+                //---- input [ Y / N ] 終了の確認 ----
+                boolean isEnd = confirmEnd(i);
+
+                if(isEnd) {
+                    break resLoop;
+                } else {
+                    i--;
+                    continue resLoop;
+                }
+
+            }//if resInput
+
+            //---- リストに登録 ----
             resList.add(i + ": " + resInput);
         }//for resLoop
 
         questNum = resList.size();
     }//resLoop()
+
+    //====== confirm [ Y / N ] of resLoop end ======
+    private boolean confirmEnd(int i) {
+        boolean isEnd = false;
+
+        scn = new Scanner(System.in);
+        System.out.printf(
+            "< ? > 回答入力を終了してもいいですか？(%d問完了) [ Y / N ] ", (i - 1));
+        String confirm = scn.next();
+
+        switch(confirm) {
+        case "Y":
+        case "y":
+        case "Ｙ":
+        case "ｙ":
+        case "0":
+        case "０":
+            isEnd = true;
+            System.out.println("// 回答終了 //");
+            break;
+
+        default:
+            isEnd = false;
+            System.out.println("回答を続けます⇒");
+        }//switch
+
+        return isEnd;
+    }//confirmEnd()
 
     //====== input 〇× ======
     private void correctLoop() {
@@ -123,7 +164,6 @@ public class AnswerMaker {
 
         return result;
     }//calcRate()
-
 
     //====== print List and result ======
     private void printResult(String result) {
@@ -183,4 +223,28 @@ public class AnswerMaker {
 
 正答率 80.00 ％ ( 〇4問 / 全5問 )
 ＊/
+
+---- Test confirmEnd() ----
+*** 回答入力 ***
+[0: 終了]
+
+1 : confirm
+2 : y
+3 : n
+4 : 0
+< ? > 回答入力を終了してもいいですか？(3問完了) [ Y / N ] n
+回答を続けます⇒
+4 : 続けます
+5 : ０
+< ? > 回答入力を終了してもいいですか？(4問完了) [ Y / N ] ｙ
+// 回答終了 //
+
+*** 答え合わせ ***
+[ 0 : 〇 ]/[ 1 : × ]
+
+1: confirm => 0
+2: y => 0
+3: n => 0
+4: 続けます => 0
+
 */
