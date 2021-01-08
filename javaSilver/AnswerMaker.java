@@ -103,7 +103,7 @@ public class AnswerMaker {
 
         default:
             isEnd = false;
-            System.out.println("回答を続けます⇒");
+            System.out.println("回答を続けます⇒\n");
         }//switch
 
         return isEnd;
@@ -118,7 +118,7 @@ public class AnswerMaker {
         int isCorrectInt = 0;
 
         for (int i = 0; i < questNum; i++) {
-            correctInput:
+            correctInput: //不正値のときのみ whileで繰り返し
             while (true) {
                 scn = new Scanner(System.in);
 
@@ -147,6 +147,9 @@ public class AnswerMaker {
 
                 } else if (isCorrectInt == 1){
                     isCorrectStr = "×";
+
+                    //---- 正解を追加入力 ----
+                    addInput(i);
                 }
 
                 correctList.add(isCorrectStr);
@@ -154,6 +157,22 @@ public class AnswerMaker {
             }//while
         }//for
     }//correctLoop()
+
+    //====== × -> 追加入力 ======
+    private void addInput(int i) {
+        StringBuilder bld = new StringBuilder();
+
+        bld.append(resList.get(i)).append(" => 〇: ");
+        System.out.print("< ? >正解入力 ×" + bld);
+
+        scn = new Scanner(System.in);
+        String addInput = scn.nextLine();
+        System.out.println();
+
+        bld.append(addInput);
+
+        resList.set(i, bld.toString());
+     }//addInput()
 
     //====== calc correctRate ======
     private String calcRate() {
@@ -178,10 +197,10 @@ public class AnswerMaker {
         System.out.println("*/");
     }//printResult()
 
-//    //====== Test main() ======
-//    public static void main(String[] args) {
-//        new AnswerMaker();
-//    }//main()
+    //====== Test main() ======
+    public static void main(String[] args) {
+        new AnswerMaker();
+    }//main()
 
 }//class
 
@@ -234,6 +253,7 @@ public class AnswerMaker {
 4 : 0
 < ? > 回答入力を終了してもいいですか？(3問完了) [ Y / N ] n
 回答を続けます⇒
+
 4 : 続けます
 5 : ０
 < ? > 回答入力を終了してもいいですか？(4問完了) [ Y / N ] ｙ
@@ -247,4 +267,34 @@ public class AnswerMaker {
 3: n => 0
 4: 続けます => 0
 
+---- Test addInput() ----
+*** 回答入力 ***
+[0: 終了]
+
+1 : A
+2 : B
+3 : C
+4 : 0
+< ? > 回答入力を終了してもいいですか？(3問完了) [ Y / N ] y
+// 回答終了 //
+
+*** 答え合わせ ***
+[ 0 : 〇 ]/[ 1 : × ]
+
+1: A => 0
+2: B => 1
+< ? >正解入力 ×2: B => 〇: A
+
+3: C => 1
+< ? >正解入力 ×3: C => 〇: D
+
+
+*** 結果発表 ***
+/＊
+〇 1: A
+× 2: B => 〇: A
+× 3: C => 〇: D
+
+正答率 33.33 ％ ( 〇1問 / 全3問 )
+＊/
 */
