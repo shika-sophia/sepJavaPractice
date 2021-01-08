@@ -15,11 +15,11 @@ import java.util.Scanner;
 
 public class AnswerMaker {
     private Scanner scn;
+    private Scanner scn2;
     private List<String> resList;
     private List<String> correctList;
     private int questNum;
     private int correctNum;
-    private double correctRate;
 
     public AnswerMaker() {
         //---- initialize field ----
@@ -27,7 +27,6 @@ public class AnswerMaker {
         correctList = new ArrayList<>();
         questNum = 0;
         correctNum = 0;
-        correctRate = 0L;
 
         //---- execute AnswerMaker ----
         run();
@@ -41,18 +40,19 @@ public class AnswerMaker {
         printResult(result);
 
         scn.close();
+        scn2.close();
     }//run()
 
     //====== input 'resInput' ======
     private void resLoop() {
+        scn = new Scanner(System.in);
+
         System.out.println("*** 回答入力 ***");
         System.out.println("[0: 終了]");
         System.out.println();
 
         resLoop:
         for(int i = 1; ; i++) {
-            scn = new Scanner(System.in);
-
             System.out.printf("%d : ", i);
             String resInput = scn.nextLine();
 
@@ -85,10 +85,10 @@ public class AnswerMaker {
     private boolean confirmEnd(int i) {
         boolean isEnd = false;
 
-        scn = new Scanner(System.in);
+        scn2 = new Scanner(System.in);
         System.out.printf(
             "< ? > 回答入力を終了してもいいですか？(%d問完了) [ Y / N ] ", (i - 1));
-        String confirm = scn.next();
+        String confirm = scn2.next();
 
         switch(confirm) {
         case "Y":
@@ -165,8 +165,8 @@ public class AnswerMaker {
         bld.append(resList.get(i)).append(" => 〇: ");
         System.out.print("< ? >正解入力 ×" + bld);
 
-        scn = new Scanner(System.in);
-        String addInput = scn.nextLine();
+        scn2 = new Scanner(System.in);
+        String addInput = scn2.nextLine();
         System.out.println();
 
         bld.append(addInput);
@@ -176,7 +176,7 @@ public class AnswerMaker {
 
     //====== calc correctRate ======
     private String calcRate() {
-        correctRate = (double)correctNum / questNum;
+        double correctRate = (double)correctNum / questNum;
 
         String result = String.format("正答率 %.2f ％ ( 〇%d問 / 全%d問 )",
             (correctRate * 100), correctNum, questNum);
