@@ -129,6 +129,7 @@ public class AnswerMaker {
         scnSub = new Scanner(System.in);
         System.out.print("< ? > １つ戻り、前のデータは消えます。よろしいですか？ [ Y / N ] ");
         String confirmReverse = scnSub.next();
+        System.out.println();
 
         switch(confirmReverse) {
         case "Y":
@@ -363,4 +364,37 @@ public class AnswerMaker {
 
 正答率 33.33 ％ ( 〇1問 / 全3問 )
 ＊/
+
+//---- Test reverseNine() [resLoop]----
+*** 回答入力 ***
+[0: 終了][9: 戻る]
+
+1 : A
+2 : B
+3 : 9
+< ! >戻り先⇒ 2: B
+< ? > １つ戻り、前のデータは消えます。よろしいですか？ [ Y / N ] y
+
+2 : rev
+3 : C
+4 : 0
+< ? > 回答入力を終了してもいいですか？(3問完了) [ Y / N ] Y
+// 回答終了 //
+
+*** 答え合わせ ***
+[ 0 : 〇 ]/[ 1 : × ]
+
+1: A => 0
+2: rev => 0
+3: C => 0
+
+*** 結果発表 ***
+/＊
+〇 1: A
+〇 2: rev
+〇 3: C
+
+正答率 100.00 ％ ( 〇3問 / 全3問 )
+＊/
+
 */
