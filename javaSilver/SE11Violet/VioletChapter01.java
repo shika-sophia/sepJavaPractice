@@ -4,7 +4,7 @@
  * @content Java基礎、コマンドプロンプト
  * @author shika
  * @date 2021-01-07
- * @correctRate 100.0％(5 / 5 問)
+ * @correctRate ①100.0％( 〇5問 / 全5問)
  */
 /*
  * 〇1: B

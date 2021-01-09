@@ -4,6 +4,7 @@
  * @content 第４章 for, while, break, continue
  * @author shika
  * @date 2021-01-08
+ * @correctRate ①正答率 80.00 ％ ( 〇12問 / 全15問 )
  */
 package javaSilver.SE11Violet;
 

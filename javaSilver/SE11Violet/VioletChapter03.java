@@ -4,6 +4,7 @@
  * @content 第３章 演算子と分岐文
  * @author shika
  * @date 2021-01-08
+ * @correctRate ①50.00 ％ ( 〇9問 / 全18問 )
  */
 /*
 〇 1: C ANS:912; ANS:102

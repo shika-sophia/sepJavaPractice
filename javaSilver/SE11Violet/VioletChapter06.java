@@ -4,6 +4,7 @@
  * @content 第６章 継承、ポリモーフィズム(多態性)
  * @author shika
  * @date 2021-01-09
+ * @correctRate ①31.25 ％ ( 〇8問 / 全25問 )
  */
 package javaSilver.SE11Violet;
 

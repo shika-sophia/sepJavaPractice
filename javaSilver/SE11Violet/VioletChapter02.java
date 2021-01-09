@@ -4,6 +4,7 @@
  * @content 第２章 変数と配列
  * @author shika
  * @date 2021-01-08
+ * @correctRate ①84.62 ％ ( 〇11問 / 全13問 )
  */
 /*
 〇 1: B longは小数不可

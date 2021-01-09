@@ -4,6 +4,7 @@
  * @content 第５章 クラス, インスタンス
  * @author shika
  * @date 2021-01-08
+ * @correctRate ①77.78 ％ ( 〇14問 / 全18問 )
  */
 package javaSilver.SE11Violet;
 
