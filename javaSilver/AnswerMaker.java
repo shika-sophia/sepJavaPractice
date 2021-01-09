@@ -82,7 +82,6 @@ public class AnswerMaker {
                     i -= 2; //for( ; ;i++)で +1されるので実質 -1
                     continue resLoop;
                 }
-
             }
 
             //---- リストに登録 ----
