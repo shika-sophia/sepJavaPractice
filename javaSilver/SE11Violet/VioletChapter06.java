@@ -41,16 +41,31 @@ public class VioletChapter06 {
 × 14: C? => 〇: D
   -> コンパイルは成功するが LecterとAudioは継承関係になため ClassCastException(in runtime)
 × 15: A, C, E, G => 〇: A,B,C,G
+  -> サブクラスの変数でsuperをそのまま代入はコンパイルエラー。
+     キャストするとコンパイルは通るが、ClassCastException(in runtime)
 〇 16: D / Gurrr Gurrr
+  -> ポリモーフィズムはstaticメンバに適用されず、変数宣言時のクラス側のメソッドが呼び出される
 × 17: D => 〇: C
-× 18: B / Cow Cow => 〇: A
+  -> インスタンスメソッドをOverrideしている場合、サブクラスが優先して呼び出される
+× 18: B / Cow Cow => 〇: A staticメソッドは サブクラス優先を適用せず
 〇 19: A / Object
-× 20: E? => 〇: D
+  -> Stringのsuperである Objectへ暗黙の型変換
+× 20: E? => 〇: D オーバーロードの問題かい
 × 21: D, F => 〇: A,F
+  【ラムダ式】
+    ・「Foo f = d -> -1;」は正しい
+    ・「Foo f = d -> {int d = -1; return d;}」引数と{ }内のローカル変数が同じのため誤り
 × 22: C / -1 => 〇: A
+  -> 【Arrays.mismatch()】
+      ・２つの配列を比較し、最初のミスマッチのindexを返す。
+      ・比較の要素が同じで順序も同じなら -1 を返す
 × 23: C / 8行目 => 〇: E
-× 24: D => 〇: C
+  「() -> 10」は引数に10ではなく、戻り値に10を返すの意
+〇 24: C
 × 25: D / NullPo => 〇: E
+  -> 「List<String> city = Arrays.asList(ary);」は固定リストとして扱われ
+     removeIf()の変更でUnsupportedOperationException(in runtime)
+     「List<String> city = new ArrayList<>(Arrays.asList(ary));」なら可変リストでremoveIf()が使える
 
-正答率 28.00 ％ ( 〇7問 / 全25問 )
+①正答率 31.25 ％ ( 〇8問 / 全25問 )
 */
