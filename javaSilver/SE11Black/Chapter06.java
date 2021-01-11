@@ -8,6 +8,17 @@
  * @date 2020-09-20 / 2020-09-30
  * @correctRate ① 16 / 30 = 53.3％
  */
+
+package javaSilver.SE11Black;
+
+public class Chapter06 {
+
+    public static void main(String[] args) {
+
+    }
+
+}
+
 /* 〇1. B 10
  * ×2. D 「banana, 200」=> 〇B「banana, 100」
  * ×3. A Object obj = null; => 〇F
@@ -116,13 +127,3 @@
  *         => 引数にオブジェクト型を渡すと、その参照をコピーして渡す。
  *         値としては異なるが、参照先にあるインスタンスは同じ。
  */
-
-package javaSilver.SE11Black;
-
-public class Chapter06 {
-
-    public static void main(String[] args) {
-
-    }
-
-}

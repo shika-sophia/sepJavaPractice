@@ -3,8 +3,9 @@
  * @reference 山本道子『JavaSilver SE11 [1ZO-815]』翔泳社,2019 (紫本)
  * @content 第６章 継承、ポリモーフィズム(多態性)
  * @author shika
- * @date 2021-01-09
- * @correctRate ①31.25 ％ ( 〇8問 / 全25問 )
+ * @date ①2021-01-09, ②2021-01-11
+ * @correctRate ①32.00 ％ ( 〇8問 / 全25問 )
+ * @correctRate ②88.00 ％ ( 〇22問 / 全25問 )
  */
 package javaSilver.SE11Violet;
 
@@ -19,7 +20,7 @@ public class VioletChapter06 {
 }//class
 
 /*
-//====== １回目 ======
+//====== １回目 / 2021-01-09 ======
 〇 1: B, F
 〇 2: D / ともに成功
     -> 派生型の配列にsuperオブジェクトを代入すると ArrayStoreException(in runtime)
@@ -68,5 +69,38 @@ public class VioletChapter06 {
      removeIf()の変更でUnsupportedOperationException(in runtime)
      「List<String> city = new ArrayList<>(Arrays.asList(ary));」なら可変リストでremoveIf()が使える
 
-①正答率 31.25 ％ ( 〇8問 / 全25問 )
+①正答率 32.00 ％ ( 〇8問 / 全25問 )
+*/
+/*
+//====== ２回目 / 2021-01-11 ======
+〇 1: B, F
+〇 2: D / A[]に new B()は入る
+〇 3: A / 100
+〇 4: E / x()は class Bに実装済とみなす
+× 5: E / 12行目 D instanceof A はコンパイルエラー => 〇: B
+  -> extends, implemntsできない型で比較するとコンパイルエラー
+  -> D と A は実装関係にはないが、Aはimplements可能な型なので、false
+〇 6: B / 0 0 50 60 / methodA(){ x = x; y = y;}はフィールドに入らず
+〇 7: C / 7行目 B()にsuper()が補われ、A()にそれがなくコンパイルエラー
+〇 8: C / Supper(), this(5)の一方または両方
+〇 9: B / super(i)が先
+〇 10: E / 16行目 super()の受け先なし
+〇 11: A, B
+〇 12: D / コンパイル成功 defaultでprivate不可。staticはprivate可
+〇 13: A, E / Cは publicじゃないと。extendsは×
+〇 14: D? LectureとFaciは実装関係。AudioとFaciも同様。コンパイルは成功する
+          f1にはLectureが入っているため ClassCastException(in runtime)
+〇 15: A, B, C, G
+〇 16: D / Gurrr Gurrr Animal[]だから
+〇 17: C / Gurrr Moo / Animal[]だが非staticでOverride
+× 18: C / 2,6行目 staticはOverride不可 => 〇: A static同士は可
+〇 19: A / Object
+〇 20: D / 6行目
+〇 21: A, F
+〇 22: A / 0
+〇 23: E / 10
+〇 24: C
+× 25: D => 〇: E UnsupportedOperationException(in runtime)
+
+②正答率 88.00 ％ ( 〇22問 / 全25問 )
 */
