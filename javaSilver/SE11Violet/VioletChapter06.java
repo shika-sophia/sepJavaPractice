@@ -1,6 +1,6 @@
 /**
  * @title javaSilver / SE11Violet / VioletChapter06.java
- * @reference 山本道子『JavaSilver SE11 [1ZO-815]』翔泳社,2019 (紫本)
+ * @reference 山本道子『JavaSilver SE11 [1Z0-815]』翔泳社,2019 (紫本)
  * @content 第６章 継承、ポリモーフィズム(多態性)
  * @author shika
  * @date ①2021-01-09, ②2021-01-11
