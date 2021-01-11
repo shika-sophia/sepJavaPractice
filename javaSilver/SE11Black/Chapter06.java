@@ -11,13 +11,15 @@
 
 package javaSilver.SE11Black;
 
+import javaSilver.AnswerMaker;
+
 public class Chapter06 {
 
     public static void main(String[] args) {
+        new AnswerMaker();
+    }//main()
 
-    }
-
-}
+}//class
 
 /* 〇1. B 10
  * ×2. D 「banana, 200」=> 〇B「banana, 100」

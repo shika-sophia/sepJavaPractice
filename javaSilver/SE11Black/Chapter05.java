@@ -55,8 +55,10 @@
  */
 package javaSilver.SE11Black;
 
+import javaSilver.AnswerMaker;
+
 public class Chapter05 {
     public static void main(String[] args) {
-
-    }
-}
+        new AnswerMaker();
+    }//main()
+}//class

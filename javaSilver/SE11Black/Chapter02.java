@@ -6,6 +6,16 @@
  * @date 2020-09-13 / 1200-
  * @correctRate ① 12.5 / 22 = 56.8％
  */
+package javaSilver.SE11Black;
+
+import javaSilver.AnswerMaker;
+
+public class Chapter02 {
+    public static void main(String[] args) {
+        new AnswerMaker();
+    }//main()
+}//class
+
 /*
  * 〇1. Cコンパイルエラー bool?
  * 〇2. E int e = 0827 -> 8進数の8はNG
@@ -110,14 +120,14 @@
  * 〇22. A 1
  *
  *  */
-package javaSilver.SE11Black;
 
-public class Chapter02 {
-    public static void main(String[] args) {
-        var bld = new StringBuilder("abcde");
-        bld.reverse();
-        System.out.println(bld);
-    }//main()
-}//class
 
+//public class Chapter02 {
+//    public static void main(String[] args) {
+//        var bld = new StringBuilder("abcde");
+//        bld.reverse();
+//        System.out.println(bld);
+//    }//main()
+//}//class
+//
 //結果: edcba
