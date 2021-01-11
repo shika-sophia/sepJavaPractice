@@ -1,0 +1,32 @@
+/**
+ * @title webCalendar / reference / webCalendarDB_Setting.txt
+ */
+
+USE PRACTICE;
+
+CREATE TABLE CALENDAR_MEMO (
+  ID INT PRIMARY KEY AUTO_INCREMENT,
+  MEMO VARCHAR(50) NOT NULL,
+  DATE DATE NOT NULL
+);
+
+SHOW COLUMNS FROM CALENDAR_MEMO;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| ID    | int         | NO   | PRI | NULL    | auto_increment |
+| MEMO  | varchar(50) | NO   |     | NULL    |                |
+| DATE  | date        | NO   |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+
+INSERT INTO CALENDAR_MEMO(MEMO, DATE)
+  VALUES('Test memo', CURRENT_DATE);
+
+select * from calendar_memo;
++----+-----------+------------+
+| ID | MEMO      | DATE       |
++----+-----------+------------+
+|  1 | Test memo | 2020-12-28 |
++----+-----------+------------+
+
+

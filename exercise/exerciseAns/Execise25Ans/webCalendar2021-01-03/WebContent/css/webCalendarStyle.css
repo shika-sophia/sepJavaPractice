@@ -1,0 +1,141 @@
+/**
+ * @title webCalendar / WebContent / css / webCalendarStyle.css
+ * @browser google-Chrome
+ * @environment window.width:1000px, height:800px
+*/
+
+@charset "UTF-8";
+
+body {
+    background: radial-gradient(ellipse farthest-side at center, white ,mistyrose 85% ,pink);
+    font-family: "MS明朝",serif;
+}
+
+div#header{
+    text-align: center;
+    width: 100%;
+    height: 120px;
+}
+
+div#calendar{
+    text-align: center;
+    vertical-align: top;
+    width: 100%;
+    height: 480px;
+}
+
+div#inputDiv{
+    text-align: center;
+    vertical-align: top;
+    width: 100%;
+    height: 340px;
+}
+
+h1{
+    text-align: center;
+    text-shadow: thistle 2px 2px;
+    color: hotpink;
+    background-color: pink;
+    font-family: "MS P明朝",serif;
+    font-size: 32px
+}
+
+table {
+    table-layout: fixed;
+    margin: 10px;
+    padding: 2em;
+    text-align: center;
+    font-family: "MS P明朝",serif;
+    background-color: lavenderblush;
+
+    border-collapse: separate;
+    border-width: 2px;
+    border-spacing: 2px;
+    border-color: pink;
+    border-radius: 10px;
+    border-style: ridge;
+
+    color: dimgray;
+    font-weight: bold;
+}
+
+table#prev{
+    float: left;
+    margin-left: 5%;
+    width: 250px;
+    height:250px;
+
+    font-size: small;
+}
+
+table#base{
+    float: left;
+    width: 400px;
+    height:400px;
+
+    font-size: x-large;
+}
+
+table#next{
+    float: left;
+    margin-right: 5%;
+    width: 250px;
+    height:250px;
+
+    font-size: small;
+}
+
+table#input{
+    float: left;
+    margin-left: 10%;
+    width: 400px;
+    height:320px;
+}
+
+table#memo{
+    float: left;
+    margin-left: 20px;
+    margin-right: 10%;
+    padding-left: 4em;
+    width: 400px;
+    height:320px;
+
+    vertical-align: top;
+}
+
+th{
+    color: royalblue;
+    text-shadow: thistle 2px 2px 1px;
+    background-color: lavenderblush;
+}
+
+th#base{
+    font-size: xx-large;
+}
+
+th#prev,#next{
+    font-size: x-large;
+}
+
+.sunday{
+    background-color: pink;
+}
+
+.saturnday{
+    background-color: lightsteelblue;
+}
+
+button {
+    font-size: medium;
+    font-weight: bold;
+    font-family: "MS明朝",serif;
+    color: mediumblue;
+}
+
+a {
+
+}
+
+.errMsg {
+    color: deeppink;
+}
