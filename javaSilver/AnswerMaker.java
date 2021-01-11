@@ -81,6 +81,9 @@ public class AnswerMaker {
                     resList.remove(i - 2); //iは1からなので indexは i-1
                     i -= 2; //for( ; ;i++)で +1されるので実質 -1
                     continue resLoop;
+                } else {
+                    i--;
+                    continue resLoop;
                 }
             }
 
@@ -229,7 +232,7 @@ public class AnswerMaker {
         StringBuilder bld = new StringBuilder();
 
         bld.append(resList.get(i)).append(" => 〇: ");
-        System.out.print("< ? >正解入力 ×" + bld);
+        System.out.print("< ? >正解入力 => ×" + bld);
 
         scnSub = new Scanner(System.in);
         String addInput = scnSub.nextLine();
