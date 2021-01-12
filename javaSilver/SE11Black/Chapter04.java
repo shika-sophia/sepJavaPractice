@@ -1,10 +1,23 @@
 /**
- * @title javaSilver / Chapter04 / 第４章 制御構造
+ * @title javaSilver / javaSE11Black / Chapter04 / 第４章 制御構造
  * @content while, for, 二重ループ, 無限ループ, 拡張for, break, continue, ラベル
  * @see 志賀澄人『徹底攻略 Java SE11 Silver 問題集[1ZO-815]』(黒本),インプレス, 2019
  * @date 2020-09-13 / 1930-2130
+ * @date 2021-01-12 / 1800-1830
  * @correctRate ① 9 / 17 = 52.9％
+ * @correctRate ② 70.58 ％ ( 〇12問 / 全17問 )
  */
+package javaSilver.SE11Black;
+
+import javaSilver.AnswerMaker;
+
+public class Chapter04 {
+
+    public static void main(String[] args) {
+        new AnswerMaker();
+    }//main()
+}//class
+
 /*
  * 〇1. A (b < 5)
  * 〇2. C do while( a < 5)
@@ -43,13 +56,30 @@
  *
  * ×17. A 6 =>〇B => 二重ループは表を作成して整理
  */
-package javaSilver.SE11Black;
+/*
+//====== ２回目 / 2021-01-12 ======
+〇 1: A
+〇 2: C
+〇 3: E
+〇 4: C
+〇 5: E
+〇 6: B
+× 7: A => 〇: D
+    -> 条件式に「,」不可。論理演算子を使う。
+〇 8: A
+〇 9: C
+〇 10: A, C, D
+× 11: C => 〇: A
+    -> 配列も Objectと互換性がある。
+〇 12: B
+× 13: D => 〇: E
+   -> while{ }内で12、while( )の判定でインクリメントされて 13。該当なしが正解。
+〇 14: A
+〇 15: B
+× 16: D => 〇: F
+   -> 上記(１回目のメモを参照)
+× 17: A => 〇: B
+   -> 計算間違いか・・
 
-import javaSilver.AnswerMaker;
-
-public class Chapter04 {
-
-    public static void main(String[] args) {
-        new AnswerMaker();
-    }//main()
-}//class
+正答率 70.58 ％ ( 〇12問 / 全17問 )
+*/
