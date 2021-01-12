@@ -306,6 +306,11 @@ public class AnswerMaker {
         bld.append("所要時間 ").append(costTime.toMinutes()).append(" 分").append("\n\n");
 
         bld.append(result).append("\n");
+
+        bld.append("\n@date ").append(startDay).append(" / ")
+           .append(startTimeStr).append("-").append(lastTimeStr);
+        bld.append("\n@correctRate ")
+           .append(result.replace("正答率 ","①")).append("\n");
         bld.append("*/ \n");
 
         System.out.println(bld.toString());
@@ -465,6 +470,9 @@ public class AnswerMaker {
 所要時間 2 分
 
 正答率 66.67 ％ ( 〇2問 / 全3問 )
+
+@date 2021-01-13 / 07:27-07:28
+@correctRate ①100.00 ％ ( 〇3問 / 全3問 )
 ＊/
 
 */
