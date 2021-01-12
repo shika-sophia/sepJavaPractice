@@ -1,11 +1,25 @@
 /**
- * @title javaSilver / Chapter03 / 第３章 演算子と判定構造
+ * @title javaSilver / javaSE11Black / Chapter03 / 第３章 演算子と判定構造
  * @content 演算子, equals() 同一性・同値性, intern(), if, switch
  * @see 志賀澄人『徹底攻略 Java SE11 Silver 問題集[1ZO-815]』(黒本),インプレス, 2019
  * @date 2020-09-13 / 1300-1500, 1700-1900
+ * @date 2021-01-12 / 1437-1505
  * @correctRate ① 12.6 / 21 = 60.0％
+ * @correctRate ② 76.19 ％ ( 〇16問 / 全21問 )
  */
+
+package javaSilver.SE11Black;
+
+import javaSilver.AnswerMaker;
+
+public class Chapter03 {
+    public static void main(String[] args) {
+        new AnswerMaker();
+    }//main()
+
+}//class
 /*
+ * ====== 1回目 / 2020-09-13 ======
  * 〇1. C 16
  * 〇2. A 100
  * 3. 〇A byte a = 0b10000000; => ちょうど128 (= 2 ^ 7乗)、byteは-128～127
@@ -73,13 +87,36 @@
  *
  * ｘ21. B 「A, B」=> 〇C breakなしのダウンフォールはdefaultも対象に含む。
  */
-package javaSilver.SE11Black;
+/*
+//====== ２回目 / 2021-01-12 ======
+〇 1: C
+〇 2: A / 100
+〇 3: A, C, D
+× 4: C / 33 => 〇: B 32 〔初歩的なミス、計算ミス〕
+〇 5: C
+〇 6: A
+〇 7: A
+〇 8: B
+× 9: B => 〇: A
+    -> a.Object.equals(b)は a == b を returnする
+    -> equals()をOverrideし、numの同値性で２つのオブジェクトの同一性を判断している
+    -> equals(Sample)で equals(Object)は継承関係のsuperで暗黙の型変換。
+    -> Object.equals(Object)なのでシグニッチャの変更はできず。
 
-import javaSilver.AnswerMaker;
+× 10: B => 〇: D
+    -> int numでも「this.num == obj.num」は同一性(同じ参照かどうか)を判定する。
+〇 11: B
+〇 12: D
+〇 13: A
+× 14: B / 1 => 〇: D 3
+    -> intern()は newされたStringも、コンスタントプールを参照する。全て trueとなり countは 3。
+〇 15: A
+〇 16: B
+〇 17: C
+〇 18: A
+〇 19: A, B, C, D, F, G
+× 20: B => 〇: A, B / 2つ選択 -> 問題ちゃんと読もう
+〇 21: C
 
-public class Chapter03 {
-    public static void main(String[] args) {
-        new AnswerMaker();
-    }//main()
-
-}//class
+正答率 76.19 ％ ( 〇16問 / 全21問 )
+*/

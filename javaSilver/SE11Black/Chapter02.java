@@ -1,10 +1,13 @@
+
 /**
- * @title javaSilver / Chapter02
+ * @title javaSilver / javaSE11Black / Chapter02
  * @content primitive, literal, var, String, StringBuilder
  * @see 志賀澄人『徹底攻略 Java SE11 Silver 問題集[1ZO-815]』(黒本),インプレス, 2019
- * @date 2020-09-12 / 1900-2500
- * @date 2020-09-13 / 1200-
+ * @author shika
+ * @date ①2020-09-12 / 1900-2500
+ * @date ②2021-01-12 / 0930-1000
  * @correctRate ① 12.5 / 22 = 56.8％
+ * @correctRate ② 72.73 ％ ( 〇16問 / 全22問 )
  */
 package javaSilver.SE11Black;
 
@@ -131,3 +134,41 @@ public class Chapter02 {
 //}//class
 //
 //結果: edcba
+
+/*
+//====== ２回目 / 2021-01-12 ======
+〇 1: C
+〇 2: E
+× 3: C, E, F, H, I => 〇: C, D, E ,F, I / ８進数 「0-」の後ろはＯＫ
+〇 4: C
+〇 5: D, E
+× 6: D => 〇: E
+  配列の初期化式 var ary = {1, 2, 3};は型を特定できず、コンパイルエラー。
+  var list = new ArrayList<>();は<>に参照できる型がなければ <Object>を参照する
+〇 7: C
+× 8: E => 〇: A
+  var a = new B(); コンパイル時に B型と決まる。
+  a = new C();は B型の変数にC型を代入しており継承関係にないため、コンパイルエラー。
+〇 9: A, B
+〇 10: A
+〇 11: F
+〇 12: E
+  indexOf(String) -> 文字列が存在しなときは -1。indexOf('c');と char型のオーバーロードもある。
+〇 13: D
+× 14: A => 〇: C
+  replace()は、文字列の最後まで行われる。"aaaa".replace("aa", "b") -> baa -> bb
+〇 15: F
+〇 16: A
+〇 17: A
+〇 18: C
+× 19: A => 〇: B
+  null + "null" => nullnull 結合のときに nullが文字列に置き換わる
+× 20: B => 〇: D 21
+  StringBuilderはデフォルトで 16の capacity (内部的に char[capacity])
+  StrungBuilder(String)は「String.length() + 16」の capacityを持つ。
+  sb.capacity() で その capacityを返す
+〇 21: D
+〇 22: A
+
+正答率 72.73 ％ ( 〇16問 / 全22問 )
+*/
