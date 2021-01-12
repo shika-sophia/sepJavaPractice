@@ -8,6 +8,10 @@
 
 package javaSilver;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -16,17 +20,20 @@ import java.util.Scanner;
 public class AnswerMaker {
     private Scanner scn;
     private Scanner scnSub;
-    private List<String> resList;
-    private List<String> correctList;
-    private int questNum;
-    private int correctNum;
+    private List<String> resList;    //回答List
+    private List<String> correctList;//〇×List
+    private int questNum;            //全問数
+    private int correctNum;          //正答数
+    private LocalDate startDay;      //実施日
+    private LocalDateTime startTime; //開始時刻
+    private LocalDateTime lastTime;  //終了時刻
+    private Duration costTime;       //時間の差
 
     public AnswerMaker() {
         //---- initialize field ----
         resList = new ArrayList<>();
         correctList = new ArrayList<>();
-        questNum = 0;
-        correctNum = 0;
+        startTime = null;
 
         //---- execute AnswerMaker ----
         run();
@@ -34,14 +41,42 @@ public class AnswerMaker {
 
     //====== call method() ======
     public void run() {
+        //startTimeの取得
+        calcTime();
+
+        //回答の入力
         resLoop();
+
+        //答え合わせ入力
         correctLoop();
+
+        //結果の計算
         String result = calcRate();
+
+        //lastTimeの取得、costTimeの計算
+        calcTime();
+
+        //結果表示
         printResult(result);
 
+        //最終処理
         scn.close();
         scnSub.close();
     }//run()
+
+    //====== get startTime, lastTime / calc costTime ======
+    private void calcTime() {
+        LocalDateTime ldt = LocalDateTime.now();
+
+        if(startTime == null) {
+            startTime = ldt;
+            startDay = LocalDate.of(
+                ldt.getYear(), ldt.getMonthValue(), ldt.getDayOfMonth());
+        } else {
+            lastTime = ldt;
+            costTime = Duration.between(startTime, lastTime);
+        }
+    }//calcTime()
 
     //====== input 'resInput' ======
     private void resLoop() {
@@ -255,16 +290,34 @@ public class AnswerMaker {
 
     //====== print List and result ======
     private void printResult(String result) {
-        System.out.println("\n*** 結果発表 ***");
-        System.out.println("/*");
+        StringBuilder bld = new StringBuilder();
+        bld.append("\n*** 結果発表 ***\n");
+        bld.append("/* \n");
+        bld.append("//====== １回目 / ").append(startDay).append(" ======\n");
 
         for(int i = 0; i < questNum; i++) {
-            System.out.printf("%s %s \n", correctList.get(i), resList.get(i));
+            bld.append(String.format(
+                "%s %s \n", correctList.get(i), resList.get(i)));
         }//for
-        System.out.println();
-        System.out.println(result);
-        System.out.println("*/");
+        String startTimeStr = formatTime(startTime);
+        String lastTimeStr = formatTime(lastTime);
+        bld.append("\n開始時刻 ").append(startTimeStr).append("\n");
+        bld.append("終了時刻 ").append(lastTimeStr).append("\n");
+        bld.append("所要時間 ").append(costTime.toMinutes()).append(" 分").append("\n\n");
+
+        bld.append(result).append("\n");
+        bld.append("*/ \n");
+
+        System.out.println(bld.toString());
     }//printResult()
+
+    //====== format startTime, lastTime ======
+    private String formatTime(LocalDateTime ldt) {
+        String ldtStr = ldt.format(
+            DateTimeFormatter.ofPattern("HH:mm"));
+
+        return ldtStr;
+    }//formatTime()
 
     //====== Test main() ======
     public static void main(String[] args) {
@@ -397,6 +450,21 @@ public class AnswerMaker {
 〇 3: C
 
 正答率 100.00 ％ ( 〇3問 / 全3問 )
+＊/
+
+//---- Test calcTime(), printResult(), formatTime() ----
+*** 結果発表 ***
+/＊
+//====== １回目 / 2021-01-13 ======
+〇 1: A
+× 2: B => 〇: D
+〇 3: C
+
+開始時刻 07:06
+終了時刻 07:08
+所要時間 2 分
+
+正答率 66.67 ％ ( 〇2問 / 全3問 )
 ＊/
 
 */
