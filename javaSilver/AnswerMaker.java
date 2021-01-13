@@ -41,20 +41,20 @@ public class AnswerMaker {
 
     //====== call method() ======
     public void run() {
-        //startTimeの取得
+        //startTimeの取得、startDayの生成
         calcTime();
 
         //回答の入力
         resLoop();
+
+        //lastTimeの取得、costTimeの計算
+        calcTime();
 
         //答え合わせ入力
         correctLoop();
 
         //結果の計算
         String result = calcRate();
-
-        //lastTimeの取得、costTimeの計算
-        calcTime();
 
         //結果表示
         printResult(result);
@@ -66,14 +66,14 @@ public class AnswerMaker {
 
     //====== get startTime, lastTime / calc costTime ======
     private void calcTime() {
-        LocalDateTime ldt = LocalDateTime.now();
+        LocalDateTime ldtNow = LocalDateTime.now();
 
         if(startTime == null) {
-            startTime = ldt;
+            startTime = ldtNow;
             startDay = LocalDate.of(
-                ldt.getYear(), ldt.getMonthValue(), ldt.getDayOfMonth());
+                ldtNow.getYear(), ldtNow.getMonthValue(), ldtNow.getDayOfMonth());
         } else {
-            lastTime = ldt;
+            lastTime = ldtNow;
             costTime = Duration.between(startTime, lastTime);
         }
     }//calcTime()
@@ -307,9 +307,10 @@ public class AnswerMaker {
 
         bld.append(result).append("\n");
 
-        bld.append("\n@date ").append(startDay).append(" / ")
-           .append(startTimeStr).append("-").append(lastTimeStr);
-        bld.append("\n@correctRate ")
+        bld.append("@date ").append(startDay).append(" / ")
+           .append(String.format("%s-%s (%s分)\n",
+               startTimeStr, lastTimeStr, costTime.toMinutes()));
+        bld.append("@correctRate ")
            .append(result.replace("正答率 ","①")).append("\n");
         bld.append("*/ \n");
 

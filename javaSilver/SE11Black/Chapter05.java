@@ -1,11 +1,23 @@
 /**
- * @title javaSilver / Chapter05 / 第５章 配列
+ * @title javaSilver / SE11Black / Chapter05 / 第５章 配列
  * @content array, new, multi-array, clone()
  * @see 志賀澄人『徹底攻略 Java SE11 Silver 問題集[1ZO-815]』(黒本),インプレス, 2019
  * @date 2020-09-14 / 2130-2230
  * @date 2020-09-15 / 2100-2230
+ * @date 2021-01-13 / 14:38-14:50
  * @correctRate ① 5.3 / 10 = 53.0％
+ * @correctRate ②60.00 ％ ( 〇6問 / 全10問 )
  */
+package javaSilver.SE11Black;
+
+import javaSilver.AnswerMaker;
+
+public class Chapter05 {
+    public static void main(String[] args) {
+        new AnswerMaker();
+    }//main()
+}//class
+
 /*
  * 〇1. E ハッシュコード
  * ◆Oblect.toString()
@@ -53,12 +65,34 @@
  *
  * 〇10.B 12
  */
-package javaSilver.SE11Black;
+/*
+//====== ２回目 / 2021-01-13 ======
+〇 1: E
+× 2: F => 〇: G
+  -> 配列の型宣言は、型と変数の両方に[]可。
+  -> 分けたときは次元を加算。int[][] f[] -> 3次元配列
+× 3: D => 〇: E
+  -> 配列型の変数宣言(前半)に、配列の大きさを宣言するのは全て誤り。
+〇 4: A, B, F
+〇 5: E / NullPo
+〇 6: C
+× 7: A, C, E => 〇: B, C, D
+ -> [2]と{ 2, 3 }の両方指定するのはコンパイルエラー
+ -> int b[][] = { };空の初期化子はＯＫ。
+     -> 要素数 0の配列インスタンスが生成される。
+ -> 初期化子は変数宣言と同時にしか使えない。
+ -> 変数の型だけ宣言するのはＯＫ。
+ -> インスタンス時に要素数・次元が分からない記述はコンパイルエラー。
+〇 8: E / NullPo
+ -> 配列の lengthはフィールドではなく、
+    コンパイル時に要素数を数える命令に置き換わるためメソッドに近い働きをする。
+× 9: C => 〇: D
+〇 10: B
 
-import javaSilver.AnswerMaker;
+開始時刻 14:38
+終了時刻 14:50
+所要時間 12 分
 
-public class Chapter05 {
-    public static void main(String[] args) {
-        new AnswerMaker();
-    }//main()
-}//class
+正答率 60.00 ％ ( 〇6問 / 全10問 )
+*/
+
