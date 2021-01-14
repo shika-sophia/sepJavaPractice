@@ -159,7 +159,7 @@ public class AnswerMaker {
         if(preCorrect.equals("")) {
             System.out.println("< ! >戻り先⇒ " + preRes);
         } else {
-            System.out.println("< ! >戻り先⇒ｎ " + preCorrect);
+            System.out.println("< ! >戻り先⇒ " + preCorrect);
         }
 
         //---- confirm [ Y / N ] of reverse ----
