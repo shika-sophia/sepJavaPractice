@@ -1,6 +1,5 @@
 /**
  * @title javaSilver / AnswerMaker.java
- * @reference 山本道子『JavaSilver SE11 [1ZO-815]』翔泳社,2019 (紫本)
  * @content 問題の回答と答え合わせの入力、正答率の自動表示
  * @author shika
  * @date 2021-01-07
