@@ -19,7 +19,7 @@
  * 〇6. B java one
  * 〇7. B java Test
  *      C java Test.java
- *    〔解説 p23〕[Java11～]javacを省略のソースファイルモード
+ *    〔解説 p23〕[Java11～] javacを省略のソースファイルモード
  *    			mvコマンド(UNIX), -d, --source 11, javap, jmod
  *
  * 〇8. >java Sample a \" a\" "a " b c

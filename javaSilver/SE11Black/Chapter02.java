@@ -1,4 +1,3 @@
-
 /**
  * @title javaSilver / javaSE11Black / Chapter02
  * @content primitive, literal, var, String, StringBuilder
@@ -33,7 +32,7 @@ public class Chapter02 {
  * ◆charに代入できるもの
  * ・「'」で括った１文字
  * ・'\\uXXXX' <- \は１つ。Unicode16進数
- * ・0～65535(=16^4)の数値 Unicode10進数, 正数のみ
+ * ・0～65535(=16^4 = 2^16)の数値 Unicode10進数, 正数のみ
  * ◆nullは参照がないことを表す。値を格納する基本型(primitive)には代入不可。
  *
  * ｘ5. A $a, C _0 -> 〇D ${d}, E g.aは不可
@@ -48,10 +47,12 @@ public class Chapter02 {
  * ◆ var 型推論 [JavaSE10～]
  * ・配列は型宣言で配列インスタンスを生成し、要素を初期化。varだとインスタンスできない。
  * ・<>は特定できないときは<Object>に決まる。
- * ・varはローカル変数のみ。フィールドは不可。
+ * ・varはローカル変数のみ。
+ * ・フィールドは不可。
  * ・仮引数の型宣言は不可。
  * ・ラムダ式は不可。
  * ・型推論はコンパイル時。
+ * ・finalは可
  *
  * 〇7. C.コンパイルエラー var value;の型を類推不可。
  * ×8. D Bが表示。var a = new B(); => 〇 A コンパイルエラー
@@ -62,7 +63,7 @@ public class Chapter02 {
  * ｘ10. B Hello, worldと表示 => 〇 A hoge, world
  * 〔p51〕
  * mutable: 可変なオブジェクト。一度セットしたフィールド値を変更できる。
- * immutable: 不変なオブジェクト。 java.lang.String, java.lang.File
+ * immutable: 不変なオブジェクト。 java.lang.String, java.lang.File, java.time.LocalDate
  *
  * Stringの変更を反映させるには新しいインスタンスを作る。replaceAll()では変更不可。
  *
@@ -83,7 +84,7 @@ public class Chapter02 {
  *
  * 〇16. A true
  * ｘ17. D "Hello,".plus("Java!") => A
- * ◆String#concat() "a".concat("b"); => "ab" 文字列の結合
+ * ◆String.concat() "a".concat("b"); => "ab" 文字列の結合
  *
  * 〇18. C 303040
  * ◆文字列「+」演算子
@@ -139,7 +140,7 @@ public class Chapter02 {
 //====== ２回目 / 2021-01-12 ======
 〇 1: C
 〇 2: E
-× 3: C, E, F, H, I => 〇: C, D, E ,F, I / ８進数 「0-」の後ろはＯＫ
+× 3: C, E, F, H, I => 〇: C, D, E ,F, I / ８進数 「0_」の後ろはＯＫ
 〇 4: C
 〇 5: D, E
 × 6: D => 〇: E
