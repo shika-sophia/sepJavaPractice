@@ -21,7 +21,7 @@ package javaSilver.SE11Violet;
 /*
 〇 1: C / one three
 × 2: B, H => F,H
-       forEach()は未定義(Stream処理のみ) / hasNext(),next()は配列で未定義
+       forEach()は未定義(List, Stream処理のみ) / hasNext(),next()は配列で未定義
 〇 3: A, B, C
 〇 4: A compile error
 〇 5: D / ary[x][y] = ary[x][y] * ary[x][y]

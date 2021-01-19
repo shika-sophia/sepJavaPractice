@@ -70,7 +70,7 @@ public class Chapter04 {
 〇 9: C
 〇 10: A, C, D
 × 11: C => 〇: A
-    -> 配列も Objectと互換性がある。
+    -> 配列も Objectと互換性がある。/ Object[]ではないことに注意
 〇 12: B
 × 13: D => 〇: E
    -> while{ }内で12、while( )の判定でインクリメントされて 13。該当なしが正解。

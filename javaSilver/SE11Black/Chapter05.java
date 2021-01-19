@@ -5,8 +5,10 @@
  * @date 2020-09-14 / 2130-2230
  * @date 2020-09-15 / 2100-2230
  * @date 2021-01-13 / 14:38-14:50
+ * @date 2021-01-19 / 09:13-09:22 (9分)
  * @correctRate ① 5.3 / 10 = 53.0％
  * @correctRate ②60.00 ％ ( 〇6問 / 全10問 )
+ * @correctRate ③100.00 ％ ( 〇10問 / 全10問 )
  */
 package javaSilver.SE11Black;
 
@@ -20,7 +22,7 @@ public class Chapter05 {
 
 /*
  * 〇1. E ハッシュコード
- * ◆Oblect.toString()
+ * ◆Object.toString()
  * public String toString(){
  *     return getClass().getName() + @ + Integer.toHexString(hashCode());
  * }
@@ -30,8 +32,8 @@ public class Chapter05 {
  * ◆２次元配列の２段階生成
  * int[][] array = new int[3][]
  * array[0] = new int[3];
- * array[1] = new int[3];
- * array[2] = new int[3];
+ * array[1] = new int[4];
+ * array[2] = new int[2];
  *
  * ×int[][] array = new int[][3]
  * 		１次元目の要素数を指定せずに、２次元目の要素数を指定するとコンパイルエラー
@@ -95,4 +97,24 @@ public class Chapter05 {
 
 正答率 60.00 ％ ( 〇6問 / 全10問 )
 */
+/* 
+//====== ３回目 / 2021-01-19 ======
+〇 1: E 
+〇 2: G 
+〇 3: E 
+〇 4: A, B, F 
+〇 5: E / NullPo 
+〇 6: C 
+〇 7: B, C, D 
+〇 8: E / NullPo 
+〇 9: D 
+〇 10: B 
+
+開始時刻 09:13
+終了時刻 09:22
+所要時間 9 分
+
+正答率 100.00 ％ ( 〇10問 / 全10問 )
+*/ 
+
 

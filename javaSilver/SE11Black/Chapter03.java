@@ -101,7 +101,7 @@ public class Chapter03 {
     -> a.Object.equals(b)は a == b を returnする
     -> equals()をOverrideし、numの同値性で２つのオブジェクトの同一性を判断している
     -> equals(Sample)で equals(Object)は継承関係のsuperで暗黙の型変換。
-    -> Object.equals(Object)なのでシグニッチャの変更はできず。
+    -> Object.equals(Object)なのでシグニチャの変更はできず。
 
 × 10: B => 〇: D
     -> int numでも「this.num == obj.num」は同一性(同じ参照かどうか)を判定する。

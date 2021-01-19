@@ -7,6 +7,8 @@
  * @author shika
  * @date 2021-01-14 / 16:09-16:32 (23分)
  * @correctRate ①63.16 ％ ( 〇12問 / 全19問 )
+ * @date 2021-01-19 / 11:47-12:03 (16分)
+ * @correctRate ②94.74 ％ ( 〇18問 / 全19問 )
  */
 package javaSilver.SE11Black;
 
@@ -35,7 +37,7 @@ public class Chapter09 {
 〇 5: E
 〇 6: D
     -> ◆LocalDate
-        ・immutable(不変オブジェクト) 他 String
+        ・immutable(不変オブジェクト) 他 String, File, DateTime
             ・値が変更されたか確かめる必要がない
             ・Thread safe
             ・データの複製を考える必要がない
@@ -62,7 +64,7 @@ public class Chapter09 {
 × 8: A => 〇: F
     -> <>が空のときは defaultで <Object>
     -> <Object>は、Object, String, Integerなど異なる型も扱える
-    -> 実行時にダウンキャストする際、ClassCastExceptionの可能性がある
+    -> 実行時にダウンキャストする際、ClassCastException(in runtime)の可能性がある
 × 9: B => 〇: E
     -> ArrayList.add(int, E)は、存在しないindexを指定すると
         IndexOutOfBoundsException(in runtime)
@@ -102,4 +104,34 @@ public class Chapter09 {
 
 正答率 63.16 ％ ( 〇12問 / 全19問 )
 */
+/* 
+//====== ２回目 / 2021-01-19 ======
+〇 1: A 
+〇 2: C 
+〇 3: D 
+〇 4: B 
+× 5: B => 〇: E 
+	LocalDateで monthに 0 -> java.time.DateTimeException(in runtime)
+〇 6: D 
+〇 7: B, D, E 
+〇 8: F 
+〇 9: E 
+〇 10: A 
+〇 11: B 
+〇 12: C 
+〇 13: E 
+〇 14: A, C 
+〇 15: D 
+〇 16: C 
+〇 17: B 
+〇 18: A, C 
+〇 19: B 
+
+開始時刻 11:47
+終了時刻 12:03
+所要時間 16 分
+
+正答率 94.74 ％ ( 〇18問 / 全19問 )
+*/ 
+
 

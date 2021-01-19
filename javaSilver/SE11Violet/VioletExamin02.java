@@ -68,6 +68,7 @@ public class VioletExamin02 {
     super(num)なので A()はなくていいんだ。継承なので protectedは そりゃ通る。
 × 40: D => 〇: A
     -> Main obj = null;でも、objの型がMainで、static foo()なので正常に呼び出し可。
+    -> (黒本)staticの a.fieldは、コンパイル時に Main.fieldに置換される。
     -> foo()が 非staticなら、 NullPo。
 〇 41: C
 〇 42: D

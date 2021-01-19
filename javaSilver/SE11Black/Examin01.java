@@ -58,7 +58,6 @@ className @main(): javaSilver.SE11Black.Examin01$1
 × 17: A, C => 〇: A,E
     staticは インスタンスとは別の領域なので、インスタンス変数に付けると意味が変わる
     inner classは、public～private 全て可能
-ーー
 〇 18: D
 〇 19: D
 〇 20: D
@@ -66,7 +65,7 @@ className @main(): javaSilver.SE11Black.Examin01$1
 〇 22: A
 〇 23: A, C, E
 〇 24: D
-    菱形継承問題(ダイアモンド継承)
+    ◆菱形継承問題(ダイアモンド継承)
     super()が B,Cのどちらを指すのか分からずコンパイルエラー
     B.super.sample() / C.super.sample()と記す。
 〇 25: C / 要public、引数も違う。@Overrideではなく、オーバーロード。
@@ -77,7 +76,7 @@ className @main(): javaSilver.SE11Black.Examin01$1
     interfaceに abstractを付けても可。
 × 29: D, E => 〇: A, D
     -> アプリの使うJREのモジュールを含めると、Javaがインストールされていないプラットフォームでも
-    アプリをじっこうでき、JREの必要なものだけをリンクさせられる。
+    アプリを実行でき、JREの必要なものだけをリンクさせられる。
     -> アプリの堅牢性とは、エラーになるような事態でもユーザーに影響を与えない能力のこと。
     モジュールの課題ではなく、アプリの非機能要件の課題。
      〔紫本の記述は間違いと論破している〕
@@ -133,7 +132,6 @@ className @main(): javaSilver.SE11Black.Examin01$1
     Javaアプリは OSを選ばず実行可能だが
     JDKは、開発環境なので OSごとのセットアップが必要で、OSごとのJDKが用意されている。
 〇 68: A, E
-ーー
 〇 69: D / java.lang.OutOfMemoryError
 〇 70: C
 〇 71: D
